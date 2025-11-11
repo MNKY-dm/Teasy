@@ -6,7 +6,6 @@
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="356.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ConnectSceneController">
    <children>
       <Button layoutX="129.0" layoutY="219.0" mnemonicParsing="false" onAction="#btnConnect" text="Se connecter">
@@ -15,8 +14,8 @@
          </effect>
       </Button>
       <Label layoutX="89.0" layoutY="77.0" text="Connectez vous à votre compte" textAlignment="CENTER" />
-      <TextField fx:id="tfmail" layoutX="93.0" layoutY="108.0" promptText="Adresse mail" text="Adresse mail" />
-      <TextField fx:id="tfpassword" layoutX="93.0" layoutY="140.0" text="Mot de passe" />
-      <Label fx:id="lbinfo" layoutX="93.0" layoutY="180.0" textAlignment="CENTER" />
+      <TextField fx:id="tfmail" layoutX="93.0" layoutY="108.0" promptText="Adresse mail" />
+      <TextField fx:id="tfpassword" layoutX="93.0" layoutY="140.0" promptText="Mot de passe" />
+      <Label fx:id="lbinfo" layoutX="94.0" layoutY="177.0" prefHeight="40.0" prefWidth="158.0" />
    </children>
 </AnchorPane>
