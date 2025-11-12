@@ -46,7 +46,7 @@ public class UserModel {
         return all;
     }
 
-    public UserModel getRowById(Integer id){
+    public UserModel getUserById(Integer id){
         // Select row by id
         String sql = "SELECT * " +
                 "FROM user " +
@@ -110,7 +110,7 @@ public class UserModel {
     public boolean deleteRowId(Integer id){
         // Delete
 
-        if (getRowById(id) != null) {
+        if (getUserById(id) != null) {
             String sql = "DELETE " +
                     "FROM user " +
                     "WHERE id = ?";
@@ -133,7 +133,7 @@ public class UserModel {
     public boolean insertNewRow(Integer id, String[] values){
         // Insert
 
-        if (values != null && values.length == 2 && getRowById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
+        if (values != null && values.length == 2 && getUserById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
             String sql = "INSERT INTO user " +
                     "VALUES (column1 = ?, column2 = ?) " ;
 
