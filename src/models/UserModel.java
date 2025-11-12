@@ -32,6 +32,7 @@ public class UserModel {
                     obj.setId(rs.getInt("id")) ;
                     obj.setNom(rs.getString("nom")) ;
                     obj.setEmail(rs.getString("email"));
+                    obj.setPassword(rs.getString("password"));
                     obj.setTel(rs.getString("tel"));
                     obj.setCreated_at(rs.getString("created_at"));
 
@@ -169,6 +170,10 @@ public class UserModel {
         return this.email;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
     public String getTel() {
         return this.tel;
     }
@@ -199,6 +204,15 @@ public class UserModel {
             this.email = email;
         } else {
             throw new IllegalArgumentException("L'email ne peut pas être null.");
+        }
+    }
+
+    public void setPassword(String password) {
+        if (password != null) {
+            this.password = password;
+        }
+        else {
+            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
         }
     }
 
