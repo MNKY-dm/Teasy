@@ -1,19 +1,15 @@
 package models;
 
 import dao.MySQLConnection;
+import models.User;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
 public class UserModel {
-    private Integer id;
-    private String nom;
-    private String email;
-    private String password;
-    private String tel;
-    private String role;
-    private String created_at;
+
+    private User user;
 
     public List<UserModel> getAll(){
         String sql = "SELECT * " +
@@ -159,79 +155,79 @@ public class UserModel {
         return false ; // Indique que la fonction n'a pas fonctionné, car le tableau ne respecte pas les deux conditions
     }
 
-    // getter + setter for your attributs
+    // getter + setter for your attributs (déplacé dans models.User)
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getNom() {
-        return this.nom;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public String getTel() {
-        return this.tel;
-    }
-
-    public String getRole() {
-        return this.role;
-    }
-
-    public String getCreated_at() {
-        return this.created_at;
-    }
-
-    public void setId(int id) {
-        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
-            this.id = id;
-        }
-        else {
-            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
-        }
-    }
-
-    public void setNom(String nom) {
-        if (nom != null) {
-            this.nom = nom;
-        } else {
-            throw new IllegalArgumentException("Le nom ne peut pas être null.");
-        }
-    }
-
-    public void setEmail(String email) {
-        if (email != null) {
-            this.email = email;
-        } else {
-            throw new IllegalArgumentException("L'email ne peut pas être null.");
-        }
-    }
-
-    public void setPassword(String password) {
-        if (password != null) {
-            this.password = password;
-        }
-        else {
-            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
-        }
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel; // Peut être null (voir BDD)
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at; // Peut être null (voir BDD)
-    }
+//    public int getId() {
+//        return this.id;
+//    }
+//
+//    public String getNom() {
+//        return this.nom;
+//    }
+//
+//    public String getEmail() {
+//        return this.email;
+//    }
+//
+//    public String getPassword() {
+//        return this.password;
+//    }
+//
+//    public String getTel() {
+//        return this.tel;
+//    }
+//
+//    public String getRole() {
+//        return this.role;
+//    }
+//
+//    public String getCreated_at() {
+//        return this.created_at;
+//    }
+//
+//    public void setId(int id) {
+//        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+//            this.id = id;
+//        }
+//        else {
+//            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
+//        }
+//    }
+//
+//    public void setNom(String nom) {
+//        if (nom != null) {
+//            this.nom = nom;
+//        } else {
+//            throw new IllegalArgumentException("Le nom ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setEmail(String email) {
+//        if (email != null) {
+//            this.email = email;
+//        } else {
+//            throw new IllegalArgumentException("L'email ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setPassword(String password) {
+//        if (password != null) {
+//            this.password = password;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setTel(String tel) {
+//        this.tel = tel; // Peut être null (voir BDD)
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
+//
+//    public void setCreated_at(String created_at) {
+//        this.created_at = created_at; // Peut être null (voir BDD)
+//    }
 }
