@@ -12,6 +12,7 @@ public class UserModel {
     private String email;
     private String password;
     private String tel;
+    private String role;
     private String created_at;
 
     public List<UserModel> getAll(){
@@ -85,7 +86,7 @@ public class UserModel {
 
         if (newValues != null && newValues.length == 2) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
             String sql = "UPDATE user " +
-                    "SET column1 = ?, column2 = ? " +
+                    "SET nom = ?, email = ?,  password = ?, tel = ?, role = ?, created_at = ? " +
                     "WHERE id = ?";
 
             try (var conn = MySQLConnection.connect();
@@ -178,6 +179,10 @@ public class UserModel {
         return this.tel;
     }
 
+    public String getRole() {
+        return this.role;
+    }
+
     public String getCreated_at() {
         return this.created_at;
     }
@@ -218,6 +223,10 @@ public class UserModel {
 
     public void setTel(String tel) {
         this.tel = tel; // Peut être null (voir BDD)
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setCreated_at(String created_at) {
