@@ -98,7 +98,7 @@ public class UserModel {
                 stmt.setInt(newValues.length + 1, id); // Définir l'id dans la commande SQL
 
                 var rs = stmt.executeUpdate();
-                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de ligne mises à jour est 1, et false sinon 
+                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -108,7 +108,7 @@ public class UserModel {
         return false ; // Indique que la fonction n'a pas fonctionné, car le tableau ne respecte pas les deux conditions
     }
 
-    public boolean deleteRowId(Integer id){
+    public boolean deleteUserById(Integer id){
         // Delete
 
         if (getUserById(id) != null) {
@@ -128,7 +128,7 @@ public class UserModel {
                 return false;
             }
         }
-        return false ; // Indique que la fonction n'a pas fonctionné car aucune ligne n'a été trouvée avec l'id
+        return false ; // Indique que la fonction n'a pas fonctionné, car aucune ligne n'a été trouvée avec l'id
     }
 
     public boolean createUser(Integer id, String[] values){
