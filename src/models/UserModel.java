@@ -80,7 +80,7 @@ public class UserModel {
         return obj;
     }
 
-    public boolean updateRowId(Integer id, String[] newValues){
+    public boolean updateUserById(Integer id, String[] newValues){
         // Update
 
         if (newValues != null && newValues.length == 2) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
