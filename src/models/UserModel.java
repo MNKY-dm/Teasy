@@ -130,7 +130,7 @@ public class UserModel {
         return false ; // Indique que la fonction n'a pas fonctionné car aucune ligne n'a été trouvée avec l'id
     }
 
-    public boolean insertNewRow(Integer id, String[] values){
+    public boolean createUser(Integer id, String[] values){
         // Insert
 
         if (values != null && values.length == 2 && getUserById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
