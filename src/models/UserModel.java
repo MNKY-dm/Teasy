@@ -21,7 +21,7 @@ public class UserModel {
 
         List<UserModel> all = new ArrayList<>();
 
-        try (var conn = MySQLConnection.connect()) {
+        try (var conn = MySQLConnection.getConnection()) {
             assert conn != null;
             try (var stmt  = conn.createStatement();
                  var rs = stmt.executeQuery(sql)) {
@@ -56,7 +56,7 @@ public class UserModel {
 
         UserModel obj = null;
 
-        try (var conn = MySQLConnection.connect();
+        try (var conn = MySQLConnection.getConnection();
             var stmt  = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id); // Remplace le '?' par l'id
@@ -69,6 +69,8 @@ public class UserModel {
                 obj.setId(rs.getInt("id")) ;
                 obj.setNom(rs.getString("nom")) ;
                 obj.setEmail(rs.getString("email"));
+                obj.setPassword(rs.getString("password"));
+                obj.setRole(rs.getString("role"));
                 obj.setTel(rs.getString("tel"));
                 obj.setCreated_at(rs.getString("created_at"));
 
@@ -86,10 +88,10 @@ public class UserModel {
 
         if (newValues != null && newValues.length == 2) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
             String sql = "UPDATE user " +
-                    "SET nom = ?, email = ?,  password = ?, tel = ?, role = ?, created_at = ? " +
+                    "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
                     "WHERE id = ?";
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 for (int i = 0 ; i < newValues.length ; i++) {
@@ -117,7 +119,7 @@ public class UserModel {
                     "FROM user " +
                     "WHERE id = ?";
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 stmt.setInt(1, id); // Remplace le '?' par l'id
@@ -137,9 +139,9 @@ public class UserModel {
 
         if (values != null && values.length == 2 && getUserById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
             String sql = "INSERT INTO user " +
-                    "VALUES (column1 = ?, column2 = ?) " ;
+                    "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) " ;
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 for (int i = 0 ; i < values.length ; i++) {
