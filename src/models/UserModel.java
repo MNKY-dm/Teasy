@@ -1,18 +1,15 @@
 package models;
 
 import dao.MySQLConnection;
+import models.User;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
 public class UserModel {
-    private Integer id;
-    private String nom;
-    private String email;
-    private String password;
-    private String tel;
-    private String created_at;
+
+    private User user;
 
     public List<UserModel> getAll(){
         String sql = "SELECT * " +
@@ -20,7 +17,7 @@ public class UserModel {
 
         List<UserModel> all = new ArrayList<>();
 
-        try (var conn = MySQLConnection.connect()) {
+        try (var conn = MySQLConnection.getConnection()) {
             assert conn != null;
             try (var stmt  = conn.createStatement();
                  var rs = stmt.executeQuery(sql)) {
@@ -32,6 +29,7 @@ public class UserModel {
                     obj.setId(rs.getInt("id")) ;
                     obj.setNom(rs.getString("nom")) ;
                     obj.setEmail(rs.getString("email"));
+                    obj.setPassword(rs.getString("password"));
                     obj.setTel(rs.getString("tel"));
                     obj.setCreated_at(rs.getString("created_at"));
 
@@ -46,7 +44,7 @@ public class UserModel {
         return all;
     }
 
-    public UserModel getRowById(Integer id){
+    public UserModel getUserById(Integer id){
         // Select row by id
         String sql = "SELECT * " +
                 "FROM user " +
@@ -54,7 +52,7 @@ public class UserModel {
 
         UserModel obj = null;
 
-        try (var conn = MySQLConnection.connect();
+        try (var conn = MySQLConnection.getConnection();
             var stmt  = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id); // Remplace le '?' par l'id
@@ -67,6 +65,8 @@ public class UserModel {
                 obj.setId(rs.getInt("id")) ;
                 obj.setNom(rs.getString("nom")) ;
                 obj.setEmail(rs.getString("email"));
+                obj.setPassword(rs.getString("password"));
+                obj.setRole(rs.getString("role"));
                 obj.setTel(rs.getString("tel"));
                 obj.setCreated_at(rs.getString("created_at"));
 
@@ -79,15 +79,15 @@ public class UserModel {
         return obj;
     }
 
-    public boolean updateRowId(Integer id, String[] newValues){
+    public boolean updateUserById(Integer id, String[] newValues){
         // Update
 
         if (newValues != null && newValues.length == 2) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
             String sql = "UPDATE user " +
-                    "SET column1 = ?, column2 = ? " +
+                    "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
                     "WHERE id = ?";
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 for (int i = 0 ; i < newValues.length ; i++) {
@@ -97,7 +97,7 @@ public class UserModel {
                 stmt.setInt(newValues.length + 1, id); // Définir l'id dans la commande SQL
 
                 var rs = stmt.executeUpdate();
-                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de ligne mises à jour est 1, et false sinon 
+                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -107,15 +107,15 @@ public class UserModel {
         return false ; // Indique que la fonction n'a pas fonctionné, car le tableau ne respecte pas les deux conditions
     }
 
-    public boolean deleteRowId(Integer id){
+    public boolean deleteUserById(Integer id){
         // Delete
 
-        if (getRowById(id) != null) {
+        if (getUserById(id) != null) {
             String sql = "DELETE " +
                     "FROM user " +
                     "WHERE id = ?";
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 stmt.setInt(1, id); // Remplace le '?' par l'id
@@ -127,17 +127,17 @@ public class UserModel {
                 return false;
             }
         }
-        return false ; // Indique que la fonction n'a pas fonctionné car aucune ligne n'a été trouvée avec l'id
+        return false ; // Indique que la fonction n'a pas fonctionné, car aucune ligne n'a été trouvée avec l'id
     }
 
-    public boolean insertNewRow(Integer id, String[] values){
+    public boolean createUser(Integer id, String[] values){
         // Insert
 
-        if (values != null && values.length == 2 && getRowById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
+        if (values != null && values.length == 2 && getUserById(id) == null) { // Ne mettre à jour la ligne que si le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id), et qu'aucune ligne avec cet id n'existe déjà
             String sql = "INSERT INTO user " +
-                    "VALUES (column1 = ?, column2 = ?) " ;
+                    "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) " ;
 
-            try (var conn = MySQLConnection.connect();
+            try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
                 for (int i = 0 ; i < values.length ; i++) {
@@ -155,58 +155,79 @@ public class UserModel {
         return false ; // Indique que la fonction n'a pas fonctionné, car le tableau ne respecte pas les deux conditions
     }
 
-    // getter + setter for your attributs
+    // getter + setter for your attributs (déplacé dans models.User)
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getNom() {
-        return this.nom;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getTel() {
-        return this.tel;
-    }
-
-    public String getCreated_at() {
-        return this.created_at;
-    }
-
-    public void setId(int id) {
-        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
-            this.id = id;
-        }
-        else {
-            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
-        }
-    }
-
-    public void setNom(String nom) {
-        if (nom != null) {
-            this.nom = nom;
-        } else {
-            throw new IllegalArgumentException("Le nom ne peut pas être null.");
-        }
-    }
-
-    public void setEmail(String email) {
-        if (email != null) {
-            this.email = email;
-        } else {
-            throw new IllegalArgumentException("L'email ne peut pas être null.");
-        }
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel; // Peut être null (voir BDD)
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at; // Peut être null (voir BDD)
-    }
+//    public int getId() {
+//        return this.id;
+//    }
+//
+//    public String getNom() {
+//        return this.nom;
+//    }
+//
+//    public String getEmail() {
+//        return this.email;
+//    }
+//
+//    public String getPassword() {
+//        return this.password;
+//    }
+//
+//    public String getTel() {
+//        return this.tel;
+//    }
+//
+//    public String getRole() {
+//        return this.role;
+//    }
+//
+//    public String getCreated_at() {
+//        return this.created_at;
+//    }
+//
+//    public void setId(int id) {
+//        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+//            this.id = id;
+//        }
+//        else {
+//            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
+//        }
+//    }
+//
+//    public void setNom(String nom) {
+//        if (nom != null) {
+//            this.nom = nom;
+//        } else {
+//            throw new IllegalArgumentException("Le nom ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setEmail(String email) {
+//        if (email != null) {
+//            this.email = email;
+//        } else {
+//            throw new IllegalArgumentException("L'email ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setPassword(String password) {
+//        if (password != null) {
+//            this.password = password;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
+//        }
+//    }
+//
+//    public void setTel(String tel) {
+//        this.tel = tel; // Peut être null (voir BDD)
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
+//
+//    public void setCreated_at(String created_at) {
+//        this.created_at = created_at; // Peut être null (voir BDD)
+//    }
 }

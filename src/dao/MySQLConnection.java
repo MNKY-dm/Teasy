@@ -6,7 +6,9 @@ import java.sql.SQLException;
 
 
 public class MySQLConnection {
-    public static Connection connect() throws SQLException {
+    private static Connection connection;
+
+    private static Connection connect() throws SQLException {
 
         try {
             var jdbcUrl = DatabaseConfig.getDbUrl();
@@ -26,8 +28,15 @@ public class MySQLConnection {
         }
     }
 
+    public static Connection getConnection() throws SQLException {
+        if (MySQLConnection.connection== null) {
+            MySQLConnection.connection = MySQLConnection.connect();
+        }
+        return MySQLConnection.connection;
+    }
+
     public static void main(String[] args) throws SQLException {
-        Connection conn = MySQLConnection.connect();
+        Connection conn = MySQLConnection.getConnection();
         if (conn != null) {
             System.out.println("✅ Connexion OK!");
         }
