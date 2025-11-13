@@ -11,11 +11,11 @@ public class UserModel {
 
     private User user;
 
-    public List<UserModel> getAll(){
+    public List<User> getAll(){
         String sql = "SELECT * " +
                 "FROM user";
 
-        List<UserModel> all = new ArrayList<>();
+        List<User> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
             assert conn != null;
@@ -23,17 +23,16 @@ public class UserModel {
                  var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
+                    User user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
 
-                    UserModel obj = new UserModel();
+//                    obj.setId(rs.getInt("id")) ;
+//                    obj.setNom(rs.getString("nom")) ;
+//                    obj.setEmail(rs.getString("email"));
+//                    obj.setPassword(rs.getString("password"));
+//                    obj.setTel(rs.getString("tel"));
+//                    obj.setCreated_at(rs.getString("created_at"));
 
-                    obj.setId(rs.getInt("id")) ;
-                    obj.setNom(rs.getString("nom")) ;
-                    obj.setEmail(rs.getString("email"));
-                    obj.setPassword(rs.getString("password"));
-                    obj.setTel(rs.getString("tel"));
-                    obj.setCreated_at(rs.getString("created_at"));
-
-                    all.add(obj);
+                    all.add(user);
                 }
 
             }
@@ -44,13 +43,13 @@ public class UserModel {
         return all;
     }
 
-    public UserModel getUserById(Integer id){
+    public User getUserById(Integer id){
         // Select row by id
         String sql = "SELECT * " +
                 "FROM user " +
                 "WHERE id = ?";
 
-        UserModel obj = null;
+        User obj = null;
 
         try (var conn = MySQLConnection.getConnection();
             var stmt  = conn.prepareStatement(sql)) {
@@ -60,15 +59,15 @@ public class UserModel {
 
             if (rs.next()) {
 
-                obj = new UserModel();
+                User user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
 
-                obj.setId(rs.getInt("id")) ;
-                obj.setNom(rs.getString("nom")) ;
-                obj.setEmail(rs.getString("email"));
-                obj.setPassword(rs.getString("password"));
-                obj.setRole(rs.getString("role"));
-                obj.setTel(rs.getString("tel"));
-                obj.setCreated_at(rs.getString("created_at"));
+//                obj.setId(rs.getInt("id")) ;
+//                obj.setNom(rs.getString("nom")) ;
+//                obj.setEmail(rs.getString("email"));
+//                obj.setPassword(rs.getString("password"));
+//                obj.setRole(rs.getString("role"));
+//                obj.setTel(rs.getString("tel"));
+//                obj.setCreated_at(rs.getString("created_at"));
 
             }
 
@@ -76,7 +75,7 @@ public class UserModel {
             System.out.println(ex.getMessage());
         }
 
-        return obj;
+        return user;
     }
 
     public boolean updateUserById(Integer id, String[] newValues){
