@@ -1,8 +1,5 @@
 package models;
 
-import dao.MySQLConnection;
-import models.User;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.SQLException;
@@ -26,7 +23,7 @@ public class UserModel {
 
         if (user != null && newValues != null && newValues.length == 6) { // Ne mettre à jour la ligne que si l'user est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
             for (int i = 0; i < newValues.length; i++) {
-                if (newValues[i] instanceof String || newValues[i] != null) {
+                if (newValues[i] instanceof String) {
                     newValues[i] = newValues[i].trim();
                 }
             }

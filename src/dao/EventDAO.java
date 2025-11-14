@@ -1,27 +1,27 @@
 package dao;
 
-import models.User;
+import models.Event;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class EventDAO {
 
-    public static List<User> getAll(){
+    public static List<Event> getAll(){
         String sql = "SELECT * " +
-                "FROM user";
+                "FROM event";
 
-        List<User> all = new ArrayList<>();
+        List<Event> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
             try (var stmt  = conn.createStatement();
-                var rs = stmt.executeQuery(sql)) {
+                 var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    User user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+                    Event Event = new Event(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("affiche"), rs.getString("language"), rs.getTimestamp("created_at"));
 
-                    all.add(user);
+                    all.add(Event);
                 }
 
             }
@@ -32,13 +32,13 @@ public class UserDAO {
         return all;
     }
 
-    public static User getUserById(Integer id) {
+    public static Event getEventById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
-                "FROM user " +
+                "FROM Event " +
                 "WHERE id = ?";
 
-        User user = null;
+        Event Event = null;
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -47,20 +47,20 @@ public class UserDAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+                Event = new Event(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
 
-        return user;
+        return Event;
     }
 
-    public static boolean updateUserById(Integer id, String[] newValues){
+    public static boolean updateEventById(Integer id, String[] newValues){
         // Update
-        String sql = "UPDATE user " +
-                "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
+        String sql = "UPDATE event " +
+                "SET name = ?, description = ?,  affiche = ?, language = ?, created_at = ? " +
                 "WHERE id = ?";
 
         try (var conn = MySQLConnection.getConnection();
@@ -81,11 +81,11 @@ public class UserDAO {
         }
     }
 
-    public static boolean deleteUserById(Integer id) {
+    public static boolean deleteEventById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
-                "FROM user " +
+                "FROM Event " +
                 "WHERE id = ?";
 
         try (var conn = MySQLConnection.getConnection();
@@ -101,9 +101,9 @@ public class UserDAO {
         }
     }
 
-    public static boolean createUser(String[] values) {
-        String sql = "INSERT INTO user " +
-                "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) ";
+    public static boolean createEvent(String[] values) {
+        String sql = "INSERT INTO Event " +
+                "VALUES (name = ?, description = ?,  affiche = ?, language = ?, created_at = ? ) ";
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
