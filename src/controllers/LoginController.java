@@ -22,9 +22,8 @@ public class LoginController {
 
         String mail = tfmail.getText();
         String pass = tfpassword.getText();
-        String[] infos = {mail,pass};
 
-        lbinfo.setText("Email : " + infos[0] + "\nMot de passe : " + infos[1]);
+        lbinfo.setText("Email : " + mail + "\nMot de passe : " + pass);
     }
 
 }

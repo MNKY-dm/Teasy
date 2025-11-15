@@ -19,7 +19,7 @@ public class SeanceModel {
 
         Seance seance = getSeanceById(id); // Récupère l'id de l'Seance que l'on va modifier
 
-        if (Seance != null && newValues != null && newValues.length == 6) { // Ne mettre à jour la ligne que si l'Seance est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
+        if (seance != null && newValues != null && newValues.length == 6) { // Ne mettre à jour la ligne que si l'Seance est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
             for (int i = 0; i < newValues.length; i++) {
                 if (newValues[i] instanceof String) {
                     newValues[i] = newValues[i].trim();
