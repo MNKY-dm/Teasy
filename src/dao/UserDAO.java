@@ -57,28 +57,60 @@ public class UserDAO {
         return user;
     }
 
-    public static boolean updateUserById(Integer id, String[] newValues){
+    public static User getUserByEmail(String email) {
+        // Select row by id
+        String sql = "SELECT * " +
+                "FROM user " +
+                "WHERE email = ?";
+
+        User user = null;
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email); // Remplace le '?' par l'id
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return user;
+    }
+
+    public static boolean updateUserById(User user){
         // Update
         String sql = "UPDATE user " +
                 "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
                 "WHERE id = ?";
 
-        try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+        int userId = user.getId();
 
-            for (int i = 0 ; i < newValues.length ; i++) {
-                stmt.setString(i + 1, newValues[i]); // Définir chaque valeur dans la commande SQL
+        if (getUserById(userId) != null) { // Ne mettre à jour la ligne que si l'user est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
+
+            try (var conn = MySQLConnection.getConnection();
+                 var stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, user.getNom());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPassword());
+                stmt.setString(4, user.getRole());
+                stmt.setString(5, user.getTel());
+                stmt.setTimestamp(6, user.getCreated_at());
+
+                var rs = stmt.executeUpdate();
+                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                return false ;
             }
-
-            stmt.setInt(newValues.length + 1, id); // Définir l'id dans la commande SQL
-
-            var rs = stmt.executeUpdate();
-            return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false ;
         }
+        return false;
     }
 
     public static boolean deleteUserById(Integer id) {
@@ -88,36 +120,45 @@ public class UserDAO {
                 "FROM user " +
                 "WHERE id = ?";
 
-        try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+        if (getUserById(id) != null) {
 
-            stmt.setInt(1, id); // Remplace le '?' par l'id
-            var rs = stmt.executeUpdate();
-            return rs == 1; // Renvoie true si une ligne a bien été supprimée, false sinon
+            try (var conn = MySQLConnection.getConnection();
+                 var stmt = conn.prepareStatement(sql)) {
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
+                stmt.setInt(1, id); // Remplace le '?' par l'id
+                var rs = stmt.executeUpdate();
+                return rs == 1; // Renvoie true si une ligne a bien été supprimée, false sinon
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                return false;
+            }
         }
+        return false;
     }
 
-    public static boolean createUser(String[] values) {
+    public static boolean createUser(User user) {
         String sql = "INSERT INTO user " +
                 "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) ";
 
+
         try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+         var stmt = conn.prepareStatement(sql)) {
 
-            for (int i = 0; i < values.length; i++) {
-                stmt.setString(i + 1, values[i]); // Définir chaque valeur dans la commande SQL
-            }
+            stmt.setString(1, user.getNom());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getRole());
+            stmt.setString(5, user.getTel());
+            stmt.setTimestamp(6, user.getCreated_at());
 
-            var rs = stmt.executeUpdate();
-            return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
+        var rs = stmt.executeUpdate();
+        return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
+
     }
 }
