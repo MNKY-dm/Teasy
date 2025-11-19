@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoDAO {
+public class PhotoDAO implements DAO {
 
     public static List<Photo> getAll(){
         String sql = "SELECT * " +
@@ -15,21 +15,21 @@ public class PhotoDAO {
         List<Photo> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            try (var stmt  = conn.createStatement();
-                 var rs = stmt.executeQuery(sql)) {
+            var stmt  = conn.createStatement();
+            var rs = stmt.executeQuery(sql);
 
-                while (rs.next()) {
-                    Photo photo = new Photo(rs.getInt("id"),
-                            rs.getInt("event_id"),
-                            rs.getString("url"),
-                            rs.getString("alt"),
-                            rs.getString("type"),
-                            rs.getTimestamp("created_at"));
+            while (rs.next()) {
+                Photo photo = new Photo(rs.getInt("id"),
+                        rs.getInt("event_id"),
+                        rs.getString("url"),
+                        rs.getString("alt"),
+                        rs.getString("type"),
+                        rs.getTimestamp("created_at"));
 
-                    all.add(photo);
-                }
-
+                all.add(photo);
             }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -37,7 +37,7 @@ public class PhotoDAO {
         return all;
     }
 
-    public static Photo getPhotoById(Integer id) {
+    public static Photo getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM Photo " +
@@ -70,12 +70,12 @@ public class PhotoDAO {
     public static boolean updatePhotoById(Photo photo){
         // Update
         String sql = "UPDATE Photo " +
-                "SET event_id = ?, url = ?,  alt = ?, type = ?, created_at = ? " +
+                "SET event_id = ?, url = ?,  alt = ?, type = ? " +
                 "WHERE id = ?";
 
         int photoId = photo.getId();
 
-        if (getPhotoById(photoId) != null) {
+        if (getRowById(photoId) != null) {
             try (var conn = MySQLConnection.getConnection();
                 var stmt = conn.prepareStatement(sql)) {
 
@@ -83,7 +83,6 @@ public class PhotoDAO {
                 stmt.setString(2, photo.getUrl());
                 stmt.setString(3, photo.getAlt());
                 stmt.setString(4, photo.getType());
-                stmt.setTimestamp(5, photo.getCreated_at());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -96,7 +95,7 @@ public class PhotoDAO {
         return false;
     }
 
-    public static boolean deletePhotoById(Integer id) {
+    public static boolean deleteRowById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
@@ -127,7 +126,7 @@ public class PhotoDAO {
             stmt.setString(2, photo.getUrl());
             stmt.setString(3, photo.getAlt());
             stmt.setString(4, photo.getType());
-            stmt.setTimestamp(6, photo.getCreated_at());
+            stmt.setTimestamp(5, photo.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérées est 1, et false sinon

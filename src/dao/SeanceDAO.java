@@ -15,22 +15,22 @@ public class SeanceDAO implements DAO {
         List<Seance> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            try (var stmt  = conn.createStatement();
-                 var rs = stmt.executeQuery(sql)) {
+            var stmt  = conn.createStatement();
+             var rs = stmt.executeQuery(sql);
 
-                while (rs.next()) {
-                    Seance seance = new Seance(rs.getInt("id"),
-                            rs.getInt("event_id"),
-                            rs.getTimestamp("date"),
-                            rs.getString("location"),
-                            rs.getInt("nb_places"),
-                            rs.getString("statut"),
-                            rs.getTimestamp("created_at"));
+            while (rs.next()) {
+                Seance seance = new Seance(rs.getInt("id"),
+                        rs.getInt("event_id"),
+                        rs.getTimestamp("date"),
+                        rs.getString("location"),
+                        rs.getInt("nb_places"),
+                        rs.getString("statut"),
+                        rs.getTimestamp("created_at"));
 
-                    all.add(seance);
-                }
-
+                all.add(seance);
             }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -38,7 +38,7 @@ public class SeanceDAO implements DAO {
         return all;
     }
 
-    public static Seance getSeanceById(Integer id) {
+    public static Seance getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM seance " +
@@ -69,15 +69,15 @@ public class SeanceDAO implements DAO {
         return seance;
     }
 
-    public static boolean updateSeanceById(Seance seance){
+    public static boolean updateRowById(Seance seance){
         // Update
         String sql = "UPDATE Seance " +
-                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ?, created_at = ? " +
+                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ? " +
                 "WHERE id = ?";
 
         int seanceID = seance.getId();
 
-        if (getSeanceById(seanceID) != null) {
+        if (getRowById(seanceID) != null) {
             try (var conn = MySQLConnection.getConnection();
                 var stmt = conn.prepareStatement(sql)) {
 
@@ -86,7 +86,6 @@ public class SeanceDAO implements DAO {
                 stmt.setString(3, seance.getLocation());
                 stmt.setInt(4, seance.getNb_places());
                 stmt.setString(5, seance.getStatut());
-                stmt.setTimestamp(6, seance.getCreated_at());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -99,7 +98,7 @@ public class SeanceDAO implements DAO {
         return false;
     }
 
-    public static boolean deleteSeanceById(Integer id) {
+    public static boolean deleteRowById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
@@ -119,7 +118,7 @@ public class SeanceDAO implements DAO {
         }
     }
 
-    public static boolean createSeance(Seance seance) {
+    public static boolean insertRow(Seance seance) {
         String sql = "INSERT INTO Seance " +
                 "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ?, created_at = ? ) ";
 

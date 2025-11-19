@@ -15,20 +15,21 @@ public class EventDAO implements DAO {
         List<Event> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            try (var stmt  = conn.createStatement();
-                 var rs = stmt.executeQuery(sql)) {
+            var stmt  = conn.createStatement();
+            var rs = stmt.executeQuery(sql);
 
-                while (rs.next()) {
-                    Event Event = new Event(rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("description"),
-                            rs.getString("affiche"),
-                            rs.getString("language"));
+            while (rs.next()) {
+                Event Event = new Event(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("affiche"),
+                        rs.getString("language"),
+                        rs.getTimestamp("created_at"));
 
-                    all.add(Event);
-                }
-
+                all.add(Event);
             }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -55,7 +56,8 @@ public class EventDAO implements DAO {
                         rs.getString("nom"),
                         rs.getString("email"),
                         rs.getString("password"),
-                        rs.getString("tel"));
+                        rs.getString("tel"),
+                        rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -68,7 +70,7 @@ public class EventDAO implements DAO {
     public static boolean updateRowById(Event event){
         // Update
         String sql = "UPDATE event " +
-                "SET name = ?, description = ?,  affiche = ?, language = ?, created_at = ? " +
+                "SET name = ?, description = ?,  affiche = ?, language = ? " +
                 "WHERE id = ?";
 
         int eventId = event.getId();
@@ -82,7 +84,6 @@ public class EventDAO implements DAO {
                 stmt.setString(2, event.getDescription());
                 stmt.setString(3, event.getAffiche());
                 stmt.setString(4, event.getLanguage());
-                stmt.setTimestamp(6, event.getCreated_at());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -126,7 +127,7 @@ public class EventDAO implements DAO {
             stmt.setString(2, event.getDescription());
             stmt.setString(3, event.getAffiche());
             stmt.setString(4, event.getLanguage());
-            stmt.setTimestamp(6, event.getCreated_at());
+            stmt.setTimestamp(5, event.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon

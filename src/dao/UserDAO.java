@@ -15,21 +15,21 @@ public class UserDAO implements DAO {
         List<User> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            try (var stmt  = conn.createStatement();
-                var rs = stmt.executeQuery(sql)) {
+            var stmt  = conn.createStatement();
+            var rs = stmt.executeQuery(sql) ;
 
-                while (rs.next()) {
-                    User user = new User(rs.getInt("id"),
-                            rs.getString("nom"),
-                            rs.getString("email"),
-                            rs.getString("password"),
-                            rs.getString("tel"),
-                            rs.getString("created_at"));
+            while (rs.next()) {
+                User user = new User(rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("tel"),
+                        rs.getString("created_at"));
 
-                    all.add(user);
-                }
-
+                all.add(user);
             }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

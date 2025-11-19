@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketDAO {
+public class TicketDAO implements DAO {
     public static List<Ticket> getAll(){
         String sql = "SELECT * " +
                 "FROM ticket";
@@ -14,26 +14,26 @@ public class TicketDAO {
         List<Ticket> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            try (var stmt  = conn.createStatement();
-                 var rs = stmt.executeQuery(sql)) {
+            var stmt  = conn.createStatement();
+            var rs = stmt.executeQuery(sql) ;
 
-                while (rs.next()) {
-                    Ticket ticket = new Ticket(rs.getInt("id"),
-                            rs.getString("code"),
-                            rs.getString("title"),
-                            rs.getString("place"),
-                            rs.getInt("user_id"),
-                            rs.getInt("seance_id"),
-                            rs.getString("type"),
-                            rs.getFloat("price"),
-                            rs.getString("status"),
-                            rs.getTimestamp("used_at"),
-                            rs.getBoolean("is_refunded"));
+            while (rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt("id"),
+                        rs.getString("code"),
+                        rs.getString("title"),
+                        rs.getString("place"),
+                        rs.getInt("user_id"),
+                        rs.getInt("seance_id"),
+                        rs.getString("type"),
+                        rs.getFloat("price"),
+                        rs.getString("status"),
+                        rs.getTimestamp("used_at"),
+                        rs.getBoolean("is_refunded"));
 
-                    all.add(ticket);
-                }
-
+                all.add(ticket);
             }
+
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -41,7 +41,7 @@ public class TicketDAO {
         return all;
     }
 
-    public static Ticket getTicketById(Integer id) {
+    public static Ticket getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM ticket " +
@@ -76,7 +76,7 @@ public class TicketDAO {
         return ticket;
     }
 
-    public static boolean updateTicketById(Ticket ticket){
+    public static boolean updateRowById(Ticket ticket){
         // Update
         String sql = "UPDATE ticket " +
                 "SET code = ?, " +
@@ -93,7 +93,7 @@ public class TicketDAO {
 
         int ticketId = ticket.getId();
 
-        if (getTicketById(ticketId) != null) {
+        if (getRowById(ticketId) != null) {
             try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
@@ -119,7 +119,7 @@ public class TicketDAO {
         return false;
     }
 
-    public static boolean deleteTicketById(Integer id) {
+    public static boolean deleteRowById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
@@ -139,7 +139,7 @@ public class TicketDAO {
         }
     }
 
-    public static boolean createTicket(Ticket ticket) {
+    public static boolean insertRow(Ticket ticket) {
         String sql = "INSERT INTO Ticket " +
                 "VALUES (code = ?,"+
                 " title = ?,"+
@@ -160,13 +160,13 @@ public class TicketDAO {
             stmt.setString(2, ticket.getTitle());
             stmt.setString(3, ticket.getPlace());
             stmt.setInt(4, ticket.getUser_id());
-            stmt.setInt(4, ticket.getSeance_id());
-            stmt.setString(4, ticket.getType());
-            stmt.setFloat(4, ticket.getPrice());
-            stmt.setString(5, ticket.getStatus());
-            stmt.setTimestamp(5, ticket.getUsed_at());
-            stmt.setBoolean(5, ticket.getIs_refunded());
-            stmt.setTimestamp(5, ticket.getCreated_at());
+            stmt.setInt(5, ticket.getSeance_id());
+            stmt.setString(6, ticket.getType());
+            stmt.setFloat(7, ticket.getPrice());
+            stmt.setString(8, ticket.getStatus());
+            stmt.setTimestamp(9, ticket.getUsed_at());
+            stmt.setBoolean(10, ticket.getIs_refunded());
+            stmt.setTimestamp(11, ticket.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérées est 1, et false sinon
