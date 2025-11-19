@@ -31,7 +31,7 @@ public class Seance {
         return this.event_id;
     }
 
-    public Timestamp getdate() {
+    public Timestamp getDate() {
         return this.date;
     }
 

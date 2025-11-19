@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements DAO {
 
     public static List<User> getAll(){
         String sql = "SELECT * " +
@@ -32,7 +32,7 @@ public class UserDAO {
         return all;
     }
 
-    public static User getUserById(Integer id) {
+    public static User getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM user " +
@@ -57,7 +57,7 @@ public class UserDAO {
         return user;
     }
 
-    public static User getUserByEmail(String email) {
+    public static User getRowByEmail(String email) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM user " +
@@ -82,7 +82,7 @@ public class UserDAO {
         return user;
     }
 
-    public static boolean updateUserById(User user){
+    public static boolean updateRowById(User user){
         // Update
         String sql = "UPDATE user " +
                 "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
@@ -90,10 +90,10 @@ public class UserDAO {
 
         int userId = user.getId();
 
-        if (getUserById(userId) != null) { // Ne mettre à jour la ligne que si l'user est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
+        if (getRowById(userId) != null) { // Ne mettre à jour la ligne que si l'user est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
 
             try (var conn = MySQLConnection.getConnection();
-                 var stmt = conn.prepareStatement(sql)) {
+                var stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, user.getNom());
                 stmt.setString(2, user.getEmail());
@@ -113,14 +113,14 @@ public class UserDAO {
         return false;
     }
 
-    public static boolean deleteUserById(Integer id) {
+    public static boolean deleteRowById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
                 "FROM user " +
                 "WHERE id = ?";
 
-        if (getUserById(id) != null) {
+        if (getRowById(id) != null) {
 
             try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
@@ -137,7 +137,7 @@ public class UserDAO {
         return false;
     }
 
-    public static boolean createUser(User user) {
+    public static boolean insertNewRow(User user) {
         String sql = "INSERT INTO user " +
                 "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) ";
 

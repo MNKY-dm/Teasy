@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeanceDAO {
+public class SeanceDAO implements DAO {
 
     public static List<Seance> getAll(){
         String sql = "SELECT * " +
@@ -57,28 +57,34 @@ public class SeanceDAO {
         return seance;
     }
 
-    public static boolean updateSeanceById(Integer id, String[] newValues){
+    public static boolean updateSeanceById(Seance seance){
         // Update
         String sql = "UPDATE Seance " +
                 "SET event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ?, created_at = ? " +
                 "WHERE id = ?";
 
-        try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+        int seanceID = seance.getId();
 
-            for (int i = 0 ; i < newValues.length ; i++) {
-                stmt.setString(i + 1, newValues[i]); // Définir chaque valeur dans la commande SQL
+        if (getSeanceById(seanceID) != null) {
+            try (var conn = MySQLConnection.getConnection();
+                var stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, seance.getEvent_id());
+                stmt.setTimestamp(2, seance.getDate());
+                stmt.setString(3, seance.getLocation());
+                stmt.setInt(4, seance.getNb_places());
+                stmt.setString(5, seance.getStatut());
+                stmt.setTimestamp(6, seance.getCreated_at());
+
+                var rs = stmt.executeUpdate();
+                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                return false ;
             }
-
-            stmt.setInt(newValues.length + 1, id); // Définir l'id dans la commande SQL
-
-            var rs = stmt.executeUpdate();
-            return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false ;
         }
+        return false;
     }
 
     public static boolean deleteSeanceById(Integer id) {
@@ -101,16 +107,19 @@ public class SeanceDAO {
         }
     }
 
-    public static boolean createSeance(String[] values) {
+    public static boolean createSeance(Seance seance) {
         String sql = "INSERT INTO Seance " +
                 "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ?, created_at = ? ) ";
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
 
-            for (int i = 0; i < values.length; i++) {
-                stmt.setString(i + 1, values[i]); // Définir chaque valeur dans la commande SQL
-            }
+            stmt.setInt(1, seance.getEvent_id());
+            stmt.setTimestamp(2, seance.getDate());
+            stmt.setString(3, seance.getLocation());
+            stmt.setInt(4, seance.getNb_places());
+            stmt.setString(5, seance.getStatut());
+            stmt.setTimestamp(6, seance.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon

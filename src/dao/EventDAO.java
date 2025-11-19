@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventDAO {
+public class EventDAO implements DAO {
 
     public static List<Event> getAll(){
         String sql = "SELECT * " +
@@ -32,7 +32,7 @@ public class EventDAO {
         return all;
     }
 
-    public static Event getEventById(Integer id) {
+    public static Event getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
                 "FROM Event " +
@@ -57,31 +57,37 @@ public class EventDAO {
         return Event;
     }
 
-    public static boolean updateEventById(Integer id, String[] newValues){
+    public static boolean updateRowById(Event event){
         // Update
         String sql = "UPDATE event " +
                 "SET name = ?, description = ?,  affiche = ?, language = ?, created_at = ? " +
                 "WHERE id = ?";
 
-        try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+        int eventId = event.getId();
 
-            for (int i = 0 ; i < newValues.length ; i++) {
-                stmt.setString(i + 1, newValues[i]); // Définir chaque valeur dans la commande SQL
+        if (getRowById(eventId) != null) { // Ne mettre à jour la ligne que si l'event est bien trouvé, que le nombre de valeurs correspond au nombre de colonnes dans la table (sans compter id)
+
+            try (var conn = MySQLConnection.getConnection();
+                 var stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, event.getName());
+                stmt.setString(2, event.getDescription());
+                stmt.setString(3, event.getAffiche());
+                stmt.setString(4, event.getLanguage());
+                stmt.setTimestamp(6, event.getCreated_at());
+
+                var rs = stmt.executeUpdate();
+                return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                return false ;
             }
-
-            stmt.setInt(newValues.length + 1, id); // Définir l'id dans la commande SQL
-
-            var rs = stmt.executeUpdate();
-            return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false ;
         }
+        return false;
     }
 
-    public static boolean deleteEventById(Integer id) {
+    public static boolean deleteRowById(Integer id) {
         // Delete
 
         String sql = "DELETE " +
@@ -101,16 +107,18 @@ public class EventDAO {
         }
     }
 
-    public static boolean createEvent(String[] values) {
+    public static boolean insertRow(Event event) {
         String sql = "INSERT INTO Event " +
                 "VALUES (name = ?, description = ?,  affiche = ?, language = ?, created_at = ? ) ";
 
         try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+            var stmt = conn.prepareStatement(sql)) {
 
-            for (int i = 0; i < values.length; i++) {
-                stmt.setString(i + 1, values[i]); // Définir chaque valeur dans la commande SQL
-            }
+            stmt.setString(1, event.getName());
+            stmt.setString(2, event.getDescription());
+            stmt.setString(3, event.getAffiche());
+            stmt.setString(4, event.getLanguage());
+            stmt.setTimestamp(6, event.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
