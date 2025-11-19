@@ -11,7 +11,7 @@ public class Event {
     private String language;
     private Timestamp created_at;
 
-    public Event(Integer id, String name, String description, String affiche, String language,  Timestamp created_at) {
+    public Event(Integer id, String name, String description, String affiche, String language) {
         this.id = id;
         this.name = name;
         this.description = description;

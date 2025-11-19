@@ -19,7 +19,11 @@ public class EventDAO implements DAO {
                  var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    Event Event = new Event(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getString("affiche"), rs.getString("language"), rs.getTimestamp("created_at"));
+                    Event Event = new Event(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getString("affiche"),
+                            rs.getString("language"));
 
                     all.add(Event);
                 }
@@ -47,7 +51,11 @@ public class EventDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Event = new Event(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getTimestamp("created_at"));
+                Event = new Event(rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("tel"));
             }
 
         } catch (SQLException ex) {

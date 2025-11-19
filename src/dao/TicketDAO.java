@@ -28,8 +28,7 @@ public class TicketDAO {
                             rs.getFloat("price"),
                             rs.getString("status"),
                             rs.getTimestamp("used_at"),
-                            rs.getBoolean("is_refunded"),
-                            rs.getTimestamp("created_at"));
+                            rs.getBoolean("is_refunded"));
 
                     all.add(ticket);
                 }
@@ -67,8 +66,7 @@ public class TicketDAO {
                         rs.getFloat("price"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
-                        rs.getBoolean("is_refunded"),
-                        rs.getTimestamp("created_at"));
+                        rs.getBoolean("is_refunded"));
             }
 
         } catch (SQLException ex) {

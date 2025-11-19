@@ -19,7 +19,12 @@ public class UserDAO implements DAO {
                 var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    User user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+                    User user = new User(rs.getInt("id"),
+                            rs.getString("nom"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("tel"),
+                            rs.getString("created_at"));
 
                     all.add(user);
                 }
@@ -47,7 +52,12 @@ public class UserDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+                user = new User(rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("tel"),
+                        rs.getString("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -72,7 +82,12 @@ public class UserDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("nom"), rs.getString("email"), rs.getString("password"), rs.getString("tel"), rs.getString("created_at"));
+                user = new User(rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("tel"),
+                        rs.getString("created_at"));
             }
 
         } catch (SQLException ex) {

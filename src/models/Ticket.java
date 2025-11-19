@@ -18,7 +18,17 @@ public class Ticket {
     private boolean is_refunded;
     private Timestamp created_at;
 
-    public Ticket(Integer id, String code, String title, String place, int user_id, int seance_id, String type, float price,  String status, Timestamp used_at, Boolean is_refunded, Timestamp created_at) {
+    public Ticket(Integer id,
+                  String code,
+                  String title,
+                  String place,
+                  int user_id,
+                  int seance_id,
+                  String type,
+                  float price,
+                  String status,
+                  Timestamp used_at,
+                  Boolean is_refunded) {
         this.id = id;
         this.code = code;
         this.title = title;

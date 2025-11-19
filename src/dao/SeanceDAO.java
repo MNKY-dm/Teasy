@@ -19,7 +19,13 @@ public class SeanceDAO implements DAO {
                  var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    Seance seance = new Seance(rs.getInt("id"), rs.getInt("event_id"), rs.getTimestamp("date"), rs.getString("location"), rs.getInt("nb_places"), rs.getString("statut"), rs.getTimestamp("created_at"));
+                    Seance seance = new Seance(rs.getInt("id"),
+                            rs.getInt("event_id"),
+                            rs.getTimestamp("date"),
+                            rs.getString("location"),
+                            rs.getInt("nb_places"),
+                            rs.getString("statut"),
+                            rs.getTimestamp("created_at"));
 
                     all.add(seance);
                 }
@@ -47,7 +53,13 @@ public class SeanceDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                seance = new Seance(rs.getInt("id"), rs.getInt("event_id"), rs.getTimestamp("date"), rs.getString("location"), rs.getInt("nb_places"), rs.getString("statut"), rs.getTimestamp("created_at"));
+                seance = new Seance(rs.getInt("id"),
+                        rs.getInt("event_id"),
+                        rs.getTimestamp("date"),
+                        rs.getString("location"),
+                        rs.getInt("nb_places"),
+                        rs.getString("statut"),
+                        rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {

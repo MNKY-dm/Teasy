@@ -19,7 +19,12 @@ public class PhotoDAO {
                  var rs = stmt.executeQuery(sql)) {
 
                 while (rs.next()) {
-                    Photo photo = new Photo(rs.getInt("id"), rs.getInt("event_id"), rs.getString("url"), rs.getString("alt"), rs.getString("type"), rs.getTimestamp("created_at"));
+                    Photo photo = new Photo(rs.getInt("id"),
+                            rs.getInt("event_id"),
+                            rs.getString("url"),
+                            rs.getString("alt"),
+                            rs.getString("type"),
+                            rs.getTimestamp("created_at"));
 
                     all.add(photo);
                 }
@@ -47,7 +52,12 @@ public class PhotoDAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Photo = new Photo(rs.getInt("id"), rs.getInt("event_id"), rs.getString("url"), rs.getString("alt"), rs.getString("type"), rs.getTimestamp("created_at"));
+                Photo = new Photo(rs.getInt("id"),
+                        rs.getInt("event_id"),
+                        rs.getString("url"),
+                        rs.getString("alt"),
+                        rs.getString("type"),
+                        rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
