@@ -120,7 +120,7 @@ public class PhotoDAO {
             stmt.setTimestamp(6, photo.getCreated_at());
 
             var rs = stmt.executeUpdate();
-            return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
+            return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérées est 1, et false sinon
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

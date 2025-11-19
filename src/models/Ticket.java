@@ -18,13 +18,18 @@ public class Ticket {
     private boolean is_refunded;
     private Timestamp created_at;
 
-    public Ticket(Integer id, String code, String title, String place, int user_id, int seance_id) {
+    public Ticket(Integer id, String code, String title, String place, int user_id, int seance_id, String type, float price,  String status, Timestamp used_at, Boolean is_refunded, Timestamp created_at) {
         this.id = id;
         this.code = code;
         this.title = title;
         this.place = place;
         this.user_id = user_id;
         this.seance_id = seance_id;
+        this.type = type;
+        this.price = price;
+        this.status = status;
+        this.used_at = used_at;
+        this.is_refunded = is_refunded;
         this.created_at = Timestamp.valueOf(LocalDateTime.now()); // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
@@ -44,7 +49,7 @@ public class Ticket {
         return this.place;
     }
 
-    public int getuser_id() {
+    public int getUser_id() {
         return this.user_id;
     }
 
@@ -68,7 +73,7 @@ public class Ticket {
         return this.used_at;
     }
 
-    public boolean isIs_refunded() {
+    public boolean getIs_refunded() {
         return this.is_refunded;
     }
 
