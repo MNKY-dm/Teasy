@@ -17,7 +17,7 @@ public class Event {
         this.description = description;
         this.affiche = affiche;
         this.language = language;
-        this.created_at = Timestamp.valueOf(LocalDateTime.now()); // Récupère le timestamp dès l'instant où la variable est créée.
+        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {

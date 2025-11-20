@@ -12,14 +12,14 @@ public class User {
     private String role;
     private Timestamp created_at;
 
-    public User(Integer id, String nom, String email, String password, String tel, String role) {
+    public User(Integer id, String nom, String email, String password, String tel, String role, Timestamp created_at) {
         this.id = id;
         this.nom = nom;
         this.email = email;
         this.password = password;
         this.tel = tel;
         this.role = role;
-        this.created_at = Timestamp.valueOf(LocalDateTime.now()); // Récupère le timestamp dès l'instant où la variable est créée.
+        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {
@@ -94,6 +94,19 @@ public class User {
 
     public void setCreated_at(String created_at) {
         this.created_at = new Timestamp(System.currentTimeMillis()); // Peut être null (voir BDD)
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                ", mdp='" + password + '\'' +
+                ", tel='" + tel + '\'' +
+                ", role='" + role + '\'' +
+                ", créé le='" + created_at + '\'' +
+                '}';
     }
 
 }

@@ -18,7 +18,7 @@ public class Photo {
         this.url = url;
         this.alt = alt;
         this.type = type;
-        this.created_at = Timestamp.valueOf(LocalDateTime.now()); // Récupère le timestamp dès l'instant où la variable est créée.
+        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {

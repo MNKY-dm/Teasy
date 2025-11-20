@@ -28,7 +28,8 @@ public class Ticket {
                   float price,
                   String status,
                   Timestamp used_at,
-                  Boolean is_refunded) {
+                  Boolean is_refunded,
+                  Timestamp created_at) {
         this.id = id;
         this.code = code;
         this.title = title;
@@ -40,7 +41,7 @@ public class Ticket {
         this.status = status;
         this.used_at = used_at;
         this.is_refunded = is_refunded;
-        this.created_at = Timestamp.valueOf(LocalDateTime.now()); // Récupère le timestamp dès l'instant où la variable est créée.
+        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {

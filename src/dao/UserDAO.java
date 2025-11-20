@@ -24,7 +24,8 @@ public class UserDAO implements DAO {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("created_at"));
+                        rs.getString("role"),
+                        rs.getTimestamp("created_at"));
 
                 all.add(user);
             }
@@ -57,7 +58,8 @@ public class UserDAO implements DAO {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("created_at"));
+                        rs.getString("role"),
+                        rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -87,7 +89,8 @@ public class UserDAO implements DAO {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("created_at"));
+                        rs.getString("role"),
+                        rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -175,5 +178,9 @@ public class UserDAO implements DAO {
             return false;
         }
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getRowByEmail("ty389@outlook.com"));
     }
 }
