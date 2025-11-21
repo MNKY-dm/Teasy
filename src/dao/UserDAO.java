@@ -181,6 +181,6 @@ public class UserDAO implements DAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(getRowByEmail("ty389@outlook.com"));
+        System.out.println(getRowById(2));
     }
 }

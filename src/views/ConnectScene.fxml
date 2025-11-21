@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="356.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
@@ -14,9 +15,12 @@
             <Blend opacity="0.86" />
          </effect>
       </Button>
-      <Label layoutX="89.0" layoutY="77.0" text="Connectez vous à votre compte" textAlignment="CENTER" />
-      <TextField fx:id="tfmail" layoutX="93.0" layoutY="108.0" promptText="Adresse mail" />
+      <Label layoutX="46.0" layoutY="69.0" text="Connectez vous à votre compte" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <TextField fx:id="tfmail" layoutX="99.0" layoutY="125.0" promptText="Adresse mail" />
       <Label fx:id="lbinfo" layoutX="94.0" layoutY="177.0" prefHeight="40.0" prefWidth="158.0" />
-      <PasswordField fx:id="tfpassword" layoutX="93.0" layoutY="139.0" promptText="Mot de passe" />
+      <PasswordField fx:id="tfpassword" layoutX="99.0" layoutY="165.0" promptText="Mot de passe" />
    </children>
 </AnchorPane>

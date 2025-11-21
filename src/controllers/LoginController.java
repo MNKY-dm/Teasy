@@ -1,11 +1,13 @@
 package controllers;
 
-import javafx.fxml.FXML;
+import javafx.fxml.FXML; // Librairie JavaFX pour intéragir avec l'interface FXML
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import org.springframework.security.crypto.bcrypt.BCrypt; // Librairie Bcrypt pour les hash de password
 
 public class LoginController {
 
@@ -17,7 +19,7 @@ public class LoginController {
     private Label lbinfo;
 
     @FXML
-    void btnConnect(ActionEvent event) {
+    public void btnConnect(ActionEvent event) {
         Stage stage = (Stage) tfmail.getScene().getWindow();
 
         String mail = tfmail.getText();

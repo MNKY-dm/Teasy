@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="file:///Library/Java/Extensions/JavaFX/javafx-sdk-25.0.1/lib" />
       <root url="file://$USER_HOME$/LocalApps/Java/JavaFX/javafx-sdk-25.0.1/lib" />
+      <root url="jar:///Library/Java/Extensions/spring-security-crypto-5.2.0.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
