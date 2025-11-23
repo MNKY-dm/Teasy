@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import models.User;
 
-import org.springframework.security.crypto.bcrypt.BCrypt; // Librairie Bcrypt pour les hash de password
 
 public class LoginController {
 
@@ -24,8 +24,19 @@ public class LoginController {
 
         String mail = tfmail.getText();
         String pass = tfpassword.getText();
-
-        lbinfo.setText("Email : " + mail + "\nMot de passe : " + pass);
+//        System.out.println("mail: " + mail); // Test pour vérifier si l'email est correctement récupéré
+        models.User user = dao.UserDAO.getRowByEmail(mail);
+        if (user != null) {
+            // lbinfo.setText(user.toString());
+            if (utils.PasswordUtils.checkPassword(pass, user.getPassword())) {
+                // Ouvrir l'application
+                lbinfo.setText("Connexion réussie.");
+            } else {
+                lbinfo.setText("Mot de passe incorrect");
+            }
+        } else {
+           lbinfo.setText("Email incorrect.");
+        }
     }
 
 }

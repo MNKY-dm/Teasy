@@ -78,12 +78,13 @@ public class UserDAO implements DAO {
         User user = null;
 
         try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+            var stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email); // Remplace le '?' par l'id
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
+                System.out.println(email + " existe");
                 user = new User(rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("email"),
@@ -91,6 +92,7 @@ public class UserDAO implements DAO {
                         rs.getString("tel"),
                         rs.getString("role"),
                         rs.getTimestamp("created_at"));
+            } else {
             }
 
         } catch (SQLException ex) {
@@ -181,6 +183,6 @@ public class UserDAO implements DAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(getRowById(2));
+//        System.out.println(getRowByEmail("ty389@outlook.com"));
     }
 }

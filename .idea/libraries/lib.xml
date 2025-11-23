@@ -5,6 +5,7 @@
       <root url="file://$USER_HOME$/LocalApps/Java/JavaFX/javafx-sdk-25.0.1/lib" />
       <root url="jar:///Library/Java/Extensions/spring-security-crypto-5.2.0.RELEASE.jar!/" />
       <root url="jar://$USER_HOME$/LocalApps/Java/spring-security-crypto-5.2.0.RELEASE.jar!/" />
+      <root url="jar:///Library/Java/Extensions/commons-logging-1.3.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
