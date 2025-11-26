@@ -8,28 +8,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="356.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="356.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
    <children>
       <Label alignment="CENTER" layoutX="115.0" layoutY="43.0" prefHeight="35.0" prefWidth="127.0" text="Inscrivez-vous" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="tfmail" layoutX="99.0" layoutY="91.0" promptText="Adresse mail" />
-      <PasswordField fx:id="tfpassword" layoutX="99.0" layoutY="130.0" promptText="Mot de passe" />
-      <Button layoutX="145.0" layoutY="219.0" mnemonicParsing="false" onAction="#btnRegister" text="S'inscrire" />
-      <PasswordField fx:id="tfpasswordConfirm" layoutX="99.0" layoutY="171.0" promptText="Confirmez le mot de passe" />
+      <TextField fx:id="tfmail" layoutX="95.0" layoutY="161.0" promptText="Adresse mail" />
+      <TextField fx:id="tftel" layoutX="95.0" layoutY="205.0" promptText="Numéro de téléphone" />
+      <TextField fx:id="tfrole" layoutX="95.0" layoutY="247.0" promptText="Rôle" />
+      <PasswordField fx:id="tfpassword" layoutX="95.0" layoutY="288.0" promptText="Mot de passe" />
+      <Button layoutX="141.0" layoutY="377.0" mnemonicParsing="false" onAction="#btnRegister" text="S'inscrire" />
+      <PasswordField fx:id="tfpasswordConfirm" layoutX="95.0" layoutY="329.0" promptText="Confirmez le mot de passe" />
       <Label fx:id="lbinfo" layoutX="100.0" layoutY="197.0" prefHeight="17.0" prefWidth="158.0" />
       <Label fx:id="lbconfirm" layoutX="99.0" layoutY="155.0" prefHeight="17.0" prefWidth="158.0" />
-      <Text layoutX="32.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous avez  déjà un compte ?">
+      <Text layoutX="68.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous avez  déjà un compte ?">
          <font>
             <Font size="10.0" />
          </font>
       </Text>
-      <Button layoutX="170.0" layoutY="314.0" mnemonicParsing="false" onAction="#moveToConnect" text="Se connecter">
+      <Button layoutX="206.0" layoutY="88.0" mnemonicParsing="false" onAction="#moveToConnect" text="Se connecter">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
+      <TextField fx:id="tfnom" layoutX="96.0" layoutY="122.0" promptText="Nom" />
    </children>
 </AnchorPane>

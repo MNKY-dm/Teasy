@@ -2,12 +2,18 @@ package controllers;
 
 import javafx.fxml.FXML; // Librairie JavaFX pour intéragir avec l'interface FXML
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import models.User;
+
+import java.io.IOException;
 
 import static utils.PasswordUtils.checkPassword;
 
@@ -40,6 +46,15 @@ public class LoginController {
         } else {
            lbinfo.setText("Email incorrect.");
         }
+    }
+
+    @FXML
+    private void moveToRegister(ActionEvent mouseEvent) throws IOException {
+        Parent registerRoot = FXMLLoader.load(getClass().getResource("/views/RegisterScene.fxml"));
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        Scene registerScene = new Scene(registerRoot);
+        stage.setScene(registerScene);
+        stage.show();
     }
 
 }

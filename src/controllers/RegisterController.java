@@ -18,7 +18,13 @@ import java.util.Objects;
 
 public class RegisterController {
     @FXML
+    private TextField tfnom;
+    @FXML
     private TextField tfmail;
+    @FXML
+    private TextField tftel;
+    @FXML
+    private TextField tfrole;
     @FXML
     private PasswordField tfpassword;
     @FXML
@@ -28,11 +34,15 @@ public class RegisterController {
     @FXML
     private Label lbconfirm;
 
+    @FXML
     public void btnRegister(ActionEvent event) {
 
         Stage stage = (Stage) tfmail.getScene().getWindow();
 
+        String nom = tfnom.getText();
         String mail = tfmail.getText();
+        String tel = tftel.getText();
+        String role = tfrole.getText();
         String pass = tfpassword.getText();
         String confirmedPass = tfpasswordConfirm.getText();
         User user = dao.UserDAO.getRowByEmail(mail);
@@ -40,6 +50,8 @@ public class RegisterController {
         // lbinfo.setText(user.toString());
             if (Objects.equals(pass, confirmedPass)) {
                 lbinfo.setText("Inscription réussie.");
+//                user = new User(id, nom, mail, utils.PasswordUtils.hashPassword(pass), tel, role, created_at);
+                dao.UserDAO.insertNewRow(user);
             } else {
                 lbconfirm.setText("Les mots de passe ne correspondent pas.");
             }
@@ -51,7 +63,7 @@ public class RegisterController {
 
     @FXML
     private void moveToConnect(ActionEvent mouseEvent) throws IOException {
-        Parent registerRoot = FXMLLoader.load(getClass().getResource("RegisterScene.fxml"));
+        Parent registerRoot = FXMLLoader.load(getClass().getResource("/views/ConnectScene.fxml"));
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         Scene registerScene = new Scene(registerRoot);
         stage.setScene(registerScene);
