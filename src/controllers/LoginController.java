@@ -6,7 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import models.User;
+
+import static utils.PasswordUtils.checkPassword;
 
 
 public class LoginController {
@@ -25,10 +28,10 @@ public class LoginController {
         String mail = tfmail.getText();
         String pass = tfpassword.getText();
 //        System.out.println("mail: " + mail); // Test pour vérifier si l'email est correctement récupéré
-        models.User user = dao.UserDAO.getRowByEmail(mail);
+        User user = dao.UserDAO.getRowByEmail(mail);
         if (user != null) {
             // lbinfo.setText(user.toString());
-            if (utils.PasswordUtils.checkPassword(pass, user.getPassword())) {
+            if (checkPassword(pass, user.getPassword())) {
                 // Ouvrir l'application
                 lbinfo.setText("Connexion réussie.");
             } else {
