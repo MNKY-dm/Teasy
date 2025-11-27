@@ -154,8 +154,8 @@ public class UserDAO implements DAO {
     }
 
     public static boolean insertNewRow(User user) {
-        String sql = "INSERT INTO user " +
-                "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?) ";
+        String sql = "INSERT INTO user (nom, email, password, role, tel) " +
+                "VALUES (?, ?, ?, ?, ?) ";
 
         try (Connection conn = MySQLConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
