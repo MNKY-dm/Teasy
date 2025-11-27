@@ -49,9 +49,14 @@ public class RegisterController {
         if (user == null) {
         // lbinfo.setText(user.toString());
             if (Objects.equals(pass, confirmedPass)) {
-                lbinfo.setText("Inscription réussie.");
-//                user = new User(id, nom, mail, utils.PasswordUtils.hashPassword(pass), tel, role, created_at);
-                dao.UserDAO.insertNewRow(user);
+                user = new User(nom, mail, utils.PasswordUtils.hashPassword(pass), tel, role);
+                if(dao.UserDAO.insertNewRow(user)) {
+                    lbinfo.setText("Inscription réussie.");
+                }
+                else {
+                    lbinfo.setText("Erreur lors de l'inscription.");
+                }
+
             } else {
                 lbconfirm.setText("Les mots de passe ne correspondent pas.");
             }

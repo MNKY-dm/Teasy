@@ -18,8 +18,7 @@ public class Ticket {
     private boolean is_refunded;
     private Timestamp created_at;
 
-    public Ticket(Integer id,
-                  String code,
+    public Ticket(String code,
                   String title,
                   String place,
                   int user_id,
@@ -28,9 +27,7 @@ public class Ticket {
                   float price,
                   String status,
                   Timestamp used_at,
-                  Boolean is_refunded,
-                  Timestamp created_at) {
-        this.id = id;
+                  Boolean is_refunded) {
         this.code = code;
         this.title = title;
         this.place = place;
@@ -41,7 +38,6 @@ public class Ticket {
         this.status = status;
         this.used_at = used_at;
         this.is_refunded = is_refunded;
-        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {
@@ -154,7 +150,7 @@ public class Ticket {
         this.is_refunded = is_refunded;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = new Timestamp(System.currentTimeMillis()); // Peut être null (voir BDD)
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 }

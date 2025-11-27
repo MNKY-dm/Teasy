@@ -2,7 +2,7 @@ package dao;
 
 import models.User;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +19,13 @@ public class UserDAO implements DAO {
             var rs = stmt.executeQuery(sql) ;
 
             while (rs.next()) {
-                User user = new User(rs.getInt("id"),
-                        rs.getString("nom"),
+                User user = new User(rs.getString("nom"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at"));
-
+                        rs.getString("role"));
+                user.setId(rs.getInt("id"));
+                user.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(user);
             }
 
@@ -53,13 +52,12 @@ public class UserDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User(rs.getInt("id"),
-                        rs.getString("nom"),
+                user = new User(rs.getString("nom"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("role"));
+                user.setId(rs.getInt("id"));
             }
 
         } catch (SQLException ex) {
@@ -85,15 +83,14 @@ public class UserDAO implements DAO {
 
             if (rs.next()) {
                 System.out.println(email + " existe");
-                user = new User(rs.getInt("id"),
-                        rs.getString("nom"),
+                user = new User(rs.getString("nom"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tel"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at"));
-            } else {
+                        rs.getString("role"));
+                user.setId(rs.getInt("id"));
             }
+
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -105,7 +102,7 @@ public class UserDAO implements DAO {
     public static boolean updateRowById(User user){
         // Update
         String sql = "UPDATE user " +
-                "SET nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? " +
+                "SET nom = ?, email = ?,  password = ?, role = ?, tel = ? " +
                 "WHERE id = ?";
 
         int userId = user.getId();
@@ -120,7 +117,6 @@ public class UserDAO implements DAO {
                 stmt.setString(3, user.getPassword());
                 stmt.setString(4, user.getRole());
                 stmt.setString(5, user.getTel());
-                stmt.setTimestamp(6, user.getCreated_at());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -159,21 +155,27 @@ public class UserDAO implements DAO {
 
     public static boolean insertNewRow(User user) {
         String sql = "INSERT INTO user " +
-                "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?, created_at = ? ) ";
+                "VALUES (nom = ?, email = ?,  password = ?, role = ?, tel = ?) ";
 
-
-        try (var conn = MySQLConnection.getConnection();
-         var stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = MySQLConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, user.getNom());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getRole());
             stmt.setString(5, user.getTel());
-            stmt.setTimestamp(6, user.getCreated_at());
 
-        var rs = stmt.executeUpdate();
-        return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
+            int rows = stmt.executeUpdate();
+            if (rows == 1) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        user.setId(rs.getInt(1));
+                    }
+                }
+                return true;
+            }
+            return false; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

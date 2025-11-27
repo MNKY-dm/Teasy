@@ -18,8 +18,7 @@ public class TicketDAO implements DAO {
             var rs = stmt.executeQuery(sql) ;
 
             while (rs.next()) {
-                Ticket ticket = new Ticket(rs.getInt("id"),
-                        rs.getString("code"),
+                Ticket ticket = new Ticket(rs.getString("code"),
                         rs.getString("title"),
                         rs.getString("place"),
                         rs.getInt("user_id"),
@@ -28,9 +27,9 @@ public class TicketDAO implements DAO {
                         rs.getFloat("price"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
-                        rs.getBoolean("is_refunded"),
-                        rs.getTimestamp("created_at"));
-
+                        rs.getBoolean("is_refunded"));
+                ticket.setId(rs.getInt("id"));
+                ticket.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(ticket);
             }
 
@@ -57,8 +56,7 @@ public class TicketDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                ticket = new Ticket(rs.getInt("id"),
-                        rs.getString("code"),
+                ticket = new Ticket(rs.getString("code"),
                         rs.getString("title"),
                         rs.getString("place"),
                         rs.getInt("user_id"),
@@ -67,8 +65,7 @@ public class TicketDAO implements DAO {
                         rs.getFloat("price"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
-                        rs.getBoolean("is_refunded"),
-                        rs.getTimestamp("created_at"));
+                        rs.getBoolean("is_refunded"));
             }
 
         } catch (SQLException ex) {
