@@ -15,6 +15,7 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <TextField fx:id="tfnom" layoutX="96.0" layoutY="122.0" promptText="Nom" />
       <TextField fx:id="tfmail" layoutX="95.0" layoutY="161.0" promptText="Adresse mail" />
       <TextField fx:id="tftel" layoutX="95.0" layoutY="205.0" promptText="Numéro de téléphone" />
       <TextField fx:id="tfrole" layoutX="95.0" layoutY="247.0" promptText="Rôle" />
@@ -33,6 +34,5 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <TextField fx:id="tfnom" layoutX="96.0" layoutY="122.0" promptText="Nom" />
    </children>
 </AnchorPane>

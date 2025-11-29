@@ -9,21 +9,8 @@ import models.User;
 import services.SessionManager;
 import utils.PasswordUtils;
 
-/**
- * LoginController : Gère la page de connexion
- * <p>
- * AVANT (ancien code) :
- *   - Vérifier email/password
- *   - Charger RegisterScene directement
- * <p>
- * APRÈS (nouveau code) :
- *   - Vérifier email/password (MÊME CODE)
- *   - Sauvegarder user dans SessionManager (NOUVEAU)
- *   - Appeler AppController.loadHome() (NOUVEAU)
- * <p>
- * Avantage : LoginController ne crée plus ses propres scenes
- *            AppController gère toute la navigation
- */
+// Gérait initialement le changement de scene dans moveToRegister()
+
 public class LoginController {
 
     // Composants FXML
@@ -36,17 +23,6 @@ public class LoginController {
     @FXML
     private Label lbinfo;
 
-    // DAO pour accéder à la base de données
-    private UserDAO userDAO;
-
-    /**
-     * Constructeur
-     * <p>
-     * Initialiser le DAO
-     */
-    public LoginController() {
-        this.userDAO = new UserDAO();
-    }
 
     /**
      * btnConnect() : Bouton "Se connecter"
