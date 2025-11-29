@@ -1,4 +1,3 @@
-import controllers.AppController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,35 +10,16 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Initialiser AppController avec la Stage
-            AppController.getInstance().init(primaryStage);
-
-            // Charger la première page (Login)
-            AppController.getInstance().loadLogin();
-
-            // Configurer la fenêtre
-            primaryStage.setTitle("Teasy - Billeterie");
-            primaryStage.setWidth(800);
-            primaryStage.setHeight(600);
-            primaryStage.setResizable(false);  // Fenêtre non-redimensionnable
-
-            // Afficher la fenêtre
+            Parent root = FXMLLoader.load((getClass().getResource("views/RegisterScene.fxml")));
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Register");
             primaryStage.show();
-
-            System.out.println("[APP] Application démarrée avec succès");
-
         } catch (Exception e) {
-            System.err.println("[ERREUR] Erreur au démarrage de l'application");
             e.printStackTrace();
         }
     }
 
-    /**
-     * main(String[] args) : Point d'entrée Java
-     *
-     * Appelé d'abord, puis lance Application.launch()
-     * qui appelle start()
-     */
     public static void main(String[] args) {
         launch(args);
     }
