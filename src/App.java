@@ -11,17 +11,14 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Initialiser AppController avec la Stage
+            // Initialiser AppController
             AppController.getInstance().init(primaryStage);
 
             // Charger la première page (Login)
             AppController.getInstance().loadLogin();
 
-            // Configurer la fenêtre
+            // Nommer la fenêtre
             primaryStage.setTitle("Teasy - Billeterie");
-            primaryStage.setWidth(800);
-            primaryStage.setHeight(600);
-            primaryStage.setResizable(false);  // Fenêtre non-redimensionnable
 
             // Afficher la fenêtre
             primaryStage.show();

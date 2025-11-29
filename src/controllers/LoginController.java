@@ -24,17 +24,8 @@ public class LoginController {
     private Label lbinfo;
 
 
-    /**
-     * btnConnect() : Bouton "Se connecter"
-     * <p>
-     * Processus :
-     *   1. Récupérer email et password depuis les champs
-     *   2. Chercher l'utilisateur en base de données
-     *   3. SI trouvé ET password correct :
-     *      - Sauvegarder dans SessionManager
-     *      - Charger la page HOME
-     *   4. SINON : Afficher message d'erreur
-     */
+
+    // btnConnect() : Bouton "Se connecter"
     @FXML
     public void btnConnect() {
         // Récupérer les données du formulaire
@@ -55,13 +46,12 @@ public class LoginController {
 
             // CONNEXION RÉUSSIE
 
-            // Sauvegarder l'utilisateur dans la SESSION
+            // Sauvegarder l'utilisateur dans la session
             SessionManager.getInstance().login(user);
 
-            // Charger la page HOME via AppController
+            // Charger la page HomeScene.fxml via AppController
             AppController.getInstance().loadHome();
 
-            // Feedback utilisateur
             lbinfo.setText("Connexion réussie !");
 
         } else {
@@ -72,16 +62,8 @@ public class LoginController {
         }
     }
 
-    /**
-     * moveToRegister() : Bouton "S'inscrire"
-     * <p>
-     * Appelé depuis le bouton "S'inscrire" du formulaire de login
-     * <p>
-     * AVANT : Chargeait RegisterScene directement
-     * APRÈS : Appelle AppController pour charger Register
-     * <p>
-     * Avantage : Logique de navigation CENTRALISÉE
-     */
+
+    // moveToRegister() : Bouton "S'inscrire"
     @FXML
     public void moveToRegister() {
         // Utiliser AppController pour la navigation

@@ -69,7 +69,7 @@ public class RegisterController {
         // 4. Vérifier que l'email n'existe pas
         if (UserDAO.getRowByEmail(email) != null) {
             lbinfo.setText("Email déjà utilisé");
-            return;
+            return; // Interrompt la méthode si jamais le mail est déjà inscrit en BDD
         }
 
         // Hasher le mot de passe avant de l'enregistrer
@@ -81,7 +81,7 @@ public class RegisterController {
         // l'ajouter en base de données
         UserDAO.insertNewRow(newUser);
 
-        // ✅ INSCRIPTION RÉUSSIE
+        // INSCRIPTION RÉUSSIE
         lbinfo.setText("Compte créé avec succès ! Redirection...");
 
         // Rediriger vers Login après un délai
