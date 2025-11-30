@@ -57,6 +57,6 @@ public class EventCardController {
     }
 
     private void showEvent(MouseEvent event){
-        System.out.println("Card cliquée : ID évenement --> " + eventId);
+        System.out.println("Card cliquée : ID événement --> " + eventId);
     }
 }

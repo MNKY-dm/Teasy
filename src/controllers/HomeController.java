@@ -1,11 +1,16 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import models.Event;
 import models.User;
 import services.SessionManager;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,11 +19,14 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-    @FXML
-    private Label lbUserEmail;
+//    @FXML
+//    private Label lbUserEmail;
+//
+//    @FXML
+//    private Label lbUserRole;
 
     @FXML
-    private Label lbUserRole;
+    private HBox eventsToComeHbox;
 
 
     // initialize() : Appelé dès que la scene FXML est chargée
@@ -29,7 +37,7 @@ public class HomeController implements Initializable {
 
         // Vérifier qu'on est bien connecté (par sécurité)
         if (currentUser == null) {
-            System.out.println("[ERREUR] HomeController : Aucun utilisateur connecté !");
+            System.out.println("Erreur dans HomeController : Aucun utilisateur connecté.");
             AppController.getInstance().loadLogin();
             return; // interrompt la fonction si pas d'utilisateur connecté
         }
@@ -38,15 +46,34 @@ public class HomeController implements Initializable {
 //        lbUserEmail.setText("Email : " + currentUser.getEmail());
 //        lbUserRole.setText("Rôle : " + currentUser.getRole());
 
-        System.out.println("[HOMECONTROLLER] Page d'accueil chargée pour : "
+        System.out.println("HomeController : Page d'accueil chargée pour : "
                 + currentUser.getEmail());
+    }
+
+    // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
+    private void addEventCard(Event event) {
+        try {
+            // Charger le FXML de la card
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EventCard.fxml"));
+            AnchorPane cardRoot = loader.load();
+
+            // Charger le controller et set up les infos de la card selon l'event
+            EventCardController eventCardController = loader.getController();
+            eventCardController.setEventData(event);
+
+            // L'ajouter au HBOX
+            eventsToComeHbox.getChildren().add(cardRoot);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     // btnGoToEvents() : Bouton "Voir les événements" ; permet à l'utilisateur de consulter la page présentant les événements en fonction de sa recherche, de différentes sections...
     @FXML
     public void btnGoToEvents() {
-        System.out.println("[HOMECONTROLLER] Navigation vers Events");
+        System.out.println("HomeController : Navigation vers Events");
         // AppController.getInstance().loadEvents();  // Décommenter une fois fonctionnalité terminée
         System.out.println("Cette page n'existe pas encore !");
     }
@@ -55,7 +82,7 @@ public class HomeController implements Initializable {
     // btnGoToProfile() : Bouton "Mon profil" ; permet à l'utilisateur de consulter son profil (servira surtout lorsque plus de fonctionnalités seront codées
     @FXML
     public void btnGoToProfile() {
-        System.out.println("[HOMECONTROLLER] Navigation vers Profile");
+        System.out.println("HomeController : Navigation vers Profile");
         // AppController.getInstance().loadProfile();  // Décommenter une fois fonctionnalité terminée
         System.out.println("Cette page n'existe pas encore !");
     }
@@ -64,7 +91,7 @@ public class HomeController implements Initializable {
     // btnGoToTickets() : Bouton "Mes billets" ; permet à l'utilisateur de consulter son historique
     @FXML
     public void btnGoToTickets() {
-        System.out.println("[HOMECONTROLLER] Navigation vers Tickets");
+        System.out.println("HomeController : Navigation vers Tickets");
 //        AppController.getInstance().loadTickets();  // Décommenter une fois fonctionnalité terminée
         System.out.println("Cette page n'existe pas encore !");
     }
@@ -73,7 +100,7 @@ public class HomeController implements Initializable {
     // btnLogout() : Bouton "Se déconnecter" dans le menu de l'application
     @FXML
     public void btnLogout() {
-        System.out.println("[HOMECONTROLLER] Déconnexion...");
+        System.out.println("HomeController : Déconnexion");
 
         // AppController gère la déconnexion et redirection
         AppController.getInstance().loadLogout();
