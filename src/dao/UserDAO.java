@@ -153,7 +153,7 @@ public class UserDAO implements DAO {
         return false;
     }
 
-    public static boolean insertNewRow(User user) {
+    public static void insertNewRow(User user) {
         String sql = "INSERT INTO user (nom, email, password, role, tel) " +
                 "VALUES (?, ?, ?, ?, ?) ";
 
@@ -173,13 +173,10 @@ public class UserDAO implements DAO {
                         user.setId(rs.getInt(1));
                     }
                 }
-                return true;
             }
-            return false; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            return false;
         }
 
     }
