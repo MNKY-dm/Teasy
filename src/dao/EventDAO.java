@@ -142,29 +142,39 @@ public class EventDAO implements DAO {
         }
     }
 
-    public static Photo getPictures(int eventId) {
-        String sql = "SELECT *" +
+    public static List<Photo> getPictures(int eventId) {
+        String sql = "SELECT * " +
                 "FROM photo " +
-                "INNER JOIN event ON photo.event_id = event.id " +
-                "WHERE event.id = ?";
+                "WHERE event_id = ?";
 
-        Photo photo = null;
+        List<Photo> all = new ArrayList<>();
 
-        try (Connection conn = MySQLConnection.getConnection();
-            var stmt = conn.prepareStatement(sql)) {
+        try (var conn = MySQLConnection.getConnection();
+            var stmt  = conn.prepareStatement(sql)) {
 
-            var rs = stmt.executeQuery();
+//            System.out.println("eventId reçu : " + eventId); // Débugger la méthode
+//            System.out.println("SQL avant : " + sql);
 
-            if (rs.next()) {
-                photo = new Photo(rs.getInt("event_id"),
+            stmt.setInt(1, eventId);
+
+            var rs = stmt.executeQuery(); // Erreur bloquante ici : j'avais passé sql en paramètre
+
+            while (rs.next()) {
+//                System.out.println("Photo trouvée : event_id=" + rs.getInt("event_id") + ", url=" + rs.getString("url")); // Débugger la méthode
+                Photo photo = new Photo(rs.getInt("event_id"),
                         rs.getString("url"),
                         rs.getString("alt"),
                         rs.getString("type"));
+
+                all.add(photo);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            return null;
         }
-        return photo;
+        return all;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getPictures(1));
     }
 }
