@@ -116,8 +116,8 @@ public class EventDAO implements DAO {
     }
 
     public static void insertNewRow(Event event) { // Methode utilisée si un artiste ou un admin ajoute un événement (fonctionnalité non implémentée pour le moment)
-        String sql = "INSERT INTO Event " +
-                "VALUES (name = ?, description = ?,  affiche = ?, language = ?, created_at = ? ) ";
+        String sql = "INSERT INTO event (name, description, affiche, language) " +
+                "VALUES (?, ?,  ?, ?) ";
 
         try (var conn = MySQLConnection.getConnection();
             var stmt = conn.prepareStatement(sql)) {
@@ -175,6 +175,6 @@ public class EventDAO implements DAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(getPictures(1));
+//        System.out.println(getPictures(1)); // débugger
     }
 }
