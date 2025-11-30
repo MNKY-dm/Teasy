@@ -2,6 +2,7 @@ package dao;
 
 import models.Event;
 import models.Photo;
+import models.Seance;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -169,8 +170,43 @@ public class EventDAO implements DAO {
                         rs.getString("url"),
                         rs.getString("alt"),
                         rs.getString("type"));
-
+                photo.setId(rs.getInt("id"));
+                photo.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(photo);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return all;
+    }
+
+    public static List<Seance> getSeances(int eventId) {
+        String sql = "SELECT * " +
+                "FROM seance " +
+                "WHERE event_id = ?";
+
+        List<Seance> all = new ArrayList<>();
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt  = conn.prepareStatement(sql)) {
+
+//            System.out.println("eventId reçu : " + eventId); // Débugger la méthode
+//            System.out.println("SQL avant : " + sql);
+
+            stmt.setInt(1, eventId);
+
+            var rs = stmt.executeQuery(); // Erreur bloquante ici : j'avais passé sql en paramètre
+
+            while (rs.next()) {
+//                System.out.println("Photo trouvée : event_id=" + rs.getInt("event_id") + ", url=" + rs.getString("url")); // Débugger la méthode
+                Seance seance = new Seance(rs.getInt("event_id"),
+                        rs.getTimestamp("date"),
+                        rs.getString("location"),
+                        rs.getInt("nb_places"),
+                        rs.getString("status"));
+                seance.setId(rs.getInt("id"));
+                seance.setCreated_at(rs.getTimestamp("created_at"));
+                all.add(seance);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -2,18 +2,23 @@ package controllers;
 
 
 import dao.EventDAO;
+import dao.SeanceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import models.Event;
 import models.Photo;
+import models.Seance;
 import models.User;
 import services.SessionManager;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -54,6 +59,38 @@ public class EventController implements Initializable {
         }
 
         System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
+
+        loadSeanceInfos();
+    }
+
+    public void loadSeanceInfos() {
+        // Récupérer les courant
+        List<Seance> seances = EventDAO.getSeances(eventId);
+
+        // Afficher chaque événement dans une card
+        for (Seance seance : seances) {
+            addSeanceInfos(event);
+            System.out.println("Séance affichée : " + seance.getDate() + " ; pour l'événement : " + seance.getEvent_id());
+        }
+    }
+
+    // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
+    private void addSeanceInfos(Event event) {
+        try {
+            // Charger le FXML de la card
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceInfos.fxml"));
+            AnchorPane cardRoot = loader.load();
+
+            // Charger le controller et set up les infos de la card selon l'event
+            SeanceInfosController seanceInfosController = loader.getController();
+            seanceInfosController.setSeanceInfos(event);
+
+            // L'ajouter au HBOX
+            seancesInfos.getChildren().add(cardRoot);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setEvent(Event event) {
