@@ -38,17 +38,22 @@ public class EventCardController {
             // Tenter de récupérer les images liées à l'événement
             // Penser à renommer les différentes entités pour mieux s'y retrouver : "Photo" ; "Picture" ; "Image"
             if (!pictures.isEmpty()) { // Si on trouve une/des image(s) liée(s) à cet événement
-                String picUrl = pictures.getFirst().getUrl(); // On récupère l'URL de la première
+                Photo pic = pictures.getFirst(); // On récupère la première image
+                String picUrl = pic.getUrl(); // On récupère l'URL de cette image
 
-                if (picUrl != null && !picUrl.trim().isEmpty()) { // Si l'URL n'est pas NULL ou n'est pas vide ("")
+                if (picUrl != null && pic.isUrlValid()) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
                     try {
                         Image image = new Image(picUrl); // On modélise l'image à partir de son URL
+                        System.out.println("Url valide : " + picUrl);
                         eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
                     } catch (Exception ex) {
                         System.err.println("Erreur chargement image : " + picUrl);
-                        // Mettre une image par défaut (à mettre plus tard)
-                        // eventPic.setImage(new Image("url locale"));
+                        // Mettre une image par défaut
+                         eventPic.setImage(new Image("/pics/default_event_pic.png"));
                     }
+                } else {
+                    // Mettre une image par défaut
+                    eventPic.setImage(new Image("/pics/default_event_pic.png"));
                 }
             }
         } catch (Exception e) {
@@ -56,6 +61,7 @@ public class EventCardController {
         }
     }
 
+    @FXML
     private void showEvent(MouseEvent event){
         System.out.println("Card cliquée : ID événement --> " + eventId);
     }

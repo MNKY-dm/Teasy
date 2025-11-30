@@ -22,12 +22,14 @@ public class EventDAO implements DAO {
             var rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Event Event = new Event(rs.getString("name"),
+                Event event = new Event(rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("affiche"),
                         rs.getString("language"));
+                event.setId(rs.getInt("id"));
+                event.setCreated_at(rs.getTimestamp("created_at"));
 
-                all.add(Event);
+                all.add(event);
             }
 
 

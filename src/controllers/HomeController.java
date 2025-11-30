@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.EventDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import services.SessionManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -48,6 +50,19 @@ public class HomeController implements Initializable {
 
         System.out.println("HomeController : Page d'accueil chargée pour : "
                 + currentUser.getEmail());
+        loadEventsToCome();
+    }
+
+    // Méthode qui va permettre de charger les événements à venir sur la page d'accueil, en les piochant dans la BDD
+    private void loadEventsToCome() {
+        // Récupérer les événements dans la base de données
+        List<Event> events = EventDAO.getAll();
+
+        // Afficher chaque événement dans une card
+        for (Event event : events) {
+            addEventCard(event);
+            System.out.println("Événement affiché : " + event.getId() + " ; nom : " + event.getName());
+        }
     }
 
     // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
