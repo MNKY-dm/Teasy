@@ -55,10 +55,12 @@ public class EventDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                event = new Event(rs.getString("nom"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("tel"));
+                event = new Event(rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("affiche"),
+                        rs.getString("language"));
+                event.setId(rs.getInt("id"));
+                event.setCreated_at(rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -101,7 +103,7 @@ public class EventDAO implements DAO {
         // Delete
 
         String sql = "DELETE " +
-                "FROM Event " +
+                "FROM event " +
                 "WHERE id = ?";
 
         try (var conn = MySQLConnection.getConnection();

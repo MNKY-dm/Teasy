@@ -64,5 +64,6 @@ public class EventCardController {
     @FXML
     private void showEvent(MouseEvent event){
         System.out.println("Card cliquée : ID événement --> " + eventId);
+        AppController.getInstance().loadEvent(dao.EventDAO.getRowById(eventId));
     }
 }

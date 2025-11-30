@@ -21,19 +21,14 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-//    @FXML
-//    private Label lbUserEmail;
-//
-//    @FXML
-//    private Label lbUserRole;
-
     @FXML
     private HBox eventsToComeHbox;
 
 
-    // initialize() : Appelé dès que la scene FXML est chargée
+    // initialize() : Appelé dès que la scene FXML est chargée, permet d'initialiser les données de l'user ;
+    // puis les données / contrôleurs de la page
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { // paramètres non utilisés
         // Récupérer l'utilisateur connecté de la session
         User currentUser = SessionManager.getInstance().getCurrentUser();
 
@@ -43,10 +38,6 @@ public class HomeController implements Initializable {
             AppController.getInstance().loadLogin();
             return; // interrompt la fonction si pas d'utilisateur connecté
         }
-
-          // Afficher les infos de l'utilisateur
-//        lbUserEmail.setText("Email : " + currentUser.getEmail());
-//        lbUserRole.setText("Rôle : " + currentUser.getRole());
 
         System.out.println("HomeController : Page d'accueil chargée pour : "
                 + currentUser.getEmail());

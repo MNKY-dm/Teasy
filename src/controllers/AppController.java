@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.Event;
 import services.SessionManager;
 
 import java.io.IOException;
@@ -94,13 +95,44 @@ public class AppController {
 
             // Adapter le titre en fonction du rôle
             String role = SessionManager.getInstance().getCurrentUser().getRole();
-            String title = "Teasy - Accueil (" + role + ")";
+            String title = "Teasy - Billetterie - Accueil (" + role + ")";
             primaryStage.setTitle(title);
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
 
         } catch (IOException e) {
             System.err.println("[ERREUR] Impossible de charger HomeScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    public void loadEvent(Event event) {
+        try {
+            loadScene("views/EventScene.fxml");
+
+            // Adapter le titre en fonction de l'event cliqué
+            String eventName = event.getName();
+            String title = "Teasy - Événement (" + eventName + ")";
+            primaryStage.setTitle(title);
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger EventScene.fxml");
+            e.printStackTrace();
+        }
+    }
+    public void loadBuyTicket(Event event) {
+        try {
+            loadScene("views/BuyTicketScene.fxml");
+
+            // Adapter le titre en fonction de l'event cliqué
+            String eventName = event.getName();
+            String title = "Teasy - Acheter un ticket (" + eventName + ")";
+            primaryStage.setTitle(title);
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger BuyTicketScene.fxml");
             e.printStackTrace();
         }
     }
