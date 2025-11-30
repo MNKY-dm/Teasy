@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<AnchorPane maxWidth="308.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="308.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeanceInfosController">
+<AnchorPane fx:id="seanceInfosRoot" maxWidth="308.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="308.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeanceInfosController">
    <children>
       <HBox layoutX="-66.0" layoutY="-41.0" prefHeight="25.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

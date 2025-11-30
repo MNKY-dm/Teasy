@@ -1093,7 +1093,7 @@
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="330" parent="304" name="statut">
+    <column id="330" parent="304" name="status">
       <Position>6</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>

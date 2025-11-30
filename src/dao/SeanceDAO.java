@@ -19,14 +19,13 @@ public class SeanceDAO implements DAO {
              var rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Seance seance = new Seance(rs.getInt("id"),
-                        rs.getInt("event_id"),
+                Seance seance = new Seance(rs.getInt("event_id"),
                         rs.getTimestamp("date"),
                         rs.getString("location"),
                         rs.getInt("nb_places"),
-                        rs.getString("statut"),
-                        rs.getTimestamp("created_at"));
-
+                        rs.getString("status"));
+                seance.setId(rs.getInt("seance_id"));
+                seance.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(seance);
             }
 
@@ -53,13 +52,11 @@ public class SeanceDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                seance = new Seance(rs.getInt("id"),
-                        rs.getInt("event_id"),
+                seance = new Seance(rs.getInt("event_id"),
                         rs.getTimestamp("date"),
                         rs.getString("location"),
                         rs.getInt("nb_places"),
-                        rs.getString("statut"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("status"));
             }
 
         } catch (SQLException ex) {
@@ -72,7 +69,7 @@ public class SeanceDAO implements DAO {
     public static boolean updateRowById(Seance seance){
         // Update
         String sql = "UPDATE Seance " +
-                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ? " +
+                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, status = ? " +
                 "WHERE id = ?";
 
         int seanceID = seance.getId();
@@ -85,7 +82,7 @@ public class SeanceDAO implements DAO {
                 stmt.setTimestamp(2, seance.getDate());
                 stmt.setString(3, seance.getLocation());
                 stmt.setInt(4, seance.getNb_places());
-                stmt.setString(5, seance.getStatut());
+                stmt.setString(5, seance.getStatus());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -120,7 +117,7 @@ public class SeanceDAO implements DAO {
 
     public static boolean insertRow(Seance seance) {
         String sql = "INSERT INTO Seance " +
-                "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?, statut = ?, created_at = ? ) ";
+                "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?, status = ?, created_at = ? ) ";
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -129,7 +126,7 @@ public class SeanceDAO implements DAO {
             stmt.setTimestamp(2, seance.getDate());
             stmt.setString(3, seance.getLocation());
             stmt.setInt(4, seance.getNb_places());
-            stmt.setString(5, seance.getStatut());
+            stmt.setString(5, seance.getStatus());
             stmt.setTimestamp(6, seance.getCreated_at());
 
             var rs = stmt.executeUpdate();
@@ -139,5 +136,10 @@ public class SeanceDAO implements DAO {
             System.out.println(ex.getMessage());
             return false;
         }
+    }
+
+    public static void main (String[] args) {
+        models.Seance seance = getRowById(1);
+        System.out.println(seance.dateFormat(seance.getDate()));
     }
 }

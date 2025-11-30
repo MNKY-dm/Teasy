@@ -1,7 +1,10 @@
 package models;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Seance {
 
@@ -10,17 +13,15 @@ public class Seance {
     private Timestamp date;
     private String location;
     private Integer nb_places;
-    private String statut;
+    private String status;
     private Timestamp created_at;
 
-    public Seance(Integer id, Integer event_id, Timestamp date, String location, Integer nb_places, String statut, Timestamp created_at) {
-        this.id = id;
+    public Seance(Integer event_id, Timestamp date, String location, Integer nb_places, String status) {
         this.event_id = event_id;
         this.date = date;
         this.location = location;
         this.nb_places = nb_places;
-        this.statut = statut;
-        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
+        this.status = status;
     }
 
     public int getId() {
@@ -35,6 +36,16 @@ public class Seance {
         return this.date;
     }
 
+    public String dateFormat(Timestamp date) {
+        if (date == null) {
+            return "Date inconnue";
+        }
+
+        // Format sans secondes : juste jour/mois/année heure:minute
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return date.toLocalDateTime().format(formatter);
+    }
+
     public String getLocation() {
         return this.location;
     }
@@ -43,8 +54,8 @@ public class Seance {
         return this.nb_places;
     }
 
-    public String getStatut() {
-        return this.statut;
+    public String getStatus() {
+        return this.status;
     }
 
     public Timestamp getCreated_at() {
@@ -90,10 +101,17 @@ public class Seance {
     }
 
     public void setStatut(String statut) {
-        this.statut = statut;
+        this.status = statut;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = new Timestamp(System.currentTimeMillis()); // Peut être null (voir BDD)
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+
+    public static void main (String[] args) {
+//        Timestamp now = new Timestamp(1764541539);
+//        Seance seance = new Seance(1, now, "chez toi", 2, "epuisé");
+//
+//        System.out.println(seance.dateFormat(seance.getDate()));
     }
 }
