@@ -153,4 +153,6 @@ public class Ticket {
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
+
+    // Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "aller à un event")
 }

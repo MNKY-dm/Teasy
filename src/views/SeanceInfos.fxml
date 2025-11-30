@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane maxWidth="308.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="308.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeanceInfosController">
+   <children>
+      <HBox layoutX="-66.0" layoutY="-41.0" prefHeight="25.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="seanceLocation">
+               <HBox.margin>
+                  <Insets bottom="4.0" left="5.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="seanceDate" layoutX="15.0" layoutY="14.0">
+               <HBox.margin>
+                  <Insets bottom="4.0" left="6.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="seanceNbPlaces" layoutX="21.0" layoutY="14.0">
+               <HBox.margin>
+                  <Insets bottom="4.0" left="6.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Pane fx:id="seanceInfosSpacer" prefHeight="25.0" prefWidth="92.0" />
+            <Label fx:id="seanceStatus" layoutX="15.0" layoutY="14.0">
+               <HBox.margin>
+                  <Insets bottom="4.0" left="6.0" right="4.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
