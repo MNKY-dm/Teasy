@@ -19,12 +19,10 @@ public class PhotoDAO implements DAO {
             var rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Photo photo = new Photo(rs.getInt("id"),
-                        rs.getInt("event_id"),
+                Photo photo = new Photo(rs.getInt("event_id"),
                         rs.getString("url"),
                         rs.getString("alt"),
-                        rs.getString("type"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("type"));
 
                 all.add(photo);
             }
@@ -52,12 +50,10 @@ public class PhotoDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Photo = new Photo(rs.getInt("id"),
-                        rs.getInt("event_id"),
+                Photo = new Photo(rs.getInt("event_id"),
                         rs.getString("url"),
                         rs.getString("alt"),
-                        rs.getString("type"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("type"));
             }
 
         } catch (SQLException ex) {

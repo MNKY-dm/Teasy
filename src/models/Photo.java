@@ -12,13 +12,11 @@ public class Photo {
     private String type;
     private Timestamp created_at;
 
-    public Photo(Integer id, int event_id, String url, String alt, String type, Timestamp created_at) {
-        this.id = id;
+    public Photo(int event_id, String url, String alt, String type) {
         this.event_id = event_id;
         this.url = url;
         this.alt = alt;
         this.type = type;
-        this.created_at = created_at; // Récupère le timestamp dès l'instant où la variable est créée.
     }
 
     public int getId() {
@@ -54,7 +52,7 @@ public class Photo {
         }
     }
 
-    public void setEvent_idd(int event_id) {
+    public void setEvent_id(int event_id) {
         if (event_id >= 0) {
             this.event_id = event_id;
         } else {
@@ -78,7 +76,7 @@ public class Photo {
         this.type = type; // Peut être null (voir BDD)
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = new Timestamp(System.currentTimeMillis()); // Peut être null (voir BDD)
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at; // Peut être null (voir BDD)
     }
 }

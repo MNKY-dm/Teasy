@@ -1,7 +1,10 @@
 package dao;
 
 import models.Event;
+import models.Photo;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,10 @@ public class EventDAO implements DAO {
             var rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Event Event = new Event(rs.getInt("id"),
-                        rs.getString("name"),
+                Event Event = new Event(rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("affiche"),
-                        rs.getString("language"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("language"));
 
                 all.add(Event);
             }
@@ -40,10 +41,10 @@ public class EventDAO implements DAO {
     public static Event getRowById(Integer id) {
         // Select row by id
         String sql = "SELECT * " +
-                "FROM Event " +
+                "FROM event " +
                 "WHERE id = ?";
 
-        Event Event = null;
+        Event event = null;
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -52,19 +53,17 @@ public class EventDAO implements DAO {
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Event = new Event(rs.getInt("id"),
-                        rs.getString("nom"),
+                event = new Event(rs.getString("nom"),
                         rs.getString("email"),
                         rs.getString("password"),
-                        rs.getString("tel"),
-                        rs.getTimestamp("created_at"));
+                        rs.getString("tel"));
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
 
-        return Event;
+        return event;
     }
 
     public static boolean updateRowById(Event event){
@@ -116,7 +115,7 @@ public class EventDAO implements DAO {
         }
     }
 
-    public static boolean insertRow(Event event) {
+    public static void insertNewRow(Event event) { // Methode utilisée si un artiste ou un admin ajoute un événement (fonctionnalité non implémentée pour le moment)
         String sql = "INSERT INTO Event " +
                 "VALUES (name = ?, description = ?,  affiche = ?, language = ?, created_at = ? ) ";
 
@@ -129,12 +128,43 @@ public class EventDAO implements DAO {
             stmt.setString(4, event.getLanguage());
             stmt.setTimestamp(5, event.getCreated_at());
 
-            var rs = stmt.executeUpdate();
-            return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
+            int rows = stmt.executeUpdate();
+            if (rows == 1) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        event.setId(rs.getInt(1));
+                    }
+                }
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            return false;
         }
+    }
+
+    public static Photo getPictures(int eventId) {
+        String sql = "SELECT *" +
+                "FROM photo " +
+                "INNER JOIN event ON photo.event_id = event.id " +
+                "WHERE event.id = ?";
+
+        Photo photo = null;
+
+        try (Connection conn = MySQLConnection.getConnection();
+            var stmt = conn.prepareStatement(sql)) {
+
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                photo = new Photo(rs.getInt("event_id"),
+                        rs.getString("url"),
+                        rs.getString("alt"),
+                        rs.getString("type"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return photo;
     }
 }
