@@ -40,6 +40,12 @@ public class EventController implements Initializable {
         // Récupérer l'utilisateur connecté de la session
         User currentUser = SessionManager.getInstance().getCurrentUser();
 
+        // Débugger
+        System.out.println("initialize() appelée");
+        System.out.println("eventTitle null ? " + (eventTitle == null));
+        System.out.println("eventAffiche null ? " + (eventAffiche == null));
+        System.out.println("eventDescription null ? " + (eventDescription == null));
+
         // Vérifier qu'on est bien connecté (par sécurité)
         if (currentUser == null) {
             System.out.println("Erreur dans EventController : Aucun utilisateur connecté.");
@@ -47,16 +53,22 @@ public class EventController implements Initializable {
             return; // interrompt la fonction si pas d'utilisateur connecté
         }
 
-        System.out.println("EventController : Page d'accueil chargée pour : "
-                + currentUser.getEmail());
+        System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
+    }
+
+    public void setEvent(Event event) {
+        setEventTitle(event);
+        setEventDescription(event);
+        setEventAffiche(event);
     }
 
     @FXML
-    public void setEventTitle(Event event) {
-
+    private void setEventTitle(Event event) {
+//        System.out.println("SetEventTitle pour l'event suivant : " + event.toString());
         try {
             // Tenter de récupérer le titre de l'événement voulu
-            eventTitle.setText(event.getName());
+            String title = event.getName();
+            eventTitle.setText(title);
 
         } catch (Exception e) {
             System.err.println("EventController : erreur dans setEventTitle ; Impossible de récupérer le titre de l'événement " + e.getMessage());
@@ -64,7 +76,7 @@ public class EventController implements Initializable {
     }
 
     @FXML
-    public void setEventAffiche(Event event) {
+    private void setEventAffiche(Event event) {
 
         try {
             // Tenter de récupérer les infos de l'événement voulu
@@ -89,12 +101,12 @@ public class EventController implements Initializable {
             }
 
         } catch (Exception e) {
-            System.err.println("EventController : erreur dans setEventData ; Impossible de récupérer l'affiche l'événement " + e.getMessage());
+            System.err.println("EventController : erreur dans setEventData ; Impossible de récupérer l'affiche l'événement. " + e.getMessage());
         }
     }
 
     @FXML
-    public void setEventDescription(Event event) {
+    private void setEventDescription(Event event) {
 
         try {
             // Tenter de récupérer les infos de l'événement voulu
@@ -105,7 +117,7 @@ public class EventController implements Initializable {
 
             if (description != null) {
                 try {
-                    System.out.println("Description à afficher  " + description);
+                    System.out.println("Description à afficher : " + description);
                     eventDescription.setText(description); // On l'affiche dans le conteneur FXML eventDescription
                 } catch (Exception ex) {
                     System.err.println("Erreur chargement description : " + ex.getMessage());
@@ -118,7 +130,7 @@ public class EventController implements Initializable {
             }
 
         } catch (Exception e) {
-            System.err.println("EventController : erreur dans setEventDescription ; Impossible de récupérer les infos de l'événement " + e.getMessage());
+            System.err.println("EventController : erreur dans setEventDescription ; Impossible de récupérer les infos de l'événement." + e.getMessage());
         }
     }
 

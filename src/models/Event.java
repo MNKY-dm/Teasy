@@ -122,4 +122,16 @@ public class Event {
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", affiche='" + affiche + '\'' +
+                ", language='" + language + '\'' +
+                ", créé le='" + created_at + '\'' +
+                '}';
+    }
 }

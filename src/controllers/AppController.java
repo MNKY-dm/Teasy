@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,7 +59,7 @@ public class AppController {
         // Créer une nouvelle Scene avec ce contenu
         currentScene = new Scene(root);
 
-        // Afficher cette scène dans la Stage
+        // Afficher cette scène dans le Stage
         primaryStage.setScene(currentScene);
     }
 
@@ -106,16 +107,27 @@ public class AppController {
         }
     }
 
+    @FXML
     public void loadEvent(Event event) {
         try {
-            loadScene("views/EventScene.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EventScene.fxml"));
+            Parent root = loader.load();
 
-            // Adapter le titre en fonction de l'event cliqué
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            EventController eventController = loader.getController();  // ← LE BON
+
+            // Maintenant appeler setEvent sur le bon contrôleur (celui avec @FXML)
+            eventController.setEvent(event);
+
+            // Adapter le titre, etc.
             String eventName = event.getName();
             String title = "Teasy - Événement (" + eventName + ")";
             primaryStage.setTitle(title);
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
         } catch (IOException e) {
             System.err.println("[ERREUR] Impossible de charger EventScene.fxml");
             e.printStackTrace();
