@@ -28,6 +28,8 @@ public class EventController implements Initializable {
 
     private int eventId;
 
+    private Event event;
+
     @FXML
     private Label eventTitle;
 
@@ -64,18 +66,20 @@ public class EventController implements Initializable {
     }
 
     public void loadSeanceInfos() {
-        // Récupérer les courant
+
+        System.out.println("loadSeanceInfos est bien lancée. Event_id : " + eventId);
+        // Récupérer les séances de l'événement courant
         List<Seance> seances = EventDAO.getSeances(eventId);
 
         // Afficher chaque événement dans une card
         for (Seance seance : seances) {
-            addSeanceInfos(event);
+            addSeanceInfos(seance);
             System.out.println("Séance affichée : " + seance.getDate() + " ; pour l'événement : " + seance.getEvent_id());
         }
     }
 
     // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
-    private void addSeanceInfos(Event event) {
+    private void addSeanceInfos(Seance seance) {
         try {
             // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceInfos.fxml"));
@@ -83,7 +87,7 @@ public class EventController implements Initializable {
 
             // Charger le controller et set up les infos de la card selon l'event
             SeanceInfosController seanceInfosController = loader.getController();
-            seanceInfosController.setSeanceInfos(event);
+            seanceInfosController.setSeanceInfos(seance);
 
             // L'ajouter au HBOX
             seancesInfos.getChildren().add(cardRoot);
@@ -94,9 +98,15 @@ public class EventController implements Initializable {
     }
 
     public void setEvent(Event event) {
+        setEventId(event);
+        System.out.println("setEvent affiche l'event courant : " + event);
         setEventTitle(event);
         setEventDescription(event);
         setEventAffiche(event);
+    }
+
+    private void setEventId(Event event) {
+        this.eventId = event.getId();
     }
 
     @FXML

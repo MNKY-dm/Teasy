@@ -33,31 +33,29 @@ public class SeanceInfosController {
     @FXML
     private AnchorPane seanceInfosRoot;
 
-    public void setSeanceInfos(Event event){
+    public void setSeanceInfos(Seance seance){
 
         try {
-            // Tenter de récupérer les infos de l'événement voulu
-            this.eventId = event.getId();
+            // Tenter de récupérer l'ID de l'événement courant
+            this.eventId = seance.getEvent_id();
 
-            List<Seance>  seances = EventDAO.getSeances(eventId);
+//            List<Seance>  seances = EventDAO.getSeances(eventId); // Garder la trace des erreurs
 
             // Tenter de récupérer les seances liées à l'événement
-            if (!seances.isEmpty()) { // Si on trouve une/des seance(s) liée(s) à cet événement
+            // Si on trouve une/des seance(s) liée(s) à cet événement
 
-                Seance seance = seances.getFirst(); // On récupère la première seance
-                String location = seance.getLocation(); // On récupère le lieu de cette seance
-                String date = seance.dateFormat(seance.getDate());
-                int nbPlaces = seance.getNb_places();
-                String status = seance.getStatus();
-                try {
-                    System.out.println("lieu : " + location);
-                    seanceLocation.setText(location); // On l'affiche dans le conteneur FXML seanceLocation
-                    seanceDate.setText(date);
-                    seanceNbPlaces.setText(valueOf(nbPlaces));
-                    seanceStatus.setText(status);
-                } catch (Exception ex) {
-                    System.err.println("Erreur chargement seance : " + ex.getMessage());
-                }
+            String location = seance.getLocation(); // On récupère le lieu de cette seance
+            String date = seance.dateFormat(seance.getDate());
+            int nbPlaces = seance.getNb_places();
+            String status = seance.getStatus();
+            try {
+                System.out.println("lieu : " + location);
+                seanceLocation.setText(location); // On l'affiche dans le conteneur FXML seanceLocation
+                seanceDate.setText(date);
+                seanceNbPlaces.setText(valueOf(nbPlaces));
+                seanceStatus.setText(status);
+            } catch (Exception ex) {
+                System.err.println("Erreur chargement seance : " + ex.getMessage());
             }
 
         } catch (Exception e) {
