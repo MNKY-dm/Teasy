@@ -59,7 +59,7 @@ public class SeanceInfosController {
             }
 
         } catch (Exception e) {
-            System.err.println("EventCardController : erreur dans setEventData ; Impossible de récupérer les infos de l'événement " + e.getMessage());
+            System.err.println("EventCardController : erreur dans setSeanceInfos ; Impossible de récupérer les infos de l'événement " + e.getMessage());
         }
     }
 }

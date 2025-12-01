@@ -99,6 +99,7 @@ public class EventController implements Initializable {
 
     public void setEvent(Event event) {
         setEventId(event);
+        this.event = event;
         System.out.println("setEvent affiche l'event courant : " + event);
         setEventTitle(event);
         setEventDescription(event);
