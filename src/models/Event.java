@@ -106,12 +106,12 @@ public class Event {
 
             int responseCode = connection.getResponseCode();
 
-            // Afficher le code de réponse pour déboguer
-            System.out.println("URL : " + urlString + " -> Code : " + responseCode);
+            // Afficher le code de réponse pour tester
+//            System.out.println("URL : " + urlString + " -> Code : " + responseCode);
 
-            // Vérifier si c'est une réponse valide (200-299)
+            // Vérifier si c'est une réponse valide
             boolean isValid = responseCode >= 200 && responseCode < 300;
-            System.out.println("URL : " + urlString + " -> Status : " + isValid);
+//            System.out.println("URL : " + urlString + " -> Status : " + isValid);
 
             connection.disconnect();
             System.out.println("Valide au retour ? : " + isValid);

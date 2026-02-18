@@ -34,6 +34,7 @@ public class SeanceInfosController {
     private AnchorPane seanceInfosRoot;
 
     public void setSeanceInfos(Seance seance){
+        System.out.println("setSeanceInfos pour l'event : " + seance.getEvent_id());
 
         try {
             // Tenter de récupérer l'ID de l'événement courant

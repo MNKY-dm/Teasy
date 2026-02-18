@@ -110,6 +110,7 @@ public class AppController {
     @FXML
     public void loadEvent(Event event) {
         try {
+            System.out.println("[APPCONTROLLER] : loadEvent --> Chargement de : " + event);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EventScene.fxml"));
             Parent root = loader.load();
 

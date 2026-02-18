@@ -49,6 +49,8 @@ public class EventController implements Initializable {
 
         // Débugger
         System.out.println("initialize() appelée");
+//        System.out.println("event : " + event.toString());
+        System.out.println("eventId = 0 ? " + (eventId == 0));
         System.out.println("eventTitle null ? " + (eventTitle == null));
         System.out.println("eventAffiche null ? " + (eventAffiche == null));
         System.out.println("eventDescription null ? " + (eventDescription == null));
@@ -62,7 +64,7 @@ public class EventController implements Initializable {
 
         System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
 
-        loadSeanceInfos();
+//        setEvent(event);
     }
 
     public void loadSeanceInfos() {
@@ -71,6 +73,7 @@ public class EventController implements Initializable {
         // Récupérer les séances de l'événement courant
         List<Seance> seances = EventDAO.getSeances(eventId);
 
+        System.out.println("Nombre de seances trouvées : " + seances.size());
         // Afficher chaque événement dans une card
         for (Seance seance : seances) {
             addSeanceInfos(seance);
@@ -80,6 +83,7 @@ public class EventController implements Initializable {
 
     // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
     private void addSeanceInfos(Seance seance) {
+        System.out.println("addSeanceInfos pour l'event : " + seance.getEvent_id());
         try {
             // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceInfos.fxml"));
@@ -98,12 +102,13 @@ public class EventController implements Initializable {
     }
 
     public void setEvent(Event event) {
-        setEventId(event);
         this.event = event;
+        this.eventId = event.getId();
         System.out.println("setEvent affiche l'event courant : " + event);
         setEventTitle(event);
         setEventDescription(event);
         setEventAffiche(event);
+        loadSeanceInfos();
     }
 
     private void setEventId(Event event) {

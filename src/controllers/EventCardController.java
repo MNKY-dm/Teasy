@@ -33,28 +33,28 @@ public class EventCardController {
             // Tenter de récupérer les infos de l'événement voulu
             this.eventId = event.getId();
             eventTitle.setText(event.getName());
-            List<Photo> pictures = EventDAO.getPictures(eventId);
+            String affiche = EventDAO.getRowById(eventId).getAffiche();
+            System.out.println("setEventData pour l'event " + eventId);
+            System.out.println("setEventData pour l'event " + eventId + " affiche " + affiche);
+//            System.out.println("setEventData pour l'event " + eventId + " pictures " + pictures.size());
 
             // Tenter de récupérer les images liées à l'événement
             // Penser à renommer les différentes entités pour mieux s'y retrouver : "Photo" ; "Picture" ; "Image"
-            if (!pictures.isEmpty()) { // Si on trouve une/des image(s) liée(s) à cet événement
-                Photo pic = pictures.getFirst(); // On récupère la première image
-                String picUrl = pic.getUrl(); // On récupère l'URL de cette image
 
-                if (picUrl != null && pic.isUrlValid()) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
-                    try {
-                        Image image = new Image(picUrl); // On modélise l'image à partir de son URL
-                        System.out.println("Url valide : " + picUrl);
-                        eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
-                    } catch (Exception ex) {
-                        System.err.println("Erreur chargement image : " + picUrl);
-                        // Mettre une image par défaut
-                         eventPic.setImage(new Image("/pics/default_event_pic.png"));
-                    }
-                } else {
+            if (affiche != null && event.isAfficheUrlValid()) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
+                try {
+                    Image image = new Image(affiche); // On modélise l'image à partir de son URL
+                    System.out.println("Url valide : " + affiche);
+                    System.out.println("Event associé : " + eventId);
+                    eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
+                } catch (Exception ex) {
+                    System.err.println("Erreur chargement image : " + affiche);
                     // Mettre une image par défaut
-                    eventPic.setImage(new Image("/pics/default_event_pic.png"));
+                     eventPic.setImage(new Image("/pics/default_event_pic.png"));
                 }
+            } else {
+                // Mettre une image par défaut
+                eventPic.setImage(new Image("/pics/default_event_pic.png"));
             }
         } catch (Exception e) {
             System.err.println("EventCardController : erreur dans setEventData ; Impossible de récupérer les infos de l'événement " + e.getMessage());

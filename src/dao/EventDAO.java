@@ -183,22 +183,23 @@ public class EventDAO implements DAO {
     public static List<Seance> getSeances(int eventId) {
         String sql = "SELECT * " +
                 "FROM seance " +
-                "WHERE event_id = ?";
+                "WHERE event_id = ? ;";
 
         List<Seance> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection();
              var stmt  = conn.prepareStatement(sql)) {
 
-//            System.out.println("eventId reçu : " + eventId); // Débugger la méthode
-//            System.out.println("SQL avant : " + sql);
+            System.out.println("eventId reçu : " + eventId); // Débugger la méthode
+            System.out.println("SQL avant : " + sql);
 
             stmt.setInt(1, eventId);
+            System.out.println("SQL après : " + sql);
 
             var rs = stmt.executeQuery(); // Erreur bloquante ici : j'avais passé sql en paramètre
 
             while (rs.next()) {
-//                System.out.println("Photo trouvée : event_id=" + rs.getInt("event_id") + ", url=" + rs.getString("url")); // Débugger la méthode
+                System.out.println("Séance en cours d'ajout");
                 Seance seance = new Seance(rs.getInt("event_id"),
                         rs.getTimestamp("date"),
                         rs.getString("location"),
@@ -207,6 +208,7 @@ public class EventDAO implements DAO {
                 seance.setId(rs.getInt("id"));
                 seance.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(seance);
+                System.out.println("seance ajoutée : " + seance);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
