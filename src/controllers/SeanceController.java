@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SeanceController implements Initializable {
+    private User currentUser;
     private int seanceId;
     private Event event;
 
@@ -33,7 +34,7 @@ public class SeanceController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("[SEANCECONTROLLER] : initializing");
         // Récupérer l'utilisateur connecté de la session
-        User currentUser = SessionManager.getInstance().getCurrentUser();
+        this.currentUser = SessionManager.getInstance().getCurrentUser();
 
         // Débugger
         System.out.println("initialize() appelée");

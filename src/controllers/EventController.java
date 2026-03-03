@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -25,12 +26,22 @@ import java.util.ResourceBundle;
 
 // Class qui est utilisée lorsque l'utilisateur clique sur un événement
 public class EventController implements Initializable {
-
+    private User currentUser;
     private int eventId;
-
     private Seance currentSeance;
-
     private AnchorPane currentSeancePane;
+
+    @FXML
+    private Menu profile;
+
+    @FXML
+    private Menu myEvents;
+
+    @FXML
+    private Menu postEvent;
+
+    @FXML
+    private Menu adminPanel;
 
     @FXML
     private Label eventTitle;
@@ -47,7 +58,7 @@ public class EventController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // paramètres non utilisés
         // Récupérer l'utilisateur connecté de la session
-        User currentUser = SessionManager.getInstance().getCurrentUser();
+        this.currentUser = SessionManager.getInstance().getCurrentUser();
 
         // Débugger
         System.out.println("initialize() appelée");
@@ -66,7 +77,7 @@ public class EventController implements Initializable {
 
         System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
 
-//        setEvent(event);
+        addRoleActions();
     }
 
     public void loadSeanceInfos() {
@@ -105,6 +116,53 @@ public class EventController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void addClientFunctions() {
+        System.out.println("addClientFunctions pour l'event : " + eventId);
+        profile.setVisible(true);
+        myEvents.setVisible(true);
+    }
+
+    @FXML
+    private void addArtistFunctions() {
+        System.out.println("addArtistFunctions pour l'event : " + eventId);
+        postEvent.setVisible(true);
+    }
+
+    @FXML
+    private void addAdminFunctions() {
+        System.out.println("addAdminFunctions pour l'event : " + eventId);
+        // Rendre visible tous les menus pour l'admin
+        profile.setVisible(true);
+        myEvents.setVisible(true);
+        postEvent.setVisible(true);
+        adminPanel.setVisible(true);
+    }
+
+
+    // Fonction qui gère les fonctionnalités en fonction du role de l'user connecté
+    private void addRoleActions() {
+        String role = currentUser.getRole();
+
+        // IDE propose bloc switch plutôt que if else-if ...
+        switch (role) {
+            case "admin" :
+                System.out.println("addRoleActions admin pour l'event : " + eventId);
+                addAdminFunctions();
+                break;
+            case "artist" :
+                System.out.println("addRoleActions artist pour l'event : " + eventId);
+                addArtistFunctions();
+                break;
+            case "client" :
+                System.out.println("addRoleActions client pour l'event : " + eventId);
+                addClientFunctions();
+                break;
+            default :
+                System.err.println("Role invalide");
         }
     }
 
