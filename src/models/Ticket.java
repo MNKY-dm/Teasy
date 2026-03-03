@@ -12,7 +12,7 @@ public class Ticket {
     private int user_id;
     private int seance_id;
     private String type;
-    private int pricing_id;
+    private float price;
     private String status;
     private Timestamp used_at;
     private boolean is_refunded;
@@ -24,7 +24,7 @@ public class Ticket {
                   int user_id,
                   int seance_id,
                   String type,
-                  int pricing_id,
+                  float price,
                   String status,
                   Timestamp used_at,
                   Boolean is_refunded) {
@@ -34,7 +34,7 @@ public class Ticket {
         this.user_id = user_id;
         this.seance_id = seance_id;
         this.type = type;
-        this.pricing_id = pricing_id;
+        this.price = price;
         this.status = status;
         this.used_at = used_at;
         this.is_refunded = is_refunded;
@@ -68,8 +68,8 @@ public class Ticket {
         return this.type;
     }
 
-    public int getPricing_id() {
-        return this.pricing_id;
+    public float getPrice() {
+        return this.price;
     }
 
     public String getStatus() {
@@ -134,8 +134,8 @@ public class Ticket {
         this.type = type;
     }
 
-    public void setPrice(int pricing_id) {
-        this.pricing_id = pricing_id;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public void setStatus(String status) {
@@ -154,5 +154,5 @@ public class Ticket {
         this.created_at = created_at;
     }
 
-    // Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "aller à un event")
+    // Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")
 }
