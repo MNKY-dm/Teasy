@@ -12,7 +12,7 @@ public class Ticket {
     private int user_id;
     private int seance_id;
     private String type;
-    private float price;
+    private int pricing_id;
     private String status;
     private Timestamp used_at;
     private boolean is_refunded;
@@ -134,8 +134,8 @@ public class Ticket {
         this.type = type;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPrice(int pricing_id) {
+        this.pricing_id = pricing_id;
     }
 
     public void setStatus(String status) {
