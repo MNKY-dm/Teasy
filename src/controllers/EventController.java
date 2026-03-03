@@ -196,10 +196,10 @@ public class EventController implements Initializable {
     @FXML
     private void seanceClicked(AnchorPane cardRoot, Seance seance) {
         if (currentSeancePane != null) {
-            currentSeancePane.setStyle("-fx-background-color: #FFFFFF;");
+            currentSeancePane.setStyle("-fx-background-color: #FFFFFF; -fx-text-fill: #000000;");
         }
         currentSeancePane = cardRoot;
-        currentSeancePane.setStyle("-fx-background-color: #0063cd;");
+        currentSeancePane.setStyle("-fx-background-color: #0063cd; -fx-text-fill: #FFFFFF;");
         currentSeance = seance;
     }
 
@@ -207,7 +207,6 @@ public class EventController implements Initializable {
     public void moveToHome(ActionEvent actionEvent) {
         System.out.println("EventController : moveToHome");
         AppController.getInstance().loadHome();
-
     }
 
     @FXML

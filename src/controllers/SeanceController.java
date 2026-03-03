@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class SeanceController implements Initializable {
     private int seanceId;
+    private Event event;
 
     @FXML
     private Label eventTitle;
@@ -53,12 +54,21 @@ public class SeanceController implements Initializable {
     @FXML
     public void setSeance(Seance seance, Event event) {
         this.seanceId = seance.getId();
+        this.event = event;
+        Pricing pricing = PricingDAO.getRowBySeanceId(seanceId);
         eventTitle.setText(event.getName());
-        labelPrice1.setText(PricingDAO.getRowBySeanceId(seanceId).getPrice1() + "");
-//        labelPrice2.setText();
-//        labelPrice3.setText();
+        labelPrice1.setText(pricing.getPrice1() + "");
+        labelPrice2.setText(pricing.getPrice2() + "");
+        labelPrice3.setText(pricing.getPrice3() + "");
     }
 
+    @FXML
+    public void returnToEvent() {
+        System.out.println("[SEANCECONTROLLER] : returnToEvent");
+        AppController.getInstance().loadEvent(event);
+    }
+
+    // Tests
     static void main(String[] args) {
         Pricing pricing = PricingDAO.getRowBySeanceId(3);
         System.out.println(pricing.getPrice1()+ " " + pricing.getPrice2() + " " + pricing.getPrice3() + " ");
