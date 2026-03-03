@@ -24,7 +24,7 @@ public class TicketDAO implements DAO {
                         rs.getInt("user_id"),
                         rs.getInt("seance_id"),
                         rs.getString("type"),
-                        rs.getFloat("price"),
+                        rs.getInt("pricing_id"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
                         rs.getBoolean("is_refunded"));
@@ -62,7 +62,7 @@ public class TicketDAO implements DAO {
                         rs.getInt("user_id"),
                         rs.getInt("seance_id"),
                         rs.getString("type"),
-                        rs.getFloat("price"),
+                        rs.getInt("pricing_id"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
                         rs.getBoolean("is_refunded"));
@@ -84,7 +84,7 @@ public class TicketDAO implements DAO {
                 " user_id = ?, "+
                 " seance_id = ?, "+
                 " type = ?, "+
-                " price = ?, "+
+                " pricing_id = ?, "+
                 "status = ?, "+
                 " used_at = ?, "+
                 "is_refunded = ? " +
@@ -102,7 +102,7 @@ public class TicketDAO implements DAO {
                 stmt.setInt(4, ticket.getUser_id());
                 stmt.setInt(5, ticket.getSeance_id());
                 stmt.setString(6, ticket.getType());
-                stmt.setFloat(7, ticket.getPrice());
+                stmt.setFloat(7, ticket.getPricing_id());
                 stmt.setString(8, ticket.getStatus());
                 stmt.setTimestamp(9, ticket.getUsed_at());
                 stmt.setBoolean(10, ticket.getIs_refunded());
@@ -146,7 +146,7 @@ public class TicketDAO implements DAO {
                 " user_id = ?,"+
                 " seance_id = ?,"+
                 " type = ?,"+
-                " price = ?,"+
+                " pricing_id = ?,"+
                 " status = ?,"+
                 " used_at = ?,"+
                 " is_refunded = ?,"+
@@ -161,7 +161,7 @@ public class TicketDAO implements DAO {
             stmt.setInt(4, ticket.getUser_id());
             stmt.setInt(5, ticket.getSeance_id());
             stmt.setString(6, ticket.getType());
-            stmt.setFloat(7, ticket.getPrice());
+            stmt.setFloat(7, ticket.getPricing_id());
             stmt.setString(8, ticket.getStatus());
             stmt.setTimestamp(9, ticket.getUsed_at());
             stmt.setBoolean(10, ticket.getIs_refunded());
