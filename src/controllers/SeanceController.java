@@ -1,9 +1,11 @@
 package controllers;
 
+import dao.PricingDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import models.Event;
+import models.Pricing;
 import models.Seance;
 import models.User;
 import services.SessionManager;
@@ -52,8 +54,13 @@ public class SeanceController implements Initializable {
     public void setSeance(Seance seance, Event event) {
         this.seanceId = seance.getId();
         eventTitle.setText(event.getName());
-//        labelPrice1.setText();
+        labelPrice1.setText(PricingDAO.getRowBySeanceId(seanceId).getPrice1() + "");
 //        labelPrice2.setText();
 //        labelPrice3.setText();
+    }
+
+    static void main(String[] args) {
+        Pricing pricing = PricingDAO.getRowBySeanceId(3);
+        System.out.println(pricing.getPrice1()+ " " + pricing.getPrice2() + " " + pricing.getPrice3() + " ");
     }
 }
