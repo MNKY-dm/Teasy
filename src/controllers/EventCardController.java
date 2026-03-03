@@ -33,7 +33,7 @@ public class EventCardController {
             // Tenter de récupérer les infos de l'événement voulu
             this.eventId = event.getId();
             eventTitle.setText(event.getName());
-            String affiche = EventDAO.getRowById(eventId).getAffiche();
+            String affiche = event.getAffiche();
             System.out.println("setEventData pour l'event " + eventId);
             System.out.println("setEventData pour l'event " + eventId + " affiche " + affiche);
 //            System.out.println("setEventData pour l'event " + eventId + " pictures " + pictures.size());

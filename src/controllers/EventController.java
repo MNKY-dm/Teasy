@@ -28,7 +28,9 @@ public class EventController implements Initializable {
 
     private int eventId;
 
-    private Event event;
+    private Seance currentSeance;
+
+    private AnchorPane currentSeancePane;
 
     @FXML
     private Label eventTitle;
@@ -82,6 +84,7 @@ public class EventController implements Initializable {
     }
 
     // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
+    @FXML
     private void addSeanceInfos(Seance seance) {
         System.out.println("addSeanceInfos pour l'event : " + seance.getEvent_id());
         try {
@@ -93,6 +96,10 @@ public class EventController implements Initializable {
             SeanceInfosController seanceInfosController = loader.getController();
             seanceInfosController.setSeanceInfos(seance);
 
+            cardRoot.setOnMouseClicked(event -> {
+                seanceClicked(cardRoot, seance);
+            });
+
             // L'ajouter au HBOX
             seancesInfos.getChildren().add(cardRoot);
 
@@ -102,7 +109,6 @@ public class EventController implements Initializable {
     }
 
     public void setEvent(Event event) {
-        this.event = event;
         this.eventId = event.getId();
         System.out.println("setEvent affiche l'event courant : " + event);
         setEventTitle(event);
@@ -188,6 +194,16 @@ public class EventController implements Initializable {
     }
 
     @FXML
+    private void seanceClicked(AnchorPane cardRoot, Seance seance) {
+        if (currentSeancePane != null) {
+            currentSeancePane.setStyle("-fx-background-color: #FFFFFF;");
+        }
+        currentSeancePane = cardRoot;
+        currentSeancePane.setStyle("-fx-background-color: #0063cd;");
+        currentSeance = seance;
+    }
+
+    @FXML
     public void moveToHome(ActionEvent actionEvent) {
         System.out.println("EventController : moveToHome");
         AppController.getInstance().loadHome();
@@ -197,6 +213,6 @@ public class EventController implements Initializable {
     @FXML
     public void moveToBuyTicket(ActionEvent actionEvent) {
         System.out.println("EventController : moveToBuyTicket");
-        AppController.getInstance().loadBuyTicket(dao.EventDAO.getRowById(eventId));
+        AppController.getInstance().loadSeance(currentSeance);
     }
 }

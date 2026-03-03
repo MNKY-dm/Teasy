@@ -4,6 +4,7 @@ import dao.EventDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Event;
 import models.Photo;
@@ -62,5 +63,11 @@ public class SeanceInfosController {
         } catch (Exception e) {
             System.err.println("EventCardController : erreur dans setSeanceInfos ; Impossible de récupérer les infos de l'événement " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void showSeance(MouseEvent event){
+        System.out.println("Seance cliquée : ID événement --> " + eventId + " ; " + "Date de la séance --> " + seanceDate.getText());
+        System.out.println("Séance disponible ? --> " + seanceStatus.getText().equals("disponible"));
     }
 }

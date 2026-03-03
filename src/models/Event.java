@@ -3,7 +3,6 @@ package models;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Event {
     private Integer id;

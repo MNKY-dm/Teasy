@@ -1,11 +1,13 @@
 package controllers;
 
+import dao.EventDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.Event;
+import models.Seance;
 import services.SessionManager;
 
 import java.io.IOException;
@@ -44,7 +46,6 @@ public class AppController {
 
 
 //  loadScene(String fxmlFile) : Charger n'importe quelle scène
-//  Méthode interne utilisée par les autres loadXxx()
     private void loadScene(String fxmlFile) throws IOException {
         System.out.println("[APPCONTROLLER] Chargement de : " + fxmlFile);
 
@@ -134,18 +135,33 @@ public class AppController {
             e.printStackTrace();
         }
     }
-    public void loadBuyTicket(Event event) {
-        try {
-            loadScene("views/BuyTicketScene.fxml");
 
-            // Adapter le titre en fonction de l'event cliqué
+    public void loadSeance(Seance seance) {
+        try {
+            System.out.println("[APPCONTROLLER] : loadSeance --> Chargement de : " + seance);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceScene.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            SeanceController seanceController = loader.getController();  // ← LE BON
+
+            // Récupérer l'événement lié à la séance pour passer l'information à la page SeanceScene
+            Event event = EventDAO.getRowById(seance.getEvent_id());
+
+            // Maintenant appeler setEvent sur le bon contrôleur (celui avec @FXML)
+            seanceController.setSeance(seance, event);
+
+            // Adapter le titre, etc.
             String eventName = event.getName();
-            String title = "Teasy - Acheter un ticket (" + eventName + ")";
+            String title = "Teasy - Séance (" + eventName + ") - " + seance.getDate();
             primaryStage.setTitle(title);
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
         } catch (IOException e) {
-            System.err.println("[ERREUR] Impossible de charger BuyTicketScene.fxml");
+            System.err.println("[ERREUR] Impossible de charger SeanceScene.fxml");
             e.printStackTrace();
         }
     }
