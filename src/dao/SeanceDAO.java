@@ -1,5 +1,6 @@
 package dao;
 
+import models.Pricing;
 import models.Seance;
 
 import java.sql.SQLException;
@@ -64,6 +65,32 @@ public class SeanceDAO implements DAO {
         }
 
         return seance;
+    }
+
+    public static Pricing getPricingById(int id) throws SQLException {
+        String sql = "SELECT * " +
+                "FROM pricing " +
+                "WHERE seance_id = ?";
+        Pricing pricing = null;
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id); // Remplace le '?' par l'id
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                pricing = new Pricing(rs.getInt("seance_id"),
+                        rs.getFloat("price_1"),
+                        rs.getFloat("price_2"),
+                        rs.getFloat("price_3"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return pricing;
     }
 
     public static boolean updateRowById(Seance seance){
