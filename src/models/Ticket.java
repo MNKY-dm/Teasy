@@ -24,7 +24,7 @@ public class Ticket {
                   int user_id,
                   int seance_id,
                   String type,
-                  float price,
+                  int pricing_id,
                   String status,
                   Timestamp used_at,
                   Boolean is_refunded) {
@@ -34,7 +34,7 @@ public class Ticket {
         this.user_id = user_id;
         this.seance_id = seance_id;
         this.type = type;
-        this.price = price;
+        this.pricing_id = pricing_id;
         this.status = status;
         this.used_at = used_at;
         this.is_refunded = is_refunded;
@@ -68,8 +68,8 @@ public class Ticket {
         return this.type;
     }
 
-    public float getPrice() {
-        return this.price;
+    public int getPricing_id() {
+        return this.pricing_id;
     }
 
     public String getStatus() {
