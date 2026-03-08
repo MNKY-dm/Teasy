@@ -13,24 +13,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
    <children>
       <Label fx:id="lblusersname" layoutX="476.0" layoutY="14.0" prefHeight="17.0" prefWidth="110.0" />
-      <MenuBar layoutY="1.0" prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-                <MenuItem mnemonicParsing="false" text="Delete" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Profil">
-                <MenuItem fx:id="btnGoToProfile" mnemonicParsing="false" text="Voir le profil" />
-               <MenuItem fx:id="btnGoToTickets" mnemonicParsing="false" text="Voir l'historique" />
-                <MenuItem mnemonicParsing="false" text="Réglages" />
-                <MenuItem mnemonicParsing="false" onAction="#btnLogout" text="Se déconnecter" />
-            </Menu>
-        </menus>
-      </MenuBar>
+       <fx:include source="MenuBar.fxml" />
       <ScrollPane fx:id="main" fitToWidth="true" layoutX="1.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
         <content>
           <AnchorPane fx:id="mainContent" minHeight="0.0" minWidth="0.0" prefHeight="523.0" prefWidth="582.0">

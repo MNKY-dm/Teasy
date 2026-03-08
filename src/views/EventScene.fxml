@@ -13,39 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventController">
    <children>
-      <MenuBar layoutX="148.0" layoutY="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Menu">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Aller au menu" />
-            </items>
-          </Menu>
-          <Menu fx:id="myEvents" mnemonicParsing="false" text="Mes événements" visible="false">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Voir mes tickets" />
-                  <MenuItem mnemonicParsing="false" text="Voir mes favoris" />
-            </items>
-          </Menu>
-          <Menu fx:id="profile" mnemonicParsing="false" text="Profile" visible="false">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Voir le profil" />
-                  <MenuItem mnemonicParsing="false" text="Voir l'historique" />
-                  <MenuItem mnemonicParsing="false" text="Réglages" />
-                  <MenuItem mnemonicParsing="false" text="Se déconnecter" />
-            </items>
-          </Menu>
-            <Menu fx:id="postEvent" mnemonicParsing="false" text="Poster" visible="false">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Poster un événement" />
-               </items>
-            </Menu>
-            <Menu fx:id="adminPanel" mnemonicParsing="false" text="Panel Admin" visible="false">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Panel Admin" />
-               </items>
-            </Menu>
-        </menus>
-      </MenuBar>
+       <fx:include source="MenuBar.fxml" />
       <Label fx:id="eventTitle" alignment="TOP_CENTER" layoutY="29.0" prefHeight="17.0" prefWidth="529.0" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
          <font>
             <Font name="System Bold" size="30.0" />

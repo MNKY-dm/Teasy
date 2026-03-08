@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+
+<MenuBar xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="controllers.MenuController"
+         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <menus>
+        <Menu text="Teasy">
+            <items>
+                <MenuItem text="Accueil" onAction="#onHome"/>
+                <MenuItem text="Se déconnecter" onAction="#onLogout"/>
+            </items>
+        </Menu>
+        <Menu fx:id="menuMyEvents" text="Mes événements" visible="false">
+            <items>
+                <MenuItem text="Mes tickets"/>
+                <MenuItem fx:id="publishEvent" text="Poster un événement" visible="false"  />
+            </items>
+        </Menu>
+        <Menu fx:id="menuProfile" text="Profil" visible="false">
+            <items>
+                <MenuItem text="Voir le profil"/>
+            </items>
+        </Menu>
+        <Menu fx:id="menuAdmin" text="Admin" visible="false">
+            <items>
+                <MenuItem text="Panel Admin"/>
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>

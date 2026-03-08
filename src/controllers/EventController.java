@@ -76,8 +76,6 @@ public class EventController implements Initializable {
         }
 
         System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
-
-        addRoleActions();
     }
 
     public void loadSeanceInfos() {
@@ -116,53 +114,6 @@ public class EventController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void addClientFunctions() {
-        System.out.println("addClientFunctions pour l'event : " + eventId);
-        profile.setVisible(true);
-        myEvents.setVisible(true);
-    }
-
-    @FXML
-    private void addArtistFunctions() {
-        System.out.println("addArtistFunctions pour l'event : " + eventId);
-        postEvent.setVisible(true);
-    }
-
-    @FXML
-    private void addAdminFunctions() {
-        System.out.println("addAdminFunctions pour l'event : " + eventId);
-        // Rendre visible tous les menus pour l'admin
-        profile.setVisible(true);
-        myEvents.setVisible(true);
-        postEvent.setVisible(true);
-        adminPanel.setVisible(true);
-    }
-
-
-    // Fonction qui gère les fonctionnalités en fonction du role de l'user connecté
-    private void addRoleActions() {
-        String role = currentUser.getRole();
-
-        // IDE propose bloc switch plutôt que if else-if ...
-        switch (role) {
-            case "admin" :
-                System.out.println("addRoleActions admin pour l'event : " + eventId);
-                addAdminFunctions();
-                break;
-            case "artist" :
-                System.out.println("addRoleActions artist pour l'event : " + eventId);
-                addArtistFunctions();
-                break;
-            case "client" :
-                System.out.println("addRoleActions client pour l'event : " + eventId);
-                addClientFunctions();
-                break;
-            default :
-                System.err.println("Role invalide");
         }
     }
 
