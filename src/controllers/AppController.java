@@ -23,9 +23,6 @@ public class AppController {
     // Stage : la fenêtre principale de l'app
     private Stage primaryStage;
 
-    // Scene courante : le contenu actuellement affiché
-    private Scene currentScene;
-
     private AppController() {}
 
     // Pattern SingleTon
@@ -57,8 +54,8 @@ public class AppController {
         // Charger le contenu FXML dans un Parent (conteneur)
         Parent root = loader.load();
 
-        // Créer une nouvelle Scene avec ce contenu
-        currentScene = new Scene(root);
+        // Scene courante : le contenu actuellement affiché
+        Scene currentScene = new Scene(root);
 
         // Afficher cette scène dans le Stage
         primaryStage.setScene(currentScene);

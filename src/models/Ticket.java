@@ -8,7 +8,6 @@ public class Ticket {
     private Integer id;
     private String code;
     private String title;
-    private String place;
     private int user_id;
     private int seance_id;
     private String type;
@@ -20,7 +19,6 @@ public class Ticket {
 
     public Ticket(String code,
                   String title,
-                  String place,
                   int user_id,
                   int seance_id,
                   String type,
@@ -30,7 +28,6 @@ public class Ticket {
                   Boolean is_refunded) {
         this.code = code;
         this.title = title;
-        this.place = place;
         this.user_id = user_id;
         this.seance_id = seance_id;
         this.type = type;
@@ -50,10 +47,6 @@ public class Ticket {
 
     public String getTitle() {
         return this.title;
-    }
-
-    public String getPlace() {
-        return this.place;
     }
 
     public int getUser_id() {
@@ -110,15 +103,6 @@ public class Ticket {
             this.title = title;
         } else {
             throw new IllegalArgumentException("L'title ne peut pas être null.");
-        }
-    }
-
-    public void setPlace(String place) {
-        if (place != null) {
-            this.place = place;
-        }
-        else {
-            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
         }
     }
 
