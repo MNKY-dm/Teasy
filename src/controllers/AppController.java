@@ -162,6 +162,10 @@ public class AppController {
             e.printStackTrace();
         }
     }
+    
+    public void loadMyTickets() {
+        
+    }
 
     // =====================================================
     // AJOUTER D'AUTRES loadPage() POUR CHAQUE PAGE
@@ -204,5 +208,14 @@ public class AppController {
     // getPrimaryStage() : Obtenir la Stage principale si jamais besoin d'obtenir les propriétés de la scene courante
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public void loadPublishEvent() {
+    }
+
+    public void loadMyProfile() {
+    }
+
+    public void loadAdminPanel() {
     }
 }

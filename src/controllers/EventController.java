@@ -31,29 +31,10 @@ public class EventController implements Initializable {
     private Seance currentSeance;
     private AnchorPane currentSeancePane;
 
-    @FXML
-    private Menu profile;
-
-    @FXML
-    private Menu myEvents;
-
-    @FXML
-    private Menu postEvent;
-
-    @FXML
-    private Menu adminPanel;
-
-    @FXML
-    private Label eventTitle;
-
-    @FXML
-    private ImageView eventAffiche;
-
-    @FXML
-    private Label eventDescription;
-
-    @FXML
-    private VBox seancesInfos;
+    @FXML private Label eventTitle;
+    @FXML private ImageView eventAffiche;
+    @FXML private Label eventDescription;
+    @FXML private VBox seancesInfos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // paramètres non utilisés

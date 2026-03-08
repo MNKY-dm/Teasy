@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
@@ -40,4 +41,24 @@ public class MenuController implements Initializable {
 
     @FXML private void onHome() { AppController.getInstance().loadHome(); }
     @FXML private void onLogout() { AppController.getInstance().loadLogout(); }
+
+    @FXML
+    private void myTickets() {
+        AppController.getInstance().loadMyTickets();
+    }
+
+    @FXML
+    private void publishEvent() {
+        AppController.getInstance().loadPublishEvent();
+    }
+
+    @FXML
+    private void myProfile() {
+        AppController.getInstance().loadMyProfile();
+    }
+
+    @FXML
+    private void adminPanel() {
+        AppController.getInstance().loadAdminPanel();
+    }
 }

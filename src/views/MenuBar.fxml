@@ -17,18 +17,18 @@
         </Menu>
         <Menu fx:id="menuMyEvents" text="Mes événements" visible="false">
             <items>
-                <MenuItem text="Mes tickets"/>
-                <MenuItem fx:id="publishEvent" text="Poster un événement" visible="false"  />
+                <MenuItem text="Mes tickets" onAction="#myTickets"/>
+                <MenuItem fx:id="publishEvent" text="Poster un événement" visible="false" onAction="#publishEvent" />
             </items>
         </Menu>
         <Menu fx:id="menuProfile" text="Profil" visible="false">
             <items>
-                <MenuItem text="Voir le profil"/>
+                <MenuItem text="Voir le profil" onAction="#myProfile" />
             </items>
         </Menu>
         <Menu fx:id="menuAdmin" text="Admin" visible="false">
             <items>
-                <MenuItem text="Panel Admin"/>
+                <MenuItem text="Panel Admin" onAction="#adminPanel"/>
             </items>
         </Menu>
     </menus>
