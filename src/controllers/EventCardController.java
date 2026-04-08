@@ -1,8 +1,6 @@
 package controllers;
 
-// Gère les événements à afficher dynamiquement sur les différentes pages HomeScene et EventScene
-
-import dao.EventDAO;
+// Gère les événements à afficher dynamiquement sur les différentes pages HomeScene
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,10 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Event;
-import models.Photo;
-
-import java.sql.SQLException;
-import java.util.List;
+import services.ImageCache;
 
 public class EventCardController {
 
@@ -34,28 +29,15 @@ public class EventCardController {
             this.eventId = event.getId();
             eventTitle.setText(event.getName());
             String affiche = event.getAffiche();
-            System.out.println("setEventData pour l'event " + eventId);
-            System.out.println("setEventData pour l'event " + eventId + " affiche " + affiche);
+//            System.out.println("setEventData pour l'event " + eventId + " affiche " + affiche);
 //            System.out.println("setEventData pour l'event " + eventId + " pictures " + pictures.size());
 
             // Tenter de récupérer les images liées à l'événement
             // Penser à renommer les différentes entités pour mieux s'y retrouver : "Photo" ; "Picture" ; "Image"
 
-            if (affiche != null) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
-                try {
-                    Image image = new Image(affiche, true); // On modélise l'image à partir de son URL, et on passe true pour qu'elle soit chargée de manière asynchrone, pour éviter les lenteurs.
-                    System.out.println("Url valide : " + affiche);
-                    System.out.println("Event associé : " + eventId);
-                    eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
-                } catch (Exception ex) {
-                    System.err.println("Erreur chargement image : " + affiche);
-                    // Mettre une image par défaut
-                     eventPic.setImage(new Image("/pics/default_event_pic.png", true));
-                }
-            } else {
-                // Mettre une image par défaut
-                eventPic.setImage(new Image("/pics/default_event_pic.png", true));
-            }
+            Image image = ImageCache.get(affiche);
+            eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
+
         } catch (Exception e) {
             System.err.println("EventCardController : erreur dans setEventData ; Impossible de récupérer les infos de l'événement " + e.getMessage());
         }
