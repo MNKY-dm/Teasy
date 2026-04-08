@@ -41,20 +41,20 @@ public class EventCardController {
             // Tenter de récupérer les images liées à l'événement
             // Penser à renommer les différentes entités pour mieux s'y retrouver : "Photo" ; "Picture" ; "Image"
 
-            if (affiche != null && event.isAfficheUrlValid()) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
+            if (affiche != null) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
                 try {
-                    Image image = new Image(affiche); // On modélise l'image à partir de son URL
+                    Image image = new Image(affiche, true); // On modélise l'image à partir de son URL, et on passe true pour qu'elle soit chargée de manière asynchrone, pour éviter les lenteurs.
                     System.out.println("Url valide : " + affiche);
                     System.out.println("Event associé : " + eventId);
                     eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic
                 } catch (Exception ex) {
                     System.err.println("Erreur chargement image : " + affiche);
                     // Mettre une image par défaut
-                     eventPic.setImage(new Image("/pics/default_event_pic.png"));
+                     eventPic.setImage(new Image("/pics/default_event_pic.png", true));
                 }
             } else {
                 // Mettre une image par défaut
-                eventPic.setImage(new Image("/pics/default_event_pic.png"));
+                eventPic.setImage(new Image("/pics/default_event_pic.png", true));
             }
         } catch (Exception e) {
             System.err.println("EventCardController : erreur dans setEventData ; Impossible de récupérer les infos de l'événement " + e.getMessage());

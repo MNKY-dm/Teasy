@@ -162,9 +162,20 @@ public class AppController {
             e.printStackTrace();
         }
     }
-    
+
+//    Options du menu
+
     public void loadMyTickets() {
-        
+
+    }
+
+    public void loadPublishEvent() {
+    }
+
+    public void loadMyProfile() {
+    }
+
+    public void loadAdminPanel() {
     }
 
     // =====================================================
@@ -210,12 +221,4 @@ public class AppController {
         return primaryStage;
     }
 
-    public void loadPublishEvent() {
-    }
-
-    public void loadMyProfile() {
-    }
-
-    public void loadAdminPanel() {
-    }
 }
