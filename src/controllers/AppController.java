@@ -185,6 +185,27 @@ public class AppController {
     }
 
     public void loadAdminPanel() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadAdminPanel");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminPanelScene.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            AdminPanelController adminPanelController = loader.getController();
+
+            primaryStage.setTitle("Teasy - Panel Admin");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger AdminPanelScene.fxml");
+            e.printStackTrace();
+        }
     }
 
     // =====================================================
