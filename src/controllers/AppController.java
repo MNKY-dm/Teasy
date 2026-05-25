@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.Event;
 import models.Seance;
+import models.Ticket;
 import services.SessionManager;
 
 import java.io.IOException;
@@ -146,16 +147,10 @@ public class AppController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceScene.fxml"));
             Parent root = loader.load();
 
-            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
-            SeanceController seanceController = loader.getController();  // ← LE BON
-
-            // Récupérer l'événement lié à la séance pour passer l'information à la page SeanceScene
+            SeanceController seanceController = loader.getController();
             Event event = EventDAO.getRowById(seance.getEvent_id());
-
-            // Maintenant appeler setEvent sur le bon contrôleur (celui avec @FXML)
             seanceController.setSeance(seance, event);
 
-            // Adapter le titre, etc.
             String eventName = event.getName();
             String title = "Teasy - Séance (" + eventName + ") - " + seance.getDate();
             primaryStage.setTitle(title);
@@ -209,6 +204,34 @@ public class AppController {
         }
     }
 
+    public void loadTicketsManagement() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadTicketsManagement");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketsManagementScene.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            TicketsManagementController ticketsManagementController = loader.getController();
+
+            ticketsManagementController.setTickets();
+
+            primaryStage.setTitle("Teasy - Panel Admin");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger AdminPanelScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    public void loadTicketModifier(Ticket currentTicket) {
+    }
 
     // loadLogout() : Charger la page ConnectScene.fxml après déconnexion (depuis Profil → Se déconnecter)
 

@@ -1,7 +1,10 @@
 package models;
 
+import dao.TicketDAO;
+import dao.UserDAO;
+
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Ticket {
 
@@ -37,6 +40,10 @@ public class Ticket {
         this.is_refunded = is_refunded;
     }
 
+    public void delete() throws SQLException {
+        TicketDAO.deleteRowById(this.id);
+    }
+
     public int getId() {
         return this.id;
     }
@@ -51,6 +58,10 @@ public class Ticket {
 
     public int getUser_id() {
         return this.user_id;
+    }
+
+    public String getUser() {
+        return UserDAO.getRowById(this.getUser_id()).getNom();
     }
 
     public int getSeance_id() {

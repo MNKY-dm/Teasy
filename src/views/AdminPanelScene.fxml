@@ -1,43 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="406.0" prefWidth="600.0" styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPanelController">
-    <fx:include source="MenuBar.fxml" />
-    <ScrollPane layoutY="26.0" prefHeight="400.0" prefWidth="600.0" styleClass="main-scroll">
-        <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="582.0" styleClass="home-content">
-                <children>
-                    <Label alignment="CENTER" layoutX="244.0" layoutY="3.0" prefHeight="23.0" prefWidth="95.0" styleClass="page-title" text="Panel Admin" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPanelController">
 
-                    <Label layoutX="14.0" layoutY="52.0" styleClass="section-label" text="Nombre de tickets :" />
+    <!-- HAUT : MenuBar + titre -->
+    <top>
+        <VBox>
+            <fx:include source="MenuBar.fxml" />
+            <Label alignment="CENTER" maxWidth="Infinity" styleClass="page-title" text="Panel Admin">
+                <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
+            </Label>
+        </VBox>
+    </top>
 
-                    <Label layoutX="14.0" layoutY="81.0" styleClass="stat-label" text="Standard :" />
-                    <Label layoutX="119.0" layoutY="81.0" styleClass="stat-label" text="Plus : " />
-                    <Label layoutX="206.0" layoutY="81.0" styleClass="stat-label" text="VIP : " />
-                    <Label layoutX="291.0" layoutY="81.0" styleClass="stat-label" text="Total : " />
+    <!-- CENTRE : stats -->
+    <center>
+        <VBox spacing="16.0">
+            <VBox.margin><Insets left="24.0" right="24.0" top="16.0" /></VBox.margin>
 
-                    <Label fx:id="nbStandardTickets" layoutX="76.0" layoutY="81.0" prefHeight="17.0" prefWidth="34.0" styleClass="stat-value" />
-                    <Label fx:id="nbPlusTickets" layoutX="157.0" layoutY="81.0" prefHeight="17.0" prefWidth="34.0" styleClass="stat-value" />
-                    <Label fx:id="nbVIPTickets" layoutX="244.0" layoutY="81.0" prefHeight="17.0" prefWidth="34.0" styleClass="stat-value" />
-                    <Label fx:id="nbTotalTickets" layoutX="339.0" layoutY="81.0" prefHeight="17.0" prefWidth="47.0" styleClass="stat-value" />
+            <!-- Bloc tickets par type -->
+            <VBox spacing="8.0">
+                <Label styleClass="section-label" text="Nombre de tickets :" />
 
-                    <Label layoutX="14.0" layoutY="116.0" styleClass="stat-label" text="Nombre de tickets valides : " />
-                    <Label fx:id="nbValidTickets" layoutX="176.0" layoutY="116.0" prefHeight="17.0" prefWidth="48.0" styleClass="stat-value" />
+                <HBox spacing="24.0">
+                    <HBox spacing="6.0">
+                        <Label styleClass="stat-label" text="Standard :" />
+                        <Label fx:id="nbStandardTickets" styleClass="stat-value" />
+                    </HBox>
+                    <HBox spacing="6.0">
+                        <Label styleClass="stat-label" text="Plus :" />
+                        <Label fx:id="nbPlusTickets" styleClass="stat-value" />
+                    </HBox>
+                    <HBox spacing="6.0">
+                        <Label styleClass="stat-label" text="VIP :" />
+                        <Label fx:id="nbVIPTickets" styleClass="stat-value" />
+                    </HBox>
+                    <HBox spacing="6.0">
+                        <Label styleClass="stat-label" text="Total :" />
+                        <Label fx:id="nbTotalTickets" styleClass="stat-value" />
+                    </HBox>
+                </HBox>
+            </VBox>
 
-                    <Label layoutX="14.0" layoutY="151.0" styleClass="stat-label" text="Nombre de tickets périmés : " />
-                    <Label fx:id="nbExpiredTickets" layoutX="176.0" layoutY="151.0" prefHeight="17.0" prefWidth="54.0" styleClass="stat-value" />
+            <!-- Ligne : tickets valides -->
+            <HBox spacing="8.0">
+                <Label styleClass="stat-label" text="Nombre de tickets valides :" />
+                <Label fx:id="nbValidTickets" styleClass="stat-value" />
+            </HBox>
 
-                    <Label layoutX="14.0" layoutY="183.0" styleClass="stat-label" text="Nombre de tickets remboursés : " />
-                    <Label fx:id="nbRefundedTickets" layoutX="200.0" layoutY="183.0" prefHeight="17.0" prefWidth="49.0" styleClass="stat-value" />
-                </children>
-            </AnchorPane>
-        </content>
-    </ScrollPane>
-   <opaqueInsets>
+            <!-- Ligne : tickets périmés -->
+            <HBox spacing="8.0">
+                <Label styleClass="stat-label" text="Nombre de tickets périmés :" />
+                <Label fx:id="nbExpiredTickets" styleClass="stat-value" />
+            </HBox>
+
+            <!-- Ligne : tickets remboursés -->
+            <HBox spacing="8.0">
+                <Label styleClass="stat-label" text="Nombre de tickets remboursés :" />
+                <Label fx:id="nbRefundedTickets" styleClass="stat-value" />
+            </HBox>
+
+        </VBox>
+    </center>
+   <padding>
       <Insets bottom="6.0" left="6.0" right="6.0" />
-   </opaqueInsets>
-</AnchorPane>
+   </padding>
+   <bottom>
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toTicketsManagement" styleClass="btn-primary" text="Gérer les tickets" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+   </bottom>
+
+</BorderPane>
