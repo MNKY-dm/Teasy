@@ -84,7 +84,7 @@ public class TicketsManagementController implements Initializable {
     }
 
     @FXML
-    private void updateTicketsInfos() {
+    private void updateTicketInfos() {
         System.out.println("updateTicketsInfos pour l'event : " + currentTicket.getId());
         AppController.getInstance().loadTicketModifier(currentTicket);
     }
@@ -93,6 +93,7 @@ public class TicketsManagementController implements Initializable {
     private void deleteTicket() {
         try {
             currentTicket.delete();
+            ticketsRoot.getChildren().remove(currentTicketPane);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
