@@ -56,6 +56,9 @@ public class AppController {
 
         // Scene courante : le contenu actuellement affiché
         Scene currentScene = new Scene(root);
+        currentScene.getStylesheets().add(
+                getClass().getResource("/styles/style.css").toExternalForm()
+        );
 
         // Afficher cette scène dans le Stage
         primaryStage.setScene(currentScene);
@@ -96,8 +99,8 @@ public class AppController {
             String role = SessionManager.getInstance().getCurrentUser().getRole();
             String title = "Teasy - Billetterie - Accueil (" + role + ")";
             primaryStage.setTitle(title);
-            primaryStage.setMinWidth(600);
-            primaryStage.setMinHeight(400);
+            primaryStage.setMinWidth(1200);
+            primaryStage.setMinHeight(900);
 
         } catch (IOException e) {
             System.err.println("[ERREUR] Impossible de charger HomeScene.fxml");
@@ -126,6 +129,9 @@ public class AppController {
             primaryStage.setMinHeight(400);
 
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
             primaryStage.setScene(scene);
         } catch (IOException e) {
             System.err.println("[ERREUR] Impossible de charger EventScene.fxml");
@@ -156,6 +162,9 @@ public class AppController {
             primaryStage.setMinHeight(400);
 
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
             primaryStage.setScene(scene);
         } catch (IOException e) {
             System.err.println("[ERREUR] Impossible de charger SeanceScene.fxml");

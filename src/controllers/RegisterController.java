@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.UserDAO;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -33,8 +34,6 @@ public class RegisterController {
     @FXML
     private Label lbinfo;
 
-    @FXML
-    private Label lbconfirm;
 
 //    @FXML  À ajouter plus tard lors de la fonctionnalité des suggestions en fonction de l'emplacement
 //    private TextField tffrom;
@@ -60,13 +59,13 @@ public class RegisterController {
             return;
         }
 
-        // 3. Vérifier que les passwords correspondent
+        // Vérifier que les mots de passe correspondent
         if (!password.equals(passwordConfirm)) {
-            lbconfirm.setText("Les mots de passe ne correspondent pas");
+            lbinfo.setText("Les mots de passe ne correspondent pas");
             return;
         }
 
-        // 4. Vérifier que l'email n'existe pas
+        // Vérifier que l'email n'existe pas déjà en BDD
         if (UserDAO.getRowByEmail(email) != null) {
             lbinfo.setText("Email déjà utilisé");
             return; // Interrompt la méthode si jamais le mail est déjà inscrit en BDD
@@ -84,11 +83,13 @@ public class RegisterController {
         // INSCRIPTION RÉUSSIE
         lbinfo.setText("Compte créé avec succès ! Redirection...");
 
-        // Rediriger vers Login après un délai
+        // Rediriger vers la page de connexion après un délai de 1.5 sec
         new Thread(() -> {
             try {
-                Thread.sleep(1500);  // Attendre 1.5 secondes
-                AppController.getInstance().loadLogin();
+                Thread.sleep(1500);
+                Platform.runLater(() -> {
+                    AppController.getInstance().loadLogin();
+                });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -98,7 +99,6 @@ public class RegisterController {
 //  Bouton "Se connecter"
     @FXML
     public void moveToConnect() {
-        // Utiliser AppController pour la navigation
         AppController.getInstance().loadLogin();
     }
 }

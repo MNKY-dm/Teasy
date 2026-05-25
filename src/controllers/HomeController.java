@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import models.Event;
 import models.User;
 import services.SessionManager;
@@ -61,7 +62,7 @@ public class HomeController implements Initializable {
         try {
             // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EventCard.fxml"));
-            AnchorPane cardRoot = loader.load();
+            VBox cardRoot = loader.load();
 
             // Charger le controller et set up les infos de la card selon l'event
             EventCardController eventCardController = loader.getController();

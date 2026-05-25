@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import models.Event;
 import services.ImageCache;
 
@@ -14,7 +14,7 @@ public class EventCardController {
 
     // Import des éléments de EventCard.fxml
     @FXML
-    private AnchorPane cardRoot;
+    private VBox cardRoot;
     @FXML
     private ImageView eventPic;
     @FXML

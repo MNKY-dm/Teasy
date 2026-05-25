@@ -1,0 +1,218 @@
+/* ================================================
+   TEASY — Feuille de style principale
+   Couleurs : #5B4FFF (violet) | #1C1C1E (dark) | #F5F5F7 (fond)
+   ================================================ */
+
+/* ===== GLOBAL ===== */
+.root {
+    -fx-background-color: #F5F5F7;
+    -fx-font-family: "Segoe UI";
+}
+
+/* ===== MENU BAR ===== */
+.menu-bar {
+    -fx-background-color: #1C1C1E;
+    -fx-padding: 0 8 0 8;
+}
+.menu-bar > .container > .menu-button {
+    -fx-background-color: transparent;
+    -fx-padding: 6 12 6 12;
+}
+.menu-bar > .container > .menu-button > .label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+}
+.menu-bar > .container > .menu-button:hover {
+    -fx-background-color: #3A3A3C;
+    -fx-background-radius: 6;
+}
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: #5B4FFF;
+    -fx-background-radius: 6;
+}
+.context-menu {
+    -fx-background-color: #2C2C2E;
+    -fx-background-radius: 10;
+    -fx-padding: 4 0 4 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 16, 0, 0, 6);
+}
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 6 16 6 16;
+}
+.menu-item > .label {
+    -fx-text-fill: #F5F5F7;
+    -fx-font-size: 13px;
+}
+.menu-item:focused, .menu-item:hover {
+    -fx-background-color: #5B4FFF;
+    -fx-background-radius: 6;
+}
+
+/* ===== BOUTONS ===== */
+.btn-primary {
+    -fx-background-color: #5B4FFF;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 8;
+    -fx-border-width: 0;
+    -fx-padding: 8 20 8 20;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.btn-primary:hover   { -fx-background-color: #4840D4; }
+.btn-primary:pressed { -fx-background-color: #3A33B0; }
+
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5B4FFF;
+    -fx-border-color: #5B4FFF;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-width: 1.5;
+    -fx-padding: 8 20 8 20;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover   { -fx-background-color: #EEEDFF; }
+.btn-secondary:pressed { -fx-background-color: #D8D6FF; }
+
+.btn-link {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5B4FFF;
+    -fx-border-width: 0;
+    -fx-font-size: 11px;
+    -fx-cursor: hand;
+    -fx-padding: 2 4 2 4;
+}
+.btn-link:hover {
+    -fx-text-fill: #4840D4;
+    -fx-underline: true;
+}
+
+/* ===== CHAMPS DE SAISIE ===== */
+.auth-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+    -fx-pref-width: 240;
+    -fx-pref-height: 36;
+}
+.auth-field:focused {
+    -fx-border-color: #5B4FFF;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(91,79,255,0.15), 8, 0, 0, 0);
+}
+
+/* ===== AUTH PANE ===== */
+.auth-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 24, 0, 0, 8);
+    -fx-alignment: center;
+}
+.auth-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1D1D1F;
+}
+.auth-subtext {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6E6E73;
+}
+
+/* ===== LABELS ===== */
+.section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1D1D1F;
+}
+.section-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1D1D1F;
+}
+.event-title-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1D1D1F;
+}
+.event-description-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6E6E73;
+    -fx-font-style: italic;
+}
+.label-price {
+    -fx-text-fill: #5B4FFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.label-category {
+    -fx-text-fill: #1D1D1F;
+    -fx-font-size: 13px;
+}
+.label-error   { -fx-text-fill: #FF3B30; -fx-font-size: 11px; }
+.label-success { -fx-text-fill: #34C759; -fx-font-size: 11px; }
+
+/* ===== APP BRAND (Text node → -fx-fill) ===== */
+.app-brand {
+    -fx-fill: #5B4FFF;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* ===== SCROLL PANES ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-width: 0;
+}
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8;
+    -fx-pref-width: 8;
+}
+.scroll-bar .track    { -fx-background-color: transparent; }
+.scroll-bar .thumb    { -fx-background-color: #C7C7CC; -fx-background-radius: 4; }
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-pref-height: 0;
+    -fx-pref-width: 0;
+}
+
+/* ===== HOME PAGE ===== */
+
+.home-content {
+    -fx-background-color: #111113;
+}
+
+/* ===== EVENT CARDS ===== */
+
+.event-card {
+    -fx-background-color: #1C1C1E;
+    -fx-background-radius: 20;
+}
+
+.event-card:hover {
+    -fx-border-color : #4840D4;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20;
+    -fx-border-style: solid;
+}
+/* ===== SPINNER ===== */
+.spinner .text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E5;
+    -fx-text-fill: #1D1D1F;
+    -fx-font-size: 13px;
+    -fx-padding: 6 8 6 8;
+}
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button { -fx-background-color: #F5F5F7; -fx-border-color: #E0E0E5; }
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover { -fx-background-color: #EEEDFF; }
