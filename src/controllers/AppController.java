@@ -127,6 +127,7 @@ public class AppController {
             primaryStage.setTitle(title);
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
+            primaryStage.setResizable(true);
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(
@@ -207,34 +208,6 @@ public class AppController {
             e.printStackTrace();
         }
     }
-
-    // =====================================================
-    // AJOUTER D'AUTRES loadPage() POUR CHAQUE PAGE
-    // =====================================================
-
-
-    //  loadEvents() : Charger la page ÉVÉNEMENTS (atteignable depuis l'accueil)
-//    public void loadEvents() {
-//        try {
-//            loadScene("views/EventsScene.fxml");
-//            primaryStage.setTitle("Teasy - Événements");
-//        } catch (IOException e) {
-//            System.err.println("[ERREUR] Impossible de charger EventsScene.fxml");
-//            e.printStackTrace();
-//        }
-//    }
-
-
-//     * loadProfile() : Charger la page PROFIL (lorsque l'user clique sur "Profil")
-//    public void loadProfile() {
-//        try {
-//            loadScene("views/ProfileScene.fxml");
-//            primaryStage.setTitle("Teasy - Profil");
-//        } catch (IOException e) {
-//            System.err.println("[ERREUR] Impossible de charger ProfileScene.fxml");
-//            e.printStackTrace();
-//        }
-//    }
 
 
     // loadLogout() : Charger la page ConnectScene.fxml après déconnexion (depuis Profil → Se déconnecter)

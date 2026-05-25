@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import models.Event;
 import models.Photo;
 import models.Seance;
@@ -32,7 +32,7 @@ public class SeanceInfosController {
     private Label seanceStatus;
 
     @FXML
-    private AnchorPane seanceInfosRoot;
+    private HBox seanceInfosRoot;
 
     public void setSeanceInfos(Seance seance){
         System.out.println("setSeanceInfos pour l'event : " + seance.getEvent_id());

@@ -9,6 +9,20 @@
     -fx-font-family: "Segoe UI";
 }
 
+/* ===== DARK PANES ===== */
+.home-pane {
+    -fx-background-color: #111113;
+}
+
+.home-content {
+    -fx-background-color: #111113;
+    -fx-background: #111113;
+}
+
+.home-content > .viewport {
+    -fx-background-color: #111113;
+}
+
 /* ===== MENU BAR ===== */
 .menu-bar {
     -fx-background-color: #1C1C1E;
@@ -128,17 +142,17 @@
 .section-title {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1D1D1F;
+    -fx-text-fill: #F5F5F7;
 }
 .section-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1D1D1F;
+    -fx-text-fill: #F5F5F7;
 }
 .event-title-label {
-    -fx-font-size: 26px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1D1D1F;
+    -fx-text-fill: #5B4FFF;
 }
 .event-description-label {
     -fx-font-size: 13px;
@@ -204,6 +218,41 @@
     -fx-border-radius: 20;
     -fx-border-style: solid;
 }
+
+/* ===== ADMIN PANEL ===== */
+.page-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5B4FFF;
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #AEAEB2;
+}
+
+.stat-value {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F5F5F7;
+}
+
+.stat-total {
+    -fx-text-fill: #5B4FFF;
+}
+
+.stat-valid {
+    -fx-text-fill: #34C759;
+}
+
+.stat-expired {
+    -fx-text-fill: #FF3B30;
+}
+
+.stat-refunded {
+    -fx-text-fill: #FF9500;
+}
+
 /* ===== SPINNER ===== */
 .spinner .text-field {
     -fx-background-color: #FFFFFF;

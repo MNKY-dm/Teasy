@@ -33,7 +33,6 @@ public class EventCardController {
 //            System.out.println("setEventData pour l'event " + eventId + " pictures " + pictures.size());
 
             // Tenter de récupérer les images liées à l'événement
-            // Penser à renommer les différentes entités pour mieux s'y retrouver : "Photo" ; "Picture" ; "Image"
 
             Image image = ImageCache.get(affiche);
             eventPic.setImage(image); // On l'affiche dans le conteneur FXML eventPic

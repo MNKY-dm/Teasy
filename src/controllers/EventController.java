@@ -12,6 +12,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Event;
 import models.Photo;
@@ -29,7 +30,7 @@ public class EventController implements Initializable {
     private User currentUser;
     private int eventId;
     private Seance currentSeance;
-    private AnchorPane currentSeancePane;
+    private HBox currentSeancePane;
 
     @FXML private Label eventTitle;
     @FXML private ImageView eventAffiche;
@@ -80,7 +81,7 @@ public class EventController implements Initializable {
         try {
             // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceInfos.fxml"));
-            AnchorPane cardRoot = loader.load();
+            HBox cardRoot = loader.load();
 
             // Charger le controller et set up les infos de la card selon l'event
             SeanceInfosController seanceInfosController = loader.getController();
@@ -184,12 +185,12 @@ public class EventController implements Initializable {
     }
 
     @FXML
-    private void seanceClicked(AnchorPane cardRoot, Seance seance) {
+    private void seanceClicked(HBox cardRoot, Seance seance) {
         if (currentSeancePane != null) {
-            currentSeancePane.setStyle("-fx-background-color: #FFFFFF; -fx-text-fill: #000000;");
+            currentSeancePane.setStyle("-fx-background-color: #111113; -fx-text-fill: #FFFFFF;");
         }
         currentSeancePane = cardRoot;
-        currentSeancePane.setStyle("-fx-background-color: #0063cd; -fx-text-fill: #FFFFFF;");
+        currentSeancePane.setStyle("-fx-background-color: #5B4FFF; -fx-text-fill: #111113;");
         currentSeance = seance;
     }
 
