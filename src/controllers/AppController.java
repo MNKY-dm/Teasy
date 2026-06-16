@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.EventDAO;
+import dao.SeanceDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -168,10 +169,9 @@ public class AppController {
         }
     }
 
-//    Options du menu
+// ------------------ Options du menu ------------------ //
 
     public void loadMyTickets() {
-
     }
 
     public void loadPublishEvent() {
@@ -204,6 +204,7 @@ public class AppController {
         }
     }
 
+    // Fonctionnalités relatives au panel admin
     public void loadTicketsManagement() {
         try {
             System.out.println("[APPCONTROLLER] : loadTicketsManagement");
@@ -225,16 +226,38 @@ public class AppController {
             );
             primaryStage.setScene(scene);
         } catch (IOException e) {
-            System.err.println("[ERREUR] Impossible de charger AdminPanelScene.fxml");
+            System.err.println("[ERREUR] Impossible de charger TicketsManagementScene.fxml");
             e.printStackTrace();
         }
     }
 
-    public void loadTicketModifier(Ticket currentTicket) {
+    public void loadTicketModifier(Ticket ticket) {
+        try {
+            System.out.println("[APPCONTROLLER] : loadTicketModifier --> Chargement de : " + ticket);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketModifierScene.fxml"));
+            Parent root = loader.load();
+
+            TicketModifierController ticketModifierController = loader.getController();
+            ticketModifierController.setTicket(ticket);
+
+            String eventName = ticket.getTitle();
+            String title = "Teasy - Ticket "  + ticket.getType() + "(" + eventName + ")";
+            primaryStage.setTitle(title);
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger TicketModifierScene.fxml");
+            e.printStackTrace();
+        }
     }
 
     // loadLogout() : Charger la page ConnectScene.fxml après déconnexion (depuis Profil → Se déconnecter)
-
     public void loadLogout() {
         SessionManager.getInstance().logout();
         System.out.println("En cours de déconnexion");

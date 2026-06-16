@@ -3,6 +3,9 @@ package services;
 import dao.TicketDAO;
 import models.Ticket;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -38,5 +41,21 @@ public class TicketService {
             int seanceId = Integer.parseInt(parts[3]);
             // valider ticket avec TicketDAO.getRowById(ticketId)
         }
+    }
+
+    public static String getTicketCode(String qrURL) throws MalformedURLException {
+        String query = new URL(qrURL).getQuery();
+
+        for (String param : query.split("&")) {
+            String[] parts = param.split("=", 2);
+            String key = parts[0];
+            String value = parts.length > 1 ? parts[1] : "";
+
+            if (key.equals("data")) {
+                return URLDecoder.decode(value, StandardCharsets.UTF_8);
+            }
+        }
+
+        return null;
     }
 }
