@@ -36,17 +36,31 @@ public class TicketModifierController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        ticketId.setText(String.valueOf(ticket.getId()));
+
         ticketLabel.setText(ticket.getTitle());
         ticketLabel.setEditable(false); // car change en fonction du seance_id
+
+        ticketUserId.setText(String.valueOf(ticket.getUser_id()));
+        ticketSeanceId.setText(String.valueOf(ticket.getSeance_id()));
+        ticketType.setValue(ticket.getType());
+        ticketPrice.setText(ticket.getPrice() + " €");
+        ticketStatus.setValue(ticket.getStatus());
+
         ticketRefunded.setSelected(ticket.getIs_refunded());
 
-        ticketUsedAt.setValue(ticket.getUsed_at().toLocalDateTime().toLocalDate());
+        if (ticket.getUsed_at() != null) {
+            ticketUsedAt.setValue(ticket.getUsed_at().toLocalDateTime().toLocalDate());
+        }
         ticketCreatedAt.setValue(ticket.getCreated_at().toLocalDateTime().toLocalDate());
         ticketCreatedAt.setEditable(false);
     }
 
     public void saveTicket(ActionEvent actionEvent) {
 
+    }
+
+    public void deleteTicket(ActionEvent actionEvent) {
     }
 
     public void toTicketsManagement(ActionEvent actionEvent) {
