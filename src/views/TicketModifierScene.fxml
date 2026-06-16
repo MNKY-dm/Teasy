@@ -100,7 +100,7 @@
 
                     </GridPane>
 
-                    <HBox spacing="12.0">
+                    <HBox alignment="TOP_CENTER" spacing="12.0">
                         <Button mnemonicParsing="false" onAction="#saveTicket" styleClass="btn-primary" text="Enregistrer" />
                         <Button mnemonicParsing="false" onAction="#toTicketsManagement" styleClass="btn-secondary" text="Retour aux tickets" />
                     </HBox>
