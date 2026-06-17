@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPanelController">
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPanelController">
 
     <!-- HAUT : MenuBar + titre -->
     <top>
@@ -21,58 +18,78 @@
 
     <!-- CENTRE : stats -->
     <center>
-        <VBox spacing="16.0">
-            <VBox.margin><Insets left="24.0" right="24.0" top="16.0" /></VBox.margin>
+        <GridPane alignment="CENTER" hgap="12.0" vgap="16.0">
+            <padding>
+                <Insets left="24.0" right="24.0" top="16.0" />
+            </padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" minWidth="220.0" prefWidth="220.0" />
+                <ColumnConstraints halignment="LEFT" minWidth="70.0" prefWidth="70.0" />
+            </columnConstraints>
 
             <!-- Bloc tickets par type -->
-            <VBox spacing="8.0">
-                <Label styleClass="section-label" text="Nombre de tickets :" />
+            <Label styleClass="section-label" text="Nombre de tickets :" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
-                <HBox spacing="24.0">
-                    <HBox spacing="6.0">
-                        <Label styleClass="stat-label" text="Standard :" />
-                        <Label fx:id="nbStandardTickets" styleClass="stat-value" />
-                    </HBox>
-                    <HBox spacing="6.0">
-                        <Label styleClass="stat-label" text="Plus :" />
-                        <Label fx:id="nbPlusTickets" styleClass="stat-value" />
-                    </HBox>
-                    <HBox spacing="6.0">
-                        <Label styleClass="stat-label" text="VIP :" />
-                        <Label fx:id="nbVIPTickets" styleClass="stat-value" />
-                    </HBox>
-                    <HBox spacing="6.0">
-                        <Label styleClass="stat-label" text="Total :" />
-                        <Label fx:id="nbTotalTickets" styleClass="stat-value" />
-                    </HBox>
-                </HBox>
-            </VBox>
+            <GridPane alignment="CENTER" hgap="12.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="58.0" />
+                    <ColumnConstraints halignment="LEFT" minWidth="28.0" />
+                    <ColumnConstraints halignment="RIGHT" minWidth="40.0" />
+                    <ColumnConstraints halignment="LEFT" minWidth="28.0" />
+                    <ColumnConstraints halignment="RIGHT" minWidth="30.0" />
+                    <ColumnConstraints halignment="LEFT" minWidth="28.0" />
+                    <ColumnConstraints halignment="RIGHT" minWidth="36.0" />
+                    <ColumnConstraints halignment="LEFT" minWidth="32.0" />
+                </columnConstraints>
+
+                <Label styleClass="stat-label" text="Standard :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="nbStandardTickets" styleClass="stat-value" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label styleClass="stat-label" text="Plus :" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label fx:id="nbPlusTickets" styleClass="stat-value" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                <Label styleClass="stat-label" text="VIP :" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                <Label fx:id="nbVIPTickets" styleClass="stat-value" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+
+                <Label styleClass="stat-label" text="Total :" GridPane.columnIndex="6" GridPane.rowIndex="0" />
+                <Label fx:id="nbTotalTickets" styleClass="stat-value" GridPane.columnIndex="7" GridPane.rowIndex="0" />
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
 
             <!-- Ligne : tickets valides -->
-            <HBox spacing="8.0">
-                <Label styleClass="stat-label" text="Nombre de tickets valides :" />
-                <Label fx:id="nbValidTickets" styleClass="stat-value" />
-            </HBox>
+            <Label styleClass="stat-label" text="Nombre de tickets valides :" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="nbValidTickets" styleClass="stat-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <!-- Ligne : tickets périmés -->
-            <HBox spacing="8.0">
-                <Label styleClass="stat-label" text="Nombre de tickets périmés :" />
-                <Label fx:id="nbExpiredTickets" styleClass="stat-value" />
-            </HBox>
+            <!-- Ligne : tickets périmés -->
+            <Label styleClass="stat-label" text="Nombre de tickets périmés :" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Label fx:id="nbExpiredTickets" styleClass="stat-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <!-- Ligne : tickets remboursés -->
-            <HBox spacing="8.0">
-                <Label styleClass="stat-label" text="Nombre de tickets remboursés :" />
-                <Label fx:id="nbRefundedTickets" styleClass="stat-value" />
-            </HBox>
+            <!-- Ligne : tickets remboursés -->
+            <Label styleClass="stat-label" text="Nombre de tickets remboursés :" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <Label fx:id="nbRefundedTickets" styleClass="stat-value" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-        </VBox>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toTicketsManagement" styleClass="btn-primary" text="Gérer les tickets" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                <GridPane.margin>
+                    <Insets top="4.0" />
+                </GridPane.margin>
+            </Button>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
     </center>
-   <padding>
+
+
+    <padding>
       <Insets bottom="6.0" left="6.0" right="6.0" />
    </padding>
-   <bottom>
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toTicketsManagement" styleClass="btn-primary" text="Gérer les tickets" textAlignment="CENTER" BorderPane.alignment="CENTER" />
-   </bottom>
 
 </BorderPane>

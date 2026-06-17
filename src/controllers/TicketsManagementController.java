@@ -1,6 +1,5 @@
 package controllers;
 
-import dao.EventDAO;
 import dao.TicketDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,9 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import models.Seance;
 import models.Ticket;
-import services.SessionManager;
 
 import java.io.IOException;
 import java.net.URL;
