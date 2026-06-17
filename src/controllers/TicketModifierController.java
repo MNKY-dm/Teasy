@@ -10,6 +10,7 @@ import models.Ticket;
 import services.TicketService;
 
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -68,7 +69,7 @@ public class TicketModifierController {
         ticketCreatedAt.setEditable(false);
     }
 
-    public void saveTicket(ActionEvent actionEvent) {
+    public void saveTicket() {
         System.out.println("saving ticket");
 
         String url = ticket.getCode();
@@ -106,11 +107,17 @@ public class TicketModifierController {
         System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
     }
 
-    public void deleteTicket(ActionEvent actionEvent) {
+    public void deleteTicket() {
+        try {
+            this.ticket.delete();
+            toTicketsManagement();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
-    public void toTicketsManagement(ActionEvent actionEvent) {
-        System.out.println("AdminPanelController : toTicketsManagement");
+    public void toTicketsManagement() {
+        System.out.println("TicketModifierController : toTicketsManagement");
         AppController.getInstance().loadTicketsManagement();
     }
 
