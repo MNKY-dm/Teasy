@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.SeanceDAO;
 import dao.TicketDAO;
+import dao.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -65,8 +67,21 @@ public class TicketModifierController {
         if (ticket.getUsed_at() != null) {
             ticketUsedAt.setValue(ticket.getUsed_at().toLocalDateTime().toLocalDate());
         }
+        ticketUsedAt.setEditable(false);
         ticketCreatedAt.setValue(ticket.getCreated_at().toLocalDateTime().toLocalDate());
         ticketCreatedAt.setEditable(false);
+    }
+
+    public boolean validateUpdates(Ticket newTicket) {
+        if (SeanceDAO.getRowById(newTicket.getSeance_id()) != null && UserDAO.getRowById(newTicket.getUser_id()) != null) {
+            try {
+                Float.parseFloat(ticketPrice.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public void saveTicket() {
@@ -102,9 +117,13 @@ public class TicketModifierController {
                 ticketRefunded.isSelected()
         );
 
-        newTicket.setId(ticket.getId());
+        if (validateUpdates(newTicket)) {
+            newTicket.setId(ticket.getId());
+            System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
+        } else {
+            System.out.println("Informations non valides");
+        }
 
-        System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
     }
 
     public void deleteTicket() {
@@ -119,6 +138,12 @@ public class TicketModifierController {
     public void toTicketsManagement() {
         System.out.println("TicketModifierController : toTicketsManagement");
         AppController.getInstance().loadTicketsManagement();
+    }
+
+    public void main (String[] args) {
+        Ticket test = TicketDAO.getRowById(38);
+
+        System.out.println(validateUpdates(test));
     }
 
 }
