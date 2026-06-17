@@ -2,6 +2,7 @@ package controllers;
 
 import dao.EventDAO;
 import dao.TicketDAO;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -99,4 +100,8 @@ public class TicketsManagementController implements Initializable {
         }
     }
 
+    public void moveToAdminPanel(ActionEvent actionEvent) {
+        System.out.println("TicketManagementController : moveToAdminPanel");
+        AppController.getInstance().loadAdminPanel();
+    }
 }

@@ -26,6 +26,7 @@
    <bottom>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="24.0" BorderPane.alignment="CENTER">
          <children>
+            <Button layoutX="382.0" layoutY="21.0" mnemonicParsing="false" onAction="#moveToAdminPanel" styleClass="btn-secondary" text="Retour au dashboard" />
             <Button mnemonicParsing="false" onAction="#deleteTicket" styleClass="btn-delete" text="Supprimer" />
             <Button mnemonicParsing="false" onAction="#updateTicketInfos" styleClass="btn-primary" text="Modifier" HBox.hgrow="ALWAYS" />
          </children>
