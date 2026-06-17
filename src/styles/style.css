@@ -379,6 +379,10 @@
 }
 
 .form-checkbox .mark {
+    -fx-background-color: transparent;
+}
+
+.form-checkbox:selected .mark {
     -fx-background-color: white;
 }
 

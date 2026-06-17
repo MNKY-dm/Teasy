@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.TicketDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +10,11 @@ import models.Ticket;
 import services.TicketService;
 
 import java.net.MalformedURLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class TicketModifierController {
     @FXML public Label ticketTitle;
@@ -25,9 +31,15 @@ public class TicketModifierController {
     @FXML public CheckBox ticketRefunded;
     @FXML public DatePicker ticketUsedAt;
     @FXML public DatePicker ticketCreatedAt;
+    @FXML public Label userName;
+
+    Ticket ticket;
 
     public void setTicket(Ticket ticket)  {
+        this.ticket = ticket;
+
         ticketTitle.setText(ticket.getTitle());
+        userName.setText(ticket.getUser());
 
         Image qrCode = new Image(ticket.getCode(), true);
         ticketCode.setImage(qrCode);
@@ -44,7 +56,7 @@ public class TicketModifierController {
         ticketUserId.setText(String.valueOf(ticket.getUser_id()));
         ticketSeanceId.setText(String.valueOf(ticket.getSeance_id()));
         ticketType.setValue(ticket.getType());
-        ticketPrice.setText(ticket.getPrice() + " €");
+        ticketPrice.setText(String.valueOf(ticket.getPrice()));
         ticketStatus.setValue(ticket.getStatus());
 
         ticketRefunded.setSelected(ticket.getIs_refunded());
@@ -57,7 +69,41 @@ public class TicketModifierController {
     }
 
     public void saveTicket(ActionEvent actionEvent) {
+        System.out.println("saving ticket");
 
+        String url = ticket.getCode();
+        if (!Objects.equals(ticketCodeField.getText(), url)) {
+            url = TicketService.generateQRCode(ticket.getId(), ticket.getSeance_id());
+        }
+
+        Timestamp ticketUsed_at = ticket.getUsed_at();
+        LocalDate usedAtDt;
+        if (ticketUsed_at != null) {
+            usedAtDt = ticketUsed_at.toLocalDateTime().toLocalDate();
+            if (!Objects.equals(ticketUsedAt.getValue(), usedAtDt)) {
+                ticketUsed_at = Timestamp.valueOf(ticketUsedAt.getValue().atStartOfDay());
+            }
+        } else {
+            if (ticketUsedAt.getValue() != null) {
+                ticketUsed_at = Timestamp.valueOf(ticketUsedAt.getValue().atStartOfDay());
+            }
+        }
+
+        Ticket newTicket = new Ticket(
+                url,
+                ticketLabel.getText(),
+                Integer.parseInt(ticketUserId.getText()),
+                Integer.parseInt(ticketSeanceId.getText()),
+                ticketType.getValue(),
+                Float.parseFloat(ticketPrice.getText()),
+                ticketStatus.getValue(),
+                ticketUsed_at,
+                ticketRefunded.isSelected()
+        );
+
+        newTicket.setId(ticket.getId());
+
+        System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
     }
 
     public void deleteTicket(ActionEvent actionEvent) {

@@ -11,26 +11,22 @@
 
     <!-- HAUT : MenuBar + titre -->
     <top>
-        <VBox>
+        <VBox alignment="TOP_CENTER">
             <fx:include source="MenuBar.fxml" />
-            <Label fx:id="ticketTitle" alignment="CENTER" maxWidth="Infinity" styleClass="page-title">
-                <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
-            </Label>
+            <Label styleClass="section-label" text="Modification du ticket" />
+            <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
         </VBox>
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" styleClass="main-scroll" BorderPane.alignment="TOP_CENTER">
+        <ScrollPane fitToWidth="true" BorderPane.alignment="TOP_CENTER">
             <content>
                 <VBox alignment="TOP_CENTER" spacing="16.0" styleClass="home-content">
-                    <padding>
-                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
-                    </padding>
-
-                    <Label styleClass="section-label" text="Modification du ticket" />
+                    <Label fx:id="ticketTitle" alignment="CENTER" maxWidth="Infinity" styleClass="page-title" />
+                    <Label fx:id="userName" alignment="CENTER" maxWidth="Infinity" styleClass="page-title" />
                     <ImageView fx:id="ticketCode" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
 
-                    <GridPane hgap="12.0" vgap="12.0">
+                    <GridPane alignment="TOP_CENTER" hgap="12.0" vgap="12.0">
 
                         <Label styleClass="stat-label" text="ID :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <TextField fx:id="ticketId" editable="false" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -59,7 +55,12 @@
                         </ChoiceBox>
 
                         <Label styleClass="stat-label" text="Prix :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                        <TextField fx:id="ticketPrice" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                            <TextField fx:id="ticketPrice" styleClass="auth-field" />
+                            <Label styleClass="stat-label" text="€" />
+                        </HBox>
+
 
                         <Label styleClass="stat-label" text="Statut :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                         <ChoiceBox fx:id="ticketStatus" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="7">
@@ -99,6 +100,9 @@
                   </rowConstraints>
 
                     </GridPane>
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+                    </padding>
 
 
                 </VBox>

@@ -27,7 +27,7 @@ public class TicketService {
         return false;
     }
 
-    private static String generateQRCode(int ticketId, int seanceId) {
+    public static String generateQRCode(int ticketId, int seanceId) {
         // UUID unique + infos ticket encodées
         String data = "TEASY-TICKET-" + ticketId + "-" + seanceId + "-" + UUID.randomUUID().toString().substring(0, 8);
         return "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
