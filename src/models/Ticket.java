@@ -44,6 +44,10 @@ public class Ticket {
         TicketDAO.deleteRowById(this.id);
     }
 
+    public void update() throws SQLException {
+        TicketDAO.updateRowById(this);
+    }
+
     public int getId() {
         return this.id;
     }

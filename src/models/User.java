@@ -1,7 +1,11 @@
 package models;
 
+import dao.TicketDAO;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private Integer id;
@@ -46,6 +50,28 @@ public class User {
 
     public Timestamp getCreated_at() {
         return this.created_at;
+    }
+
+    public List<Ticket> getTickets() {
+        List<Ticket> myTickets = new ArrayList<>();
+
+        List<Ticket> tickets = TicketDAO.getAll();
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getUser_id() == this.getId()) {
+                myTickets.add(ticket);
+            }
+        }
+
+        return myTickets;
+    }
+
+    public List<Ticket> getAvailableTickets() {
+        List<Ticket> myTickets = getTickets();
+
+        myTickets.removeIf(ticket -> !ticket.getIs_refunded());
+
+        return myTickets;
     }
 
     public void setId(int id) {

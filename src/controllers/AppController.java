@@ -172,6 +172,29 @@ public class AppController {
 // ------------------ Options du menu ------------------ //
 
     public void loadMyTickets() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadMyTickets");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MyTicketsScene.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            MyTicketsController myTicketsController = loader.getController();
+
+            myTicketsController.setTickets();
+
+            primaryStage.setTitle("Teasy - Mes tickets");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger MyTicketsScene.fxml");
+            e.printStackTrace();
+        }
     }
 
     public void loadPublishEvent() {

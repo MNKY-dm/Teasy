@@ -27,8 +27,8 @@
       <HBox alignment="BOTTOM_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="24.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="382.0" layoutY="21.0" mnemonicParsing="false" onAction="#moveToHome" styleClass="btn-secondary" text="Retour à l'accueil" />
-            <Button mnemonicParsing="false" onAction="#refundTicket" styleClass="btn-delete" text="Supprimer" />
-            <Button mnemonicParsing="false" onAction="#showTicket" styleClass="btn-primary" text="Modifier" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#refundTicket" styleClass="btn-delete" text="Se faire rembourser" />
+            <Button mnemonicParsing="false" onAction="#showTicket" styleClass="btn-primary" text="Voir le ticket" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </bottom>
