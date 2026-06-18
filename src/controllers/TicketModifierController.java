@@ -74,11 +74,6 @@ public class TicketModifierController {
 
     public boolean validateUpdates(Ticket newTicket) {
         if (SeanceDAO.getRowById(newTicket.getSeance_id()) != null && UserDAO.getRowById(newTicket.getUser_id()) != null) {
-            try {
-                Float.parseFloat(ticketPrice.getText());
-            } catch (NumberFormatException e) {
-                return false;
-            }
             return true;
         }
         return false;
@@ -105,21 +100,45 @@ public class TicketModifierController {
             }
         }
 
-        Ticket newTicket = new Ticket(
-                url,
-                ticketLabel.getText(),
-                Integer.parseInt(ticketUserId.getText()),
-                Integer.parseInt(ticketSeanceId.getText()),
-                ticketType.getValue(),
-                Float.parseFloat(ticketPrice.getText()),
-                ticketStatus.getValue(),
-                ticketUsed_at,
-                ticketRefunded.isSelected()
-        );
+        Ticket newTicket;
+        try {
+//            Float.parseFloat(ticketPrice.getText());
+            newTicket = new Ticket(
+                    url,
+                    ticketLabel.getText(),
+                    Integer.parseInt(ticketUserId.getText()),
+                    Integer.parseInt(ticketSeanceId.getText()), // valeur si int dans ticketSeanceId
+                    ticketType.getValue(),
+                    Float.parseFloat(ticketPrice.getText()), // valeur si float dans ticketPrice
+                    ticketStatus.getValue(),
+                    ticketUsed_at,
+                    ticketRefunded.isSelected()
+            );
+        } catch (NumberFormatException e) {
+            newTicket = new Ticket(
+                    url,
+                    ticketLabel.getText(),
+                    Integer.parseInt(ticketUserId.getText()),
+                    ticket.getSeance_id(), // si pas int, ne rien modifier
+                    ticketType.getValue(),
+                    ticket.getPrice(), // si pas float, ne rien modifier
+                    ticketStatus.getValue(),
+                    ticketUsed_at,
+                    ticketRefunded.isSelected()
+            );
+            System.out.println("La séance ou le prix n'ont pas pu être modifiés");
+        } catch (Exception e) {
+            // Si autre erreur détectée, pas de modification
+            e.printStackTrace();
+            newTicket = ticket;
+            System.out.println("Ticket non modifié");
+        }
+
 
         if (validateUpdates(newTicket)) {
             newTicket.setId(ticket.getId());
             System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
+            setTicket(newTicket);
         } else {
             System.out.println("Informations non valides");
         }

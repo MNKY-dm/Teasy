@@ -241,7 +241,7 @@ public class AppController {
             ticketModifierController.setTicket(ticket);
 
             String eventName = ticket.getTitle();
-            String title = "Teasy - Ticket "  + ticket.getType() + "(" + eventName + ")";
+            String title = "Teasy - Ticket "  + ticket.getType() + " (" + eventName + ")";
             primaryStage.setTitle(title);
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
