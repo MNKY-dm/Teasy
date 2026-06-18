@@ -43,8 +43,14 @@
                         <Label styleClass="stat-label" text="Séance ID :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <TextField fx:id="ticketSeanceId" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                        <Label styleClass="stat-label" text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                        <ChoiceBox fx:id="ticketType" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label styleClass="stat-label" text="Emplacement :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <TextField fx:id="ticketLocation" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="5" editable="false" />
+
+                        <Label styleClass="stat-label" text="Date et heure :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <TextField fx:id="ticketDate" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="6" editable="false" />
+
+                        <Label styleClass="stat-label" text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <ChoiceBox fx:id="ticketType" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="7">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="STANDARD" />
@@ -54,16 +60,16 @@
                             </items>
                         </ChoiceBox>
 
-                        <Label styleClass="stat-label" text="Prix :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <Label styleClass="stat-label" text="Prix :" GridPane.columnIndex="0" GridPane.rowIndex="8" />
 
-                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="8">
                             <TextField fx:id="ticketPrice" styleClass="auth-field" />
                             <Label styleClass="stat-label" text="€" />
                         </HBox>
 
 
-                        <Label styleClass="stat-label" text="Statut :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                        <ChoiceBox fx:id="ticketStatus" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label styleClass="stat-label" text="Statut :" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                        <ChoiceBox fx:id="ticketStatus" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="9">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="available" />
@@ -73,19 +79,21 @@
                             </items>
                         </ChoiceBox>
 
-                        <Label styleClass="stat-label" text="Remboursé :" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                        <CheckBox fx:id="ticketRefunded" styleClass="form-checkbox" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label styleClass="stat-label" text="Remboursé :" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                        <CheckBox fx:id="ticketRefunded" styleClass="form-checkbox" GridPane.columnIndex="1" GridPane.rowIndex="10" />
 
-                        <Label styleClass="stat-label" text="Utilisé le :" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-                        <DatePicker fx:id="ticketUsedAt" styleClass="form-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label styleClass="stat-label" text="Utilisé le :" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                        <DatePicker fx:id="ticketUsedAt" styleClass="form-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="11" />
 
-                        <Label styleClass="stat-label" text="Créé le :" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-                        <DatePicker fx:id="ticketCreatedAt" editable="false" styleClass="form-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label styleClass="stat-label" text="Créé le :" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                        <DatePicker fx:id="ticketCreatedAt" editable="false" styleClass="form-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                   <columnConstraints>
                      <ColumnConstraints />
                      <ColumnConstraints />
                   </columnConstraints>
                   <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
                      <RowConstraints />
                      <RowConstraints />
                      <RowConstraints />

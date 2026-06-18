@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import models.Seance;
 import models.Ticket;
 import services.TicketService;
 
@@ -25,6 +26,8 @@ public class TicketModifierController {
     @FXML public TextField ticketLabel;
     @FXML public TextField ticketUserId;
     @FXML public TextField ticketSeanceId;
+    @FXML public TextField ticketLocation;
+    @FXML public TextField ticketDate;
     @FXML public ChoiceBox<String> ticketType;
     @FXML public TextField ticketPrice;
     @FXML public ChoiceBox<String> ticketStatus;
@@ -54,7 +57,13 @@ public class TicketModifierController {
         ticketLabel.setEditable(false); // car change en fonction du seance_id
 
         ticketUserId.setText(String.valueOf(ticket.getUser_id()));
+
         ticketSeanceId.setText(String.valueOf(ticket.getSeance_id()));
+        Seance seance = SeanceDAO.getRowById(ticket.getSeance_id());
+
+        ticketLocation.setText(seance.getLocation());
+        ticketDate.setText(seance.dateFormat(seance.getDate()));
+
         ticketType.setValue(ticket.getType());
         ticketPrice.setText(String.valueOf(ticket.getPrice()));
         ticketStatus.setValue(ticket.getStatus());
@@ -71,7 +80,7 @@ public class TicketModifierController {
 
     public boolean validateUpdates(Ticket newTicket) {
         if (SeanceDAO.getRowById(newTicket.getSeance_id()) != null && UserDAO.getRowById(newTicket.getUser_id()) != null) {
-            // Garder le if si jamais il y a autre chose à ajouter comme vérifications  
+            // Garder le if si jamais il y a autre chose à ajouter comme vérifications
             return true;
         }
         return false;
