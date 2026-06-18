@@ -149,7 +149,10 @@ public class TicketModifierController {
             newTicket.setCreated_at(ticket.getCreated_at()); // Valeur qui n'est pas dans la requête SQL de mise à jour du ticket
             newTicket.setTitle(EventDAO.getRowById(seance.getEvent_id()).getName()); // Mettre à jour le titre du ticket en fonction du titre de l'événement de la séance
             System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
-            setTicket(newTicket);
+
+            // TODO : Voir pour ajouter la mise à jour du QRCode dans le bon timing
+
+            setTicket(newTicket); // Mettre à jour l'affichage avec les nouvelles valeurs
         } else {
             System.out.println("Informations non valides");
         }
