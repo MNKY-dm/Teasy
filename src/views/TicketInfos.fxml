@@ -12,6 +12,8 @@
         <Label fx:id="userName" />
         <Label fx:id="ticketType" />
         <Label fx:id="seanceID" />
+        <Label fx:id="seanceLocation" />
+        <Label fx:id="seanceDate" />
         <Label fx:id="price" />
         <Region HBox.hgrow="ALWAYS" />
         <Label fx:id="ticketStatus" alignment="CENTER_RIGHT" contentDisplay="RIGHT" />

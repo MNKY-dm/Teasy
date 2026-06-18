@@ -41,7 +41,6 @@ public class Seance {
             return "Date inconnue";
         }
 
-        // Format sans secondes : juste jour/mois/année heure:minute
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         return date.toLocalDateTime().format(formatter);
     }

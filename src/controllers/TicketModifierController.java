@@ -3,7 +3,6 @@ package controllers;
 import dao.SeanceDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -13,10 +12,8 @@ import services.TicketService;
 
 import java.net.MalformedURLException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TicketModifierController {
@@ -74,6 +71,7 @@ public class TicketModifierController {
 
     public boolean validateUpdates(Ticket newTicket) {
         if (SeanceDAO.getRowById(newTicket.getSeance_id()) != null && UserDAO.getRowById(newTicket.getUser_id()) != null) {
+            // Garder le if si jamais il y a autre chose à ajouter comme vérifications  
             return true;
         }
         return false;
@@ -102,7 +100,6 @@ public class TicketModifierController {
 
         Ticket newTicket;
         try {
-//            Float.parseFloat(ticketPrice.getText());
             newTicket = new Ticket(
                     url,
                     ticketLabel.getText(),
