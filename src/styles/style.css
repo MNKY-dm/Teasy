@@ -196,6 +196,74 @@
     -fx-border-style: solid;
 }
 
+/* ===== PAGE ACHAT TICKETS ===== */
+.form-spinner {
+    -fx-pref-width: 110;
+    -fx-pref-height: 40;
+    -fx-background-color: transparent;
+}
+
+.form-spinner .text-field {
+    -fx-background-color: #1A1C21;
+    -fx-prompt-text-fill: #6F7683;
+    -fx-border-color: #2C313A;
+    -fx-border-width: 1;
+    -fx-border-radius: 10 0 0 10;
+    -fx-background-radius: 10 0 0 10;
+    -fx-padding: 0 12 0 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #F5F7FA;
+    -fx-highlight-fill: #5B4FFF;
+    -fx-highlight-text-fill: white;
+    -fx-display-caret: true;
+}
+
+.form-spinner:focused .text-field {
+    -fx-border-color: #5B4FFF;
+    -fx-background-color: #1D2027;
+    -fx-effect: dropshadow(gaussian, rgba(91,79,255,0.18), 10, 0, 0, 0);
+    -fx-text-fill: #F5F7FA;
+}
+
+.form-spinner > .increment-arrow-button,
+.form-spinner > .decrement-arrow-button {
+    -fx-background-color: #23262D;
+    -fx-border-color: #2C313A;
+    -fx-border-width: 1 1 1 0;
+    -fx-padding: 4 8 4 8;
+}
+
+.form-spinner > .increment-arrow-button {
+    -fx-background-radius: 0 10 0 0;
+    -fx-border-radius: 0 10 0 0;
+}
+
+.form-spinner > .decrement-arrow-button {
+    -fx-background-radius: 0 0 10 0;
+    -fx-border-radius: 0 0 10 0;
+}
+
+.form-spinner > .increment-arrow-button:hover,
+.form-spinner > .decrement-arrow-button:hover {
+    -fx-background-color: #2A2E38;
+}
+
+.form-spinner .increment-arrow,
+.form-spinner .decrement-arrow {
+    -fx-background-color: #7C72FF;
+}
+
+.form-spinner:disabled {
+    -fx-opacity: 1;
+}
+
+.form-spinner:disabled .text-field {
+    -fx-background-color: #15171B;
+    -fx-text-fill: #A8ADB8;
+    -fx-border-color: #262A32;
+}
+
+
 /* ===== ADMIN PANEL ===== */
 .page-title {
     -fx-font-size: 18px;

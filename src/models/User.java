@@ -69,7 +69,7 @@ public class User {
     public List<Ticket> getAvailableTickets() {
         List<Ticket> myTickets = getTickets();
 
-        myTickets.removeIf(ticket -> !ticket.getIs_refunded());
+        myTickets.removeIf(Ticket::getIs_refunded);
 
         return myTickets;
     }
