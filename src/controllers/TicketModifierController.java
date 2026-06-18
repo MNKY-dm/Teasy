@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.EventDAO;
 import dao.SeanceDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
@@ -120,6 +121,7 @@ public class TicketModifierController {
                     ticketUsed_at,
                     ticketRefunded.isSelected()
             );
+
         } catch (NumberFormatException e) {
             newTicket = new Ticket(
                     url,
@@ -142,7 +144,10 @@ public class TicketModifierController {
 
 
         if (validateUpdates(newTicket)) {
-            newTicket.setId(ticket.getId());
+            Seance seance = SeanceDAO.getRowById(ticket.getSeance_id());
+            newTicket.setId(ticket.getId()); // Valeur qui n'est pas dans la requête SQL de mise à jour du ticket
+            newTicket.setCreated_at(ticket.getCreated_at()); // Valeur qui n'est pas dans la requête SQL de mise à jour du ticket
+            newTicket.setTitle(EventDAO.getRowById(seance.getEvent_id()).getName()); // Mettre à jour le titre du ticket en fonction du titre de l'événement de la séance
             System.out.println("Ticket updated : "+ TicketDAO.updateRowById(newTicket));
             setTicket(newTicket);
         } else {
