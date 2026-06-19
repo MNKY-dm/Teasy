@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import models.Seance;
 import models.Ticket;
 import services.TicketService;
+import utils.TypeConverter;
 
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -63,7 +64,7 @@ public class TicketModifierController {
         Seance seance = SeanceDAO.getRowById(ticket.getSeance_id());
 
         ticketLocation.setText(seance.getLocation());
-        ticketDate.setText(seance.dateFormat(seance.getDate()));
+        ticketDate.setText(TypeConverter.dateFormat(seance.getDate()));
 
         ticketType.setValue(ticket.getType());
         ticketPrice.setText(String.valueOf(ticket.getPrice()));
@@ -160,12 +161,8 @@ public class TicketModifierController {
     }
 
     public void deleteTicket() {
-        try {
-            this.ticket.delete();
-            toTicketsManagement();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        this.ticket.delete();
+        toTicketsManagement();
     }
 
     public void toTicketsManagement() {

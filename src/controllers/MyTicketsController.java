@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Ticket;
 import services.SessionManager;
+import services.TicketService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -89,13 +90,7 @@ public class MyTicketsController implements Initializable {
 
     @FXML
     private void refundTicket() {
-        try {
-            currentTicket.setIs_refunded(true);
-            currentTicket.update();
-            ticketsRoot.getChildren().remove(currentTicketPane);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        TicketService.refundTicket(currentTicket);
     }
 
     public void moveToHome(ActionEvent actionEvent) {

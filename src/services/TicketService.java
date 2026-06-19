@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -22,9 +23,15 @@ public class TicketService {
             ticket.setId(ticketId);
             String qrUrl = generateQRCode(ticketId, seanceId);
             ticket.setCode(qrUrl);
-            return TicketDAO.updateRowById(ticket);
+            return ticket.update();
         }
         return false;
+    }
+
+    public static void refundTicket(Ticket ticket) {
+        ticket.setStatus("expired");
+        ticket.setIs_refunded(true);
+        ticket.update();
     }
 
     public static String generateQRCode(int ticketId, int seanceId) {

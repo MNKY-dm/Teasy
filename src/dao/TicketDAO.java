@@ -31,6 +31,7 @@ public class TicketDAO implements DAO {
                         rs.getBoolean("is_refunded"));
                 ticket.setId(rs.getInt("id"));
                 ticket.setCreated_at(rs.getTimestamp("created_at"));
+                ticket.setStatus(null);
                 all.add(ticket);
             }
 
@@ -67,6 +68,9 @@ public class TicketDAO implements DAO {
                         rs.getTimestamp("used_at"),
                         rs.getBoolean("is_refunded"));
             }
+            ticket.setId(id);
+            ticket.setCreated_at(rs.getTimestamp("created_at"));
+            ticket.setStatus(null);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

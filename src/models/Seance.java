@@ -36,15 +36,6 @@ public class Seance {
         return this.date;
     }
 
-    public String dateFormat(Timestamp date) {
-        if (date == null) {
-            return "Date inconnue";
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return date.toLocalDateTime().format(formatter);
-    }
-
     public String getLocation() {
         return this.location;
     }

@@ -2,6 +2,7 @@ package dao;
 
 import models.Pricing;
 import models.Seance;
+import utils.TypeConverter;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -167,6 +168,6 @@ public class SeanceDAO implements DAO {
 
     public static void main (String[] args) {
         models.Seance seance = getRowById(1);
-        System.out.println(seance.dateFormat(seance.getDate()));
+        System.out.println(TypeConverter.dateFormat(seance.getDate()));
     }
 }

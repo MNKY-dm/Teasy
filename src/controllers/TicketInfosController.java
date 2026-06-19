@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import models.Seance;
 import models.Ticket;
+import utils.TypeConverter;
 
 public class TicketInfosController {
     @FXML private Label ticketID;
@@ -32,7 +33,7 @@ public class TicketInfosController {
             ticketType.setText(ticket.getType());
             seanceID.setText(ticket.getSeance_id() + "");
             seanceLocation.setText(seance.getLocation());
-            seanceDate.setText(seance.dateFormat(seance.getDate()));
+            seanceDate.setText(TypeConverter.dateFormat(seance.getDate()));
             price.setText(ticket.getPrice() + "");
             ticketStatus.setText(ticket.getStatus());
         } catch (Exception e) {

@@ -1,10 +1,11 @@
 package models;
 
+import dao.SeanceDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Ticket {
 
@@ -40,12 +41,24 @@ public class Ticket {
         this.is_refunded = is_refunded;
     }
 
-    public void delete() throws SQLException {
-        TicketDAO.deleteRowById(this.id);
+    public void delete() {
+        try {
+            TicketDAO.deleteRowById(this.id);
+        } catch (Exception e) {
+            System.out.println("[TICKET] : Deletion failed");
+            e.printStackTrace();
+        }
     }
 
-    public void update() throws SQLException {
-        TicketDAO.updateRowById(this);
+    public boolean update() {
+        try {
+            TicketDAO.updateRowById(this);
+            return true;
+        } catch (Exception e) {
+            System.out.println("[TICKET] : Update failed");
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public int getId() {
@@ -138,7 +151,17 @@ public class Ticket {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if (status == null) {
+            Seance seance = SeanceDAO.getRowById(this.getSeance_id());
+            if (Objects.equals(this.status, "used")) {
+                   this.status = "used";
+            } else if (seance.getDate().before(new java.util.Date()) || this.is_refunded) {
+                this.status = "expired";
+            }
+        } else {
+            this.status = status;
+        }
+        this.update();
     }
 
     public void setUsed_at(Timestamp used_at) {
@@ -153,5 +176,5 @@ public class Ticket {
         this.created_at = created_at;
     }
 
-    // Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")
+    // TODO : Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")
 }

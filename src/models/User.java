@@ -1,6 +1,7 @@
 package models;
 
 import dao.TicketDAO;
+import dao.UserDAO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -22,6 +23,14 @@ public class User {
         this.password = password;
         this.tel = tel;
         this.role = role;
+    }
+
+    public void delete() {
+        UserDAO.deleteRowById(this.id);
+    }
+
+    public void update() {
+        UserDAO.updateRowById(this);
     }
 
     public int getId() {

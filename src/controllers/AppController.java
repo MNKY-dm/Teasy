@@ -201,6 +201,27 @@ public class AppController {
     }
 
     public void loadMyProfile() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadMyProfile");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MyProfileScene.fxml"));
+            Parent root = loader.load();
+            MyProfileController myProfileController = loader.getController();
+
+            myProfileController.setProfile();
+
+            primaryStage.setTitle("Teasy - Mon profil");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger MyProfileScene.fxml");
+            e.printStackTrace();
+        }
     }
 
     public void loadAdminPanel() {

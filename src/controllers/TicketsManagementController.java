@@ -89,12 +89,8 @@ public class TicketsManagementController implements Initializable {
 
     @FXML
     private void deleteTicket() {
-        try {
-            currentTicket.delete();
-            ticketsRoot.getChildren().remove(currentTicketPane);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        currentTicket.delete();
+        ticketsRoot.getChildren().remove(currentTicketPane);
     }
 
     public void moveToAdminPanel(ActionEvent actionEvent) {

@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import models.Event;
 import models.Photo;
 import models.Seance;
+import utils.TypeConverter;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -47,7 +48,7 @@ public class SeanceInfosController {
             // Si on trouve une/des seance(s) liée(s) à cet événement
 
             String location = seance.getLocation(); // On récupère le lieu de cette seance
-            String date = seance.dateFormat(seance.getDate());
+            String date = TypeConverter.dateFormat(seance.getDate());
             int nbPlaces = seance.getNb_places();
             String status = seance.getStatus();
             try {

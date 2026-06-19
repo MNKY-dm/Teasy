@@ -58,6 +58,7 @@ public class UserDAO implements DAO {
                         rs.getString("tel"),
                         rs.getString("role"));
                 user.setId(rs.getInt("id"));
+                user.setCreated_at(rs.getTimestamp("created_at"));
             }
 
         } catch (SQLException ex) {
@@ -89,6 +90,7 @@ public class UserDAO implements DAO {
                         rs.getString("tel"),
                         rs.getString("role"));
                 user.setId(rs.getInt("id"));
+                user.setCreated_at(rs.getTimestamp("created_at"));
             }
 
 
