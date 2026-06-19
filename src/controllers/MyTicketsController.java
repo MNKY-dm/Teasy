@@ -84,7 +84,7 @@ public class MyTicketsController implements Initializable {
     @FXML
     private void showTicket() {
         System.out.println("showTicket pour le ticket : " + currentTicket.getId());
-        AppController.getInstance().loadTicketModifier(currentTicket);
+        AppController.getInstance().loadTicket(currentTicket);
     }
 
     @FXML

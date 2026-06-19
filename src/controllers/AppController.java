@@ -254,6 +254,32 @@ public class AppController {
         }
     }
 
+    public void loadTicket(Ticket ticket) {
+        try {
+            System.out.println("[APPCONTROLLER] : loadTicket --> Chargement de : " + ticket);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketScene.fxml"));
+            Parent root = loader.load();
+
+            TicketController ticketController = loader.getController();
+            ticketController.setTicket(ticket);
+
+            String eventName = ticket.getTitle();
+            String title = "Teasy - Ticket "  + ticket.getType() + " (" + eventName + ")";
+            primaryStage.setTitle(title);
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger TicketScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
     public void loadTicketModifier(Ticket ticket) {
         try {
             System.out.println("[APPCONTROLLER] : loadTicketModifier --> Chargement de : " + ticket);
