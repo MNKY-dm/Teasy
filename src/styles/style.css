@@ -196,6 +196,30 @@
     -fx-border-style: solid;
 }
 
+/* ===== EVENT DETAIL PAGE ===== */
+
+.event-affiche {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 18, 0, 0, 8);
+}
+
+.event-seance-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: #2C313A;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-padding: 8;
+}
+
+.event-seance-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.seances-list {
+    -fx-padding: 10 12 10 12;
+}
+
+
 /* ===== PAGE ACHAT TICKETS ===== */
 .form-spinner {
     -fx-pref-width: 110;
