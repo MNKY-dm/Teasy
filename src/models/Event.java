@@ -10,6 +10,7 @@ public class Event {
     private String description;
     private String affiche;
     private String language;
+    // TODO : Ajouter owner_id / creator_id
     private Timestamp created_at;
 
     public Event(String name, String description, String affiche, String language) {
@@ -105,19 +106,14 @@ public class Event {
 
             int responseCode = connection.getResponseCode();
 
-            // Afficher le code de réponse pour tester
-//            System.out.println("URL : " + urlString + " -> Code : " + responseCode);
-
             // Vérifier si c'est une réponse valide
             boolean isValid = responseCode >= 200 && responseCode < 300;
-//            System.out.println("URL : " + urlString + " -> Status : " + isValid);
 
             connection.disconnect();
-            System.out.println("Valide au retour ? : " + isValid);
             return isValid;
 
         } catch (Exception e) {
-            System.err.println("Erreur vérification image : " + e.getMessage());
+            System.err.println("[EVENT] : isAfficheUrlValid --> Erreur vérification image : " + e.getMessage());
             return false;
         }
     }

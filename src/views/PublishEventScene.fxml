@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" >
-    
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PublishEventController">
+    <!-- HAUT : MenuBar + titre -->
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <fx:include source="MenuBar.fxml" />
+            <Label styleClass="section-label" text="Création d'événement" />
+            <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="TOP_CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="16.0" styleClass="home-content">
+                    <GridPane alignment="TOP_CENTER" hgap="12.0" vgap="12.0">
+                        <Label styleClass="stat-label" text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="eventName" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label styleClass="stat-label" text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="eventDescription" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="stat-label" text="URL de l'affiche :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="eventAfficheUrl" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label styleClass="stat-label" text="Aperçu de l'affiche :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <ImageView fx:id="eventAffiche" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label styleClass="stat-label" text="Langue :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <TextField fx:id="eventLanguage" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+    <padding>
+        <Insets bottom="6.0" left="6.0" right="6.0" />
+    </padding>
+    <bottom>
+        <HBox alignment="TOP_CENTER" spacing="12.0">
+            <Button mnemonicParsing="false" onAction="#saveEvent" styleClass="btn-primary" text="Enregistrer" />
+            <Button mnemonicParsing="false" onAction="#moveToHome" styleClass="btn-secondary" text="Retour à l'accueil" />
+        </HBox>
+    </bottom>
 </BorderPane>
-

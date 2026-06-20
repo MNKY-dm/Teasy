@@ -131,10 +131,10 @@ public class EventDAO implements DAO {
             stmt.setString(2, event.getDescription());
             stmt.setString(3, event.getAffiche());
             stmt.setString(4, event.getLanguage());
-            stmt.setTimestamp(5, event.getCreated_at());
+//            stmt.setTimestamp(5, event.getCreated_at());
 
-            int rows = stmt.executeUpdate();
-            if (rows == 1) {
+            boolean rows = stmt.execute();
+            if (rows) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         event.setId(rs.getInt(1));

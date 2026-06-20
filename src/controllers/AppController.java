@@ -198,6 +198,26 @@ public class AppController {
     }
 
     public void loadPublishEvent() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadPublishEvent");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/PublishEventScene.fxml"));
+            Parent root = loader.load();
+
+            PublishEventController publishEventController = loader.getController();
+
+            primaryStage.setTitle("Teasy - Publier un nouvel événement");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        }  catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger PublishEventScene.fxml");
+            e.printStackTrace();
+        }
     }
 
     public void loadMyProfile() {
