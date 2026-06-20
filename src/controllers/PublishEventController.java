@@ -45,6 +45,8 @@ public class PublishEventController implements Initializable {
                 newEvent.setCreated_at(new Timestamp(System.currentTimeMillis()));
 
                 EventDAO.insertNewRow(newEvent);
+                System.out.println("[PUBLISHEVENTCONTROLLER] : événement créé avec succès");
+                moveToHome();
             } else {
                 System.out.println("Informations non valides. L'événement n'a pas été créé.");
             }
@@ -115,7 +117,7 @@ public class PublishEventController implements Initializable {
     }
 
     @FXML
-    public void moveToHome(ActionEvent actionEvent) {
+    public void moveToHome() {
         System.out.println("PublishEventController : moveToHome");
         AppController.getInstance().loadHome();
     }
