@@ -1,10 +1,13 @@
 package models;
 
+import dao.TicketDAO;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 public class Seance {
 
@@ -73,7 +76,7 @@ public class Seance {
         if (date != null) {
             this.date = date;
         } else {
-            throw new IllegalArgumentException("L'date ne peut pas être null.");
+            throw new IllegalArgumentException("La date ne peut pas être null.");
         }
     }
 
@@ -82,12 +85,25 @@ public class Seance {
             this.location = location;
         }
         else {
-            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
+            throw new IllegalArgumentException("L'emplacement ne peut pas être null.");
         }
     }
 
     public void setNb_places(Integer nb_places) {
         this.nb_places = nb_places; // Peut être null (voir BDD)
+    }
+
+    public int getRemainingPlaces() {
+        int takenPlaces = 0;
+
+        List<Ticket> tickets = TicketDAO.getAll();
+        for (Ticket ticket : tickets) {
+            if (ticket.getSeance_id() == this.id) {
+                takenPlaces++;
+            }
+        }
+
+        return this.nb_places - takenPlaces;
     }
 
     public void setStatut(String statut) {
@@ -96,12 +112,5 @@ public class Seance {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
-    }
-
-    public static void main (String[] args) {
-//        Timestamp now = new Timestamp(1764541539);
-//        Seance seance = new Seance(1, now, "chez toi", 2, "epuisé");
-//
-//        System.out.println(seance.dateFormat(seance.getDate()));
     }
 }

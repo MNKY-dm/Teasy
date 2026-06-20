@@ -1,18 +1,11 @@
 package controllers;
 
-import dao.EventDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import models.Event;
-import models.Photo;
 import models.Seance;
 import utils.TypeConverter;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 import static java.lang.String.valueOf;
 
@@ -49,7 +42,7 @@ public class SeanceInfosController {
 
             String location = seance.getLocation(); // On récupère le lieu de cette seance
             String date = TypeConverter.dateFormat(seance.getDate());
-            int nbPlaces = seance.getNb_places();
+            int nbPlaces = seance.getRemainingPlaces();
             String status = seance.getStatus();
             try {
                 System.out.println("lieu : " + location);
