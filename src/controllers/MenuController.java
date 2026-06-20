@@ -10,7 +10,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
-    public MenuItem publishEvent;
+    @FXML public MenuItem publishEvent;
+    @FXML public MenuItem myEvents;
     @FXML private Menu menuProfile;
     @FXML private Menu menuMyEvents;
     @FXML private Menu menuAdmin;
@@ -25,6 +26,7 @@ public class MenuController implements Initializable {
                 menuProfile.setVisible(true);
                 menuMyEvents.setVisible(true);
                 menuMyEvents.getItems().get(1).setVisible(true);
+                menuMyEvents.getItems().get(2).setVisible(true);
                 menuAdmin.setVisible(true);
                 break;
             case "client":
@@ -35,6 +37,7 @@ public class MenuController implements Initializable {
                 menuProfile.setVisible(true);
                 menuMyEvents.setVisible(true);
                 menuMyEvents.getItems().get(1).setVisible(true);
+                menuMyEvents.getItems().get(2).setVisible(true);
                 break;
         }
     }
@@ -46,6 +49,9 @@ public class MenuController implements Initializable {
     private void myTickets() {
         AppController.getInstance().loadMyTickets();
     }
+
+    @FXML
+    public void myEvents(ActionEvent actionEvent) { AppController.getInstance().loadMyEvents(); }
 
     @FXML
     private void publishEvent() {

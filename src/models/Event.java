@@ -1,5 +1,7 @@
 package models;
 
+import dao.EventDAO;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -19,6 +21,14 @@ public class Event {
         this.affiche = affiche;
         this.language = language;
         this.creator_id = creator_id;
+    }
+
+    public void update() {
+        EventDAO.updateRowById(this);
+    }
+
+    public void delete() {
+        EventDAO.deleteRowById(this.id);
     }
 
     public int getId() {

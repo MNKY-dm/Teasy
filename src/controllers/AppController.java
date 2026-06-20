@@ -197,6 +197,32 @@ public class AppController {
         }
     }
 
+    public void loadMyEvents() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadMyEvents");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MyEventsScene.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur créé par FXMLLoader (celui qui a les @FXML injectés)
+            MyEventsController myeventsController = loader.getController();
+
+            myeventsController.setEvents();
+
+            primaryStage.setTitle("Teasy - Mes événements");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger MyEventsScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
     public void loadPublishEvent() {
         try {
             System.out.println("[APPCONTROLLER] : loadPublishEvent");

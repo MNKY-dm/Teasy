@@ -76,7 +76,7 @@ public class EventDAO implements DAO {
     public static boolean updateRowById(Event event){
         // Update
         String sql = "UPDATE event " +
-                "SET name = ?, description = ?,  affiche = ?, language = ? " +
+                "SET name = ?, description = ?,  affiche = ?, language = ?, event.creator_id = ?" +
                 "WHERE id = ?";
 
         int eventId = event.getId();
@@ -90,6 +90,7 @@ public class EventDAO implements DAO {
                 stmt.setString(2, event.getDescription());
                 stmt.setString(3, event.getAffiche());
                 stmt.setString(4, event.getLanguage());
+                stmt.setInt(5, event.getCreator_id());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -123,8 +124,8 @@ public class EventDAO implements DAO {
     }
 
     public static void insertNewRow(Event event) { // Methode utilisée si un artiste ou un admin ajoute un événement (fonctionnalité non implémentée pour le moment)
-        String sql = "INSERT INTO event (name, description, affiche, language) " +
-                "VALUES (?, ?,  ?, ?) ";
+        String sql = "INSERT INTO event (name, description, affiche, language, creator_id) " +
+                "VALUES (?, ?,  ?, ?, ?) ";
 
         try (var conn = MySQLConnection.getConnection();
             var stmt = conn.prepareStatement(sql)) {
@@ -134,6 +135,8 @@ public class EventDAO implements DAO {
             stmt.setString(3, event.getAffiche());
             stmt.setString(4, event.getLanguage());
             stmt.setInt(5, event.getCreator_id());
+
+            System.out.println("Creation de l'événement" + event.getName());
 
             boolean rows = stmt.execute();
             if (rows) {
@@ -145,7 +148,7 @@ public class EventDAO implements DAO {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

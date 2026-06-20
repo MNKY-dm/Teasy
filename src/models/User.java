@@ -1,5 +1,6 @@
 package models;
 
+import dao.EventDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
 
@@ -73,6 +74,20 @@ public class User {
         }
 
         return myTickets;
+    }
+
+    public List<Event> getEvents() {
+        List<Event> myEvents = new ArrayList<>();
+
+        List<Event> events = EventDAO.getAll();
+
+        for (Event event : events) {
+            if (event.getCreator_id() == this.getId()) {
+                myEvents.add(event);
+            }
+        }
+
+        return myEvents;
     }
 
     public List<Ticket> getAvailableTickets() {

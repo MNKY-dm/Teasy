@@ -18,6 +18,7 @@
         <Menu fx:id="menuMyEvents" text="Mes événements" visible="false">
             <items>
                 <MenuItem text="Mes tickets" onAction="#myTickets"/>
+                <MenuItem fx:id="myEvents" text="Mes événements" visible="false" onAction="#myEvents"/>
                 <MenuItem fx:id="publishEvent" text="Poster un événement" visible="false" onAction="#publishEvent" />
             </items>
         </Menu>
@@ -27,6 +28,7 @@
             </items>
         </Menu>
         <Menu fx:id="menuAdmin" text="Admin" visible="false">
+            <!--      TODO : Changer les options en mettant "Gérer les tickets" ; "Gérer les événements" ...      -->
             <items>
                 <MenuItem text="Panel Admin" onAction="#adminPanel"/>
             </items>
