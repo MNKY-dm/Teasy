@@ -26,7 +26,8 @@ public class EventDAO implements DAO {
                 Event event = new Event(rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("affiche"),
-                        rs.getString("language"));
+                        rs.getString("language"),
+                        rs.getInt("creator_id"));
                 event.setId(rs.getInt("id"));
                 event.setCreated_at(rs.getTimestamp("created_at"));
 
@@ -59,7 +60,8 @@ public class EventDAO implements DAO {
                 event = new Event(rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("affiche"),
-                        rs.getString("language"));
+                        rs.getString("language"),
+                        rs.getInt("creator_id"));
                 event.setId(rs.getInt("id"));
                 event.setCreated_at(rs.getTimestamp("created_at"));
             }
@@ -131,7 +133,7 @@ public class EventDAO implements DAO {
             stmt.setString(2, event.getDescription());
             stmt.setString(3, event.getAffiche());
             stmt.setString(4, event.getLanguage());
-//            stmt.setTimestamp(5, event.getCreated_at());
+            stmt.setInt(5, event.getCreator_id());
 
             boolean rows = stmt.execute();
             if (rows) {

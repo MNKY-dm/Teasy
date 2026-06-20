@@ -10,14 +10,15 @@ public class Event {
     private String description;
     private String affiche;
     private String language;
-    // TODO : Ajouter owner_id / creator_id
+    private Integer creator_id;
     private Timestamp created_at;
 
-    public Event(String name, String description, String affiche, String language) {
+    public Event(String name, String description, String affiche, String language, Integer creator_id) {
         this.name = name;
         this.description = description;
         this.affiche = affiche;
         this.language = language;
+        this.creator_id = creator_id;
     }
 
     public int getId() {
@@ -38,6 +39,10 @@ public class Event {
 
     public String getLanguage() {
         return this.language;
+    }
+
+    public Integer getCreator_id() {
+        return this.creator_id;
     }
 
     public Timestamp getCreated_at() {
@@ -81,6 +86,8 @@ public class Event {
     public void setLanguage(String language) {
         this.language = language; // Peut être null (voir BDD)
     }
+
+    public void setCreator_id(Integer creator_id) { this.creator_id = creator_id; }
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;

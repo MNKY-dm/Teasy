@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : mer. 26 nov. 2025 à 12:13
+-- Généré le : sam. 20 juin 2026 à 14:07
 -- Version du serveur : 8.0.40
 -- Version de PHP : 8.3.14
 
@@ -33,6 +33,7 @@ CREATE TABLE `event` (
   `description` text COLLATE utf8mb4_general_ci,
   `affiche` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `language` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `creator_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,17 +41,19 @@ CREATE TABLE `event` (
 -- Déchargement des données de la table `event`
 --
 
-INSERT INTO `event` (`id`, `name`, `description`, `affiche`, `language`, `created_at`) VALUES
-(1, 'Festival Charcutix', 'Fête locale consacrée à la charcuterie et au terroir.', 'https://unsplash.com/photos/CilE4RB6AX', 'de', '2025-10-20 14:00:19'),
-(2, 'Global Music Stars', 'Festival international regroupant les plus grandes stars mondiales.', 'https://unsplash.com/photos/vbh4NJJkvJ', 'en', '2025-10-20 14:00:19'),
-(3, 'Beer & Food Show', 'Salon dédié aux boissons artisanales et à la gastronomie.', 'https://unsplash.com/photos/XHrq8j2wjH', 'fr', '2025-10-20 14:00:19'),
-(4, 'Code&Play Dev Conference', 'Conférence tech pour passionné·es de programmation.', 'https://unsplash.com/photos/EpaRiYdiep', 'es', '2025-10-20 14:00:19'),
-(5, 'Summer Colors Expo', 'Exposition d\'art coloré et festival urbain.', 'https://unsplash.com/photos/yJzweHHweS', 'de', '2025-10-20 14:00:19'),
-(6, 'Nuit des Gourmets', 'Rencontre des chefs étoilés pour une nuit gastronomique à Paris.', 'https://unsplash.com/photos/YFnqHIPUz4', 'fr', '2025-10-20 14:00:19'),
-(7, 'Comic Zone Convention', 'Convention geek, comics et pop culture.', 'https://unsplash.com/photos/QilOwjwa5O', 'de', '2025-10-20 14:00:19'),
-(8, 'World Sports Gala', 'Gala sportif rassemblant athlètes internationaux.', 'https://unsplash.com/photos/KLwkvq5fQ2', 'es', '2025-10-20 14:00:19'),
-(9, 'Urban Dance Fest', 'Compétition de danse urbaine avec battle et DJ.', 'https://unsplash.com/photos/Pb7SKvh3P3', 'de', '2025-10-20 14:00:19'),
-(10, 'Carnaval des Villes', 'Défilé dédié à la diversité urbaine avec costumes et musique.', 'https://unsplash.com/photos/mLauT5tJ8J', 'de', '2025-10-20 14:00:19');
+INSERT INTO `event` (`id`, `name`, `description`, `affiche`, `language`, `creator_id`, `created_at`) VALUES
+(1, 'Festival Charcutix', 'Fête locale consacrée à la charcuterie et au terroir.', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'de', 65, '2025-10-20 14:00:19'),
+(2, 'Global Music Stars', 'Festival international regroupant les plus grandes stars mondiales.', 'https://tse4.mm.bing.net/th/id/OIP.rDtLG1YCv8Pun6tqKho9bQHaEc?pid=Api', 'en', 66, '2025-10-20 14:00:19'),
+(3, 'Beer & Food Show', 'Salon dédié aux boissons artisanales et à la gastronomie.', 'https://plus.unsplash.com/premium_photo-1695931839656-f192be509203?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'fr', 61, '2025-10-20 14:00:19'),
+(4, 'Code&Play Dev Conference', 'Conférence tech pour passionné·es de programmation.', 'https://plus.unsplash.com/premium_photo-1685086785636-2a1a0e5b591f?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'es', 63, '2025-10-20 14:00:19'),
+(5, 'Summer Colors Expo', 'Exposition d\'art coloré et festival urbain.', 'https://images.unsplash.com/photo-1464820453369-31d2c0b651af?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'de', 64, '2025-10-20 14:00:19'),
+(6, 'Nuit des Gourmets', 'Rencontre des chefs étoilés pour une nuit gastronomique à Paris.', 'https://images.unsplash.com/photo-1623073284788-0d846f75e329?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'fr', 67, '2025-10-20 14:00:19'),
+(7, 'Comic Zone Convention', 'Convention geek, comics et pop culture.', 'https://plus.unsplash.com/premium_photo-1725404409133-61938ac37719?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'de', 68, '2025-10-20 14:00:19'),
+(8, 'World Sports Gala', 'Gala sportif rassemblant athlètes internationaux.', 'https://plus.unsplash.com/premium_photo-1733313613724-3ea5f9eec5ca?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'es', 58, '2025-10-20 14:00:19'),
+(9, 'Urban Dance Fest', 'Compétition de danse urbaine avec battle et DJ.', 'https://plus.unsplash.com/premium_photo-1682089706055-d5ef14dc14e4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'de', 45, '2025-10-20 14:00:19'),
+(10, 'Carnaval des Villes', 'Défilé dédié à la diversité urbaine avec costumes et musique.', 'https://plus.unsplash.com/premium_photo-1677110758877-bbe4f0075f1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'de', 12, '2025-10-20 14:00:19'),
+(11, 'Sammy Jo Fest', 'Le festival Officiel de Sammy Jo le chat ', 'https://img.freepik.com/psd-premium/dessin-affiche-fete-internationale-du-chat-illustration-couple-chats_1232486-571.jpg?w=200', 'français', 23, '2026-06-20 13:34:15'),
+(12, 'Test event 1', 'Test event 1', 'https://img.freepik.com/psd-premium/dessin-affiche-fete-internationale-du-chat-illustration-couple-chats_1232486-571.jpg?w=200', 'français', 37, '2026-06-20 13:35:33');
 
 -- --------------------------------------------------------
 
@@ -72,26 +75,146 @@ CREATE TABLE `photo` (
 --
 
 INSERT INTO `photo` (`id`, `event_id`, `url`, `alt`, `type`, `created_at`) VALUES
-(1, 8, 'https://unsplash.com/photos/dSce0UdMYN', 'Coulisses', 'coulisses', '2025-10-20 14:00:19'),
-(2, 5, 'https://unsplash.com/photos/KGZOqyJIRr', 'Affiche officielle', 'affiche', '2025-10-20 14:00:19'),
-(3, 7, 'https://unsplash.com/photos/gQT5255l1Y', 'Photo événementielle', 'logo', '2025-10-20 14:00:19'),
-(4, 10, 'https://unsplash.com/photos/Sk7fj5dB8N', 'Coulisses', 'coulisses', '2025-10-20 14:00:19'),
-(5, 1, 'https://unsplash.com/photos/8BDVZ8uYmd', 'Portrait artiste', 'artiste', '2025-10-20 14:00:19'),
-(6, 9, 'https://unsplash.com/photos/2TBkWTnMAR', 'Logo festival', 'affiche', '2025-10-20 14:00:19'),
-(7, 1, 'https://unsplash.com/photos/9fXE2R022x', 'Logo festival', 'coulisses', '2025-10-20 14:00:19'),
+(1, 8, 'https://images.unsplash.com/photo-1569863959165-56dae551d4fc?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Coulisses', 'coulisses', '2025-10-20 14:00:19'),
+(2, 4, 'https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2106&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Affiche officielle', 'affiche', '2025-10-20 14:00:19'),
+(3, 7, 'https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Photo événementielle', 'logo', '2025-10-20 14:00:19'),
+(4, 10, 'https://images.unsplash.com/photo-1574724713425-fee7e2eacf84?q=80&w=2026&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Coulisses', 'coulisses', '2025-10-20 14:00:19'),
+(5, 1, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Portrait artiste', 'artiste', '2025-10-20 14:00:19'),
+(6, 9, 'https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Logo festival', 'affiche', '2025-10-20 14:00:19'),
+(7, 2, 'https://medias.horizonactu.fr/photos/1200/45165/?v=1759851545', 'Logo festival', 'coulisses', '2025-10-20 14:00:19'),
 (8, 10, 'https://unsplash.com/photos/AO1czTMPww', 'Affiche officielle', 'affiche', '2025-10-20 14:00:19'),
-(9, 6, 'https://unsplash.com/photos/n5lcdTDT5B', 'Portrait artiste', 'affiche', '2025-10-20 14:00:19'),
+(9, 6, 'https://plus.unsplash.com/premium_photo-1661677253638-ed2538328c63?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Portrait artiste', 'affiche', '2025-10-20 14:00:19'),
 (10, 9, 'https://unsplash.com/photos/a9ITHnb8zB', 'Photo événementielle', 'artiste', '2025-10-20 14:00:19'),
 (11, 10, 'https://unsplash.com/photos/L3f8pSOINd', 'Logo festival', 'illustration', '2025-10-20 14:00:19'),
-(12, 5, 'https://unsplash.com/photos/rcnJSCv7r4', 'Affiche officielle', 'logo', '2025-10-20 14:00:19'),
-(13, 3, 'https://unsplash.com/photos/IHFMmyVISo', 'Portrait artiste', 'coulisses', '2025-10-20 14:00:19'),
+(12, 5, 'https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Affiche officielle', 'logo', '2025-10-20 14:00:19'),
+(13, 3, 'https://plus.unsplash.com/premium_photo-1695931839656-f192be509203?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Portrait artiste', 'coulisses', '2025-10-20 14:00:19'),
 (14, 9, 'https://unsplash.com/photos/SFdoPKpnjw', 'Affiche officielle', 'artiste', '2025-10-20 14:00:19'),
 (15, 10, 'https://unsplash.com/photos/ezcdppkKhD', 'Affiche officielle', 'affiche', '2025-10-20 14:00:19'),
 (16, 9, 'https://unsplash.com/photos/Apq0UaNlPq', 'Portrait artiste', 'illustration', '2025-10-20 14:00:19'),
 (17, 10, 'https://unsplash.com/photos/U5u75ac0iQ', 'Affiche officielle', 'illustration', '2025-10-20 14:00:19'),
 (18, 4, 'https://unsplash.com/photos/QQ3A7wiqfo', 'Portrait artiste', 'coulisses', '2025-10-20 14:00:19'),
 (19, 1, 'https://unsplash.com/photos/JO9B2lm06I', 'Portrait artiste', 'artiste', '2025-10-20 14:00:19'),
-(20, 3, 'https://unsplash.com/photos/yy6CxnAtNx', 'Coulisses', 'affiche', '2025-10-20 14:00:19');
+(20, 3, 'https://unsplash.com/photos/snnhGYNqm44', 'Coulisses', 'affiche', '2025-10-20 14:00:19');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pricing`
+--
+
+CREATE TABLE `pricing` (
+  `id` int NOT NULL,
+  `seance_id` int NOT NULL,
+  `price_1` decimal(8,2) NOT NULL,
+  `price_2` decimal(8,2) DEFAULT NULL,
+  `price_3` decimal(8,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `pricing`
+--
+
+INSERT INTO `pricing` (`id`, `seance_id`, `price_1`, `price_2`, `price_3`) VALUES
+(1, 1, 15.30, NULL, NULL),
+(2, 2, 12.50, 18.90, 27.00),
+(3, 3, 10.00, 15.75, 22.50),
+(4, 4, 14.90, 21.00, 30.50),
+(5, 5, 11.50, 17.25, 25.00),
+(6, 6, 13.00, 19.50, 28.75),
+(7, 7, 9.90, 14.50, 20.00),
+(8, 8, 15.00, 22.50, 32.00),
+(9, 9, 12.00, 18.00, 26.50),
+(10, 10, 16.50, 24.00, 34.99),
+(11, 11, 10.50, 16.00, 23.50),
+(12, 12, 13.50, 20.25, 29.90),
+(13, 13, 11.00, 17.50, 25.50),
+(14, 14, 13.90, 20.00, 29.00),
+(15, 15, 9.50, 14.00, 19.90),
+(16, 16, 15.50, 23.00, 33.50),
+(17, 17, 12.50, 18.75, 27.50),
+(18, 18, 10.90, 16.50, 24.00),
+(19, 19, 14.00, 21.50, 31.00),
+(20, 20, 11.75, 17.00, 24.50),
+(21, 21, 13.50, 19.90, 28.00),
+(22, 22, 16.00, 23.50, 35.00),
+(23, 23, 10.00, 15.50, 22.00),
+(24, 24, 12.00, 18.50, 26.00),
+(25, 25, 14.50, 21.00, 30.00),
+(26, 26, 11.50, 17.00, 24.00),
+(27, 27, 13.00, 19.50, 28.50),
+(28, 28, 10.50, 15.75, 23.00),
+(29, 29, 14.50, 21.00, 30.00),
+(30, 30, 12.00, 18.25, 26.50),
+(31, 31, 9.90, 14.50, 20.50),
+(32, 32, 15.00, 22.00, 32.50),
+(33, 33, 11.25, 17.50, 25.00),
+(34, 34, 13.50, 20.25, 29.50),
+(35, 35, 10.00, 15.00, 21.50),
+(36, 36, 16.00, 23.50, 34.00),
+(37, 37, 12.50, 18.75, 27.00),
+(38, 38, 10.90, 16.00, 23.50),
+(39, 39, 14.00, 21.50, 31.50),
+(40, 40, 11.75, 17.25, 25.50),
+(41, 41, 13.50, 20.00, 29.00),
+(42, 42, 9.50, 14.00, 20.00),
+(43, 43, 15.50, 22.50, 33.00),
+(44, 44, 12.00, 18.00, 26.00),
+(45, 45, 14.90, 21.75, 31.00),
+(46, 46, 10.50, 16.25, 23.00),
+(47, 47, 13.00, 19.00, 28.00),
+(48, 48, 11.00, 16.50, 24.50),
+(49, 49, 15.00, 22.00, 32.00),
+(50, 50, 12.50, 18.50, 27.50),
+(51, 51, 10.00, 15.50, 22.50),
+(52, 52, 14.00, 20.75, 30.00),
+(53, 53, 11.50, 17.25, 25.00),
+(54, 54, 13.90, 20.50, 29.90),
+(55, 55, 9.90, 14.75, 21.00),
+(56, 56, 16.50, 24.00, 35.00),
+(57, 57, 12.00, 18.00, 26.50),
+(58, 58, 14.50, 21.00, 30.50),
+(59, 59, 10.90, 16.50, 24.00),
+(60, 60, 13.50, 19.90, 28.75),
+(61, 61, 11.25, 17.00, 25.50),
+(62, 62, 15.50, 23.00, 33.50),
+(63, 63, 12.50, 18.75, 27.00),
+(64, 64, 10.00, 15.00, 21.50),
+(65, 65, 14.00, 21.00, 30.00),
+(66, 66, 11.75, 17.50, 25.75),
+(67, 67, 13.00, 19.50, 28.50),
+(68, 68, 9.50, 14.25, 20.50),
+(69, 69, 15.00, 22.50, 32.50),
+(70, 70, 12.00, 18.25, 26.00),
+(71, 71, 14.90, 21.75, 31.50),
+(72, 72, 10.50, 16.00, 23.50),
+(73, 73, 13.50, 20.00, 29.00),
+(74, 74, 11.00, 16.75, 24.50),
+(75, 75, 15.50, 23.00, 34.00),
+(76, 76, 12.50, 18.50, 27.50),
+(77, 77, 10.00, 15.50, 22.00),
+(78, 78, 14.00, 20.75, 30.50),
+(79, 79, 11.50, 17.25, 25.00),
+(80, 80, 13.90, 20.50, 29.50),
+(81, 81, 9.90, 14.50, 21.00),
+(82, 82, 16.00, 23.50, 34.50),
+(83, 83, 12.00, 18.00, 26.50),
+(84, 84, 14.50, 21.25, 31.00),
+(85, 85, 10.90, 16.50, 24.00),
+(86, 86, 13.50, 19.90, 28.75),
+(87, 87, 11.25, 17.00, 25.50),
+(88, 88, 15.00, 22.50, 32.00),
+(89, 89, 12.50, 18.75, 27.00),
+(90, 90, 10.00, 15.25, 22.00),
+(91, 91, 14.00, 21.00, 30.00),
+(92, 92, 11.75, 17.50, 25.75),
+(93, 93, 13.00, 19.50, 28.50),
+(94, 94, 9.50, 14.00, 20.50),
+(95, 95, 15.50, 23.00, 33.50),
+(96, 96, 12.00, 18.25, 26.00),
+(97, 97, 14.90, 21.75, 31.50),
+(98, 98, 10.50, 16.00, 23.50),
+(99, 99, 13.50, 20.00, 29.00),
+(100, 100, 11.00, 16.75, 24.50);
 
 -- --------------------------------------------------------
 
@@ -223,9 +346,8 @@ INSERT INTO `seance` (`id`, `event_id`, `date`, `location`, `nb_places`, `status
 
 CREATE TABLE `ticket` (
   `id` int NOT NULL,
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `place` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `seance_id` int DEFAULT NULL,
   `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -235,6 +357,66 @@ CREATE TABLE `ticket` (
   `is_refunded` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ticket`
+--
+
+INSERT INTO `ticket` (`id`, `code`, `title`, `user_id`, `seance_id`, `type`, `price`, `status`, `used_at`, `is_refunded`, `created_at`) VALUES
+(11, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-11-60-34e3188c', 'Festival Charcutix', 65, 60, 'STANDARD', 13.50, 'expired', NULL, 0, '2026-03-08 18:27:06'),
+(13, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-13-60-3a12ceee', 'Festival Charcutix', 65, 60, 'PLUS', 19.90, 'expired', NULL, 0, '2026-03-08 18:27:06'),
+(14, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-14-60-9d88374f', 'Festival Charcutix', 65, 60, 'VIP', 28.75, 'expired', NULL, 0, '2026-03-08 18:27:06'),
+(16, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-16-90-449b8343', 'Beer & Food Show', 66, 90, 'PLUS', 15.25, 'expired', NULL, 0, '2026-05-25 18:11:28'),
+(17, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-17-90-d74fc38a', 'Beer & Food Show', 66, 90, 'VIP', 22.00, 'expired', NULL, 0, '2026-05-25 18:11:28'),
+(19, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-19-63-503b9977', 'Festival Charcutix', 66, 63, 'PLUS', 18.75, 'expired', NULL, 0, '2026-05-25 18:11:56'),
+(20, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-20-63-aa9bd163', 'Festival Charcutix', 66, 63, 'PLUS', 18.75, 'expired', NULL, 0, '2026-05-25 18:11:56'),
+(21, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-21-63-72b05694', 'Festival Charcutix', 66, 63, 'PLUS', 18.75, 'expired', NULL, 0, '2026-05-25 18:11:56'),
+(24, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-24-63-eb9a0c4b', 'Festival Charcutix', 66, 63, 'PLUS', 18.75, 'expired', NULL, 0, '2026-05-25 18:11:56'),
+(25, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-25-58-1f83213d', 'Beer & Food Show', 66, 25, 'VIP', 14.50, 'used', '2026-06-24 22:00:00', 1, '2026-05-25 18:12:23'),
+(26, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-26-58-4041bdbd', 'Beer & Food Show', 66, 58, 'STANDARD', 14.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(27, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-27-13-c403dac5', 'Beer & Food Show', 65, 13, 'STANDARD', 14.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(28, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-28-58-9cb69669', 'Beer & Food Show', 66, 58, 'STANDARD', 14.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(31, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-31-58-6183910b', 'Beer & Food Show', 66, 58, 'STANDARD', 14.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(32, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-32-15-37a93ad8', 'Beer & Food Show', 66, 16, 'PLUS', 14.53, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(33, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-33-58-1e6903c0', 'Beer & Food Show', 66, 30, 'STANDARD', 14.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(34, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-34-58-bc702df1', 'Beer & Food Show', 63, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(35, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-35-58-40bb3401', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 1, '2026-05-25 18:12:23'),
+(36, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-36-58-110e05f7', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(37, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-37-58-ed54f65b', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(38, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-38-58-c9d21870', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(39, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-39-58-ea5bbb4d', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(40, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-40-58-b3531972', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(41, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-41-58-7294b290', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(42, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-42-58-a87e1f16', 'Beer & Food Show', 66, 58, 'PLUS', 21.00, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(43, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-43-58-8ec0527c', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(44, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-44-58-31aec863', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(45, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-45-58-2b38019b', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(46, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-46-58-893c6ee0', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(47, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-47-58-22f0d7fd', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(48, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-48-58-6d9d30e3', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(49, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-49-58-f06a93ca', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(50, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-50-58-a52d830d', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(51, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-51-58-f4371c70', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(52, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-52-58-60dd23ca', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(53, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-53-58-bf0f3215', 'Beer & Food Show', 66, 58, 'VIP', 30.50, 'expired', NULL, 0, '2026-05-25 18:12:23'),
+(57, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-57-20-de28b935', 'Code&Play Dev Conference', 66, 20, 'STANDARD', 11.75, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(58, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-58-20-0dcb5f90', 'Code&Play Dev Conference', 66, 20, 'STANDARD', 11.75, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(59, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-59-20-63b1cd6e', 'Code&Play Dev Conference', 66, 20, 'STANDARD', 11.75, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(60, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-60-20-5532c50b', 'Code&Play Dev Conference', 66, 20, 'PLUS', 17.00, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(61, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-61-20-ff98d72f', 'Code&Play Dev Conference', 66, 20, 'PLUS', 17.00, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(62, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-62-20-ea1b9c27', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(63, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-63-20-b7799d9e', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(64, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-64-20-c3488764', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(65, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-65-20-fc2828cc', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(66, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-66-20-c77abff3', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(67, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-67-20-fac8d5c3', 'Code&Play Dev Conference', 66, 20, 'VIP', 24.50, 'expired', NULL, 0, '2026-06-18 21:43:05'),
+(68, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-68-44-7626cfb4', 'Code&Play Dev Conference', 66, 44, 'STANDARD', 12.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(69, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-69-44-b6a9369c', 'Code&Play Dev Conference', 66, 44, 'STANDARD', 12.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(70, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-70-44-a72ff101', 'Code&Play Dev Conference', 66, 44, 'STANDARD', 12.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(71, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-71-44-6124db23', 'Code&Play Dev Conference', 66, 44, 'PLUS', 18.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(72, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-72-44-3ad90bef', 'Code&Play Dev Conference', 66, 44, 'PLUS', 18.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(73, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-73-44-daaec40e', 'Code&Play Dev Conference', 66, 44, 'VIP', 26.00, 'expired', NULL, 0, '2026-06-18 21:58:45'),
+(74, 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TEASY-TICKET-74-44-95fb24a5', 'Code&Play Dev Conference', 66, 44, 'VIP', 26.00, 'expired', NULL, 0, '2026-06-18 21:58:45');
 
 -- --------------------------------------------------------
 
@@ -316,7 +498,14 @@ INSERT INTO `user` (`id`, `nom`, `email`, `password`, `role`, `tel`, `created_at
 (57, 'MorinmhA', 'im94nab2hs@outlook.com', '', '', '+33741321939', '2025-10-20 14:00:19'),
 (58, 'WatanabexC1D', 'luqowgu0jrg@gmail.com', '', '', '+33753403211', '2025-10-20 14:00:19'),
 (59, 'MercierDGBI', 'xoghltc@example.com', '', '', '+33722453467', '2025-10-20 14:00:19'),
-(60, 'NguyenaN', 'tjlgp5zn@gmail.com', '', '', '+33691978077', '2025-10-20 14:00:19');
+(60, 'NguyenaN', 'tjlgp5zn@gmail.com', '', '', '+33691978077', '2025-10-20 14:00:19'),
+(61, 'thibaut', 'thibaut@test.fr', '$2a$10$e3CvQAits4.iYrvodF1GMuy9PDVkR55xYWMEtYEqO2EHFoOs2Rsii', 'role', '0622736462', '2025-11-27 16:55:29'),
+(63, 'Jade', '555ju@gmail.com', '$2a$10$POsNDuSeDKxrPpHr3jR95e9QwM4cLOWVCMCKNZxSPNLCxzlR8oIzG', 'jadddeuh', '0768951252', '2025-11-30 16:59:05'),
+(64, 'Dylan', 'dylantest@test.fr', '$2a$10$N.WBhBMiy72s/UJXsB.bge4MP4SEMGeyN1ldw18Muqohcn8x2Q6lq', 'client', '065536372', '2025-12-01 08:13:57'),
+(65, 'Dylan', 'dylan.test@test.com', '$2a$10$eezEqWcV/ckbh6MWiCJSz.6kZ1JMAdgbV.1Zygm0j7TK6H43E9wkW', 'admin', '098765456', '2026-02-16 17:31:03'),
+(66, 'Dylan', 'dylan@test.fr', '$2a$10$EVvGRgAFIgTGieH8tprJue/PcnsXnwruzY3MwulZLaffT/YuQNB8m', 'admin', '0622813315', '2026-05-25 11:06:07'),
+(67, 'test', 'test@test.fr', '$2a$10$XK6PlmfncK9KhDs637r1mulRF63Y8/UCX.D0Yyfj5oe7iTQkayqEy', 'user', '089765445', '2026-05-25 11:11:43'),
+(68, 'test', 'test@test.test', '$2a$10$qr/xVonunootvjAUjds6MOgO1R4qmmuNd/2q8uRNoqVjWHrb2phG2', 'test', '098765456', '2026-05-25 11:15:21');
 
 --
 -- Index pour les tables déchargées
@@ -326,7 +515,8 @@ INSERT INTO `user` (`id`, `nom`, `email`, `password`, `role`, `tel`, `created_at
 -- Index pour la table `event`
 --
 ALTER TABLE `event`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `event_user_FK` (`creator_id`);
 
 --
 -- Index pour la table `photo`
@@ -334,6 +524,13 @@ ALTER TABLE `event`
 ALTER TABLE `photo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `event_id` (`event_id`);
+
+--
+-- Index pour la table `pricing`
+--
+ALTER TABLE `pricing`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `seance_id_unique` (`seance_id`);
 
 --
 -- Index pour la table `seance`
@@ -349,7 +546,8 @@ ALTER TABLE `ticket`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `code` (`code`),
   ADD KEY `client_id` (`user_id`),
-  ADD KEY `seance_id` (`seance_id`);
+  ADD KEY `seance_id` (`seance_id`),
+  ADD KEY `ticket_ibfk_3` (`price`);
 
 --
 -- Index pour la table `user`
@@ -366,13 +564,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `photo`
 --
 ALTER TABLE `photo`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT pour la table `pricing`
+--
+ALTER TABLE `pricing`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT pour la table `seance`
@@ -384,23 +588,35 @@ ALTER TABLE `seance`
 -- AUTO_INCREMENT pour la table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
+-- Contraintes pour la table `event`
+--
+ALTER TABLE `event`
+  ADD CONSTRAINT `event_user_FK` FOREIGN KEY (`creator_id`) REFERENCES `user` (`id`);
+
+--
 -- Contraintes pour la table `photo`
 --
 ALTER TABLE `photo`
   ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
+
+--
+-- Contraintes pour la table `pricing`
+--
+ALTER TABLE `pricing`
+  ADD CONSTRAINT `pricing_seance_FK` FOREIGN KEY (`seance_id`) REFERENCES `seance` (`id`);
 
 --
 -- Contraintes pour la table `seance`

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.Event;
+import services.SessionManager;
 
 import java.net.URI;
 import java.net.URL;
@@ -38,7 +39,8 @@ public class PublishEventController implements Initializable {
                     eventName.getText(),
                     eventDescription.getText(),
                     eventAfficheUrl.getText(), // valeur si int dans ticketSeanceId
-                    eventLanguage.getText()
+                    eventLanguage.getText(),
+                    SessionManager.getInstance().getCurrentUser().getId()
             );
 
             if (validateValues(newEvent)) {
