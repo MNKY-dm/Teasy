@@ -1042,7 +1042,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Current>1</Current>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-06-20.15:12:32</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-06-21.10:15:30</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <user id="300" parent="1" name="laravel">
@@ -1265,9 +1265,11 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="347" parent="308" name="status">
+    <column id="347" parent="308" name="is_cancelled">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
       <Position>6</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>tinyint(1)|0s</StoredType>
     </column>
     <column id="348" parent="308" name="created_at">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>

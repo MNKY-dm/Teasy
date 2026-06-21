@@ -25,7 +25,7 @@ public class SeanceDAO implements DAO {
                         rs.getTimestamp("date"),
                         rs.getString("location"),
                         rs.getInt("nb_places"),
-                        rs.getString("status"));
+                        rs.getBoolean("is_cancelled")); // TODO : retirer status de la bdd t le rendre uniquement calculé dynamiquement par les contrôleurs, stocké dans les objets quand-même
                 seance.setId(rs.getInt("seance_id"));
                 seance.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(seance);
@@ -58,7 +58,7 @@ public class SeanceDAO implements DAO {
                         rs.getTimestamp("date"),
                         rs.getString("location"),
                         rs.getInt("nb_places"),
-                        rs.getString("status"));
+                        rs.getBoolean("is_cancelled"));
             }
 
         } catch (SQLException ex) {
@@ -97,7 +97,7 @@ public class SeanceDAO implements DAO {
     public static boolean updateRowById(Seance seance){
         // Update
         String sql = "UPDATE Seance " +
-                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, status = ? " +
+                "SET event_id = ?, date = ?,  location = ?, nb_places = ?, is_cancelled = ? " +
                 "WHERE id = ?";
 
         int seanceID = seance.getId();
@@ -110,7 +110,7 @@ public class SeanceDAO implements DAO {
                 stmt.setTimestamp(2, seance.getDate());
                 stmt.setString(3, seance.getLocation());
                 stmt.setInt(4, seance.getNb_places());
-                stmt.setString(5, seance.getStatus());
+                stmt.setBoolean(5, seance.getIs_cancelled());
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
@@ -145,7 +145,7 @@ public class SeanceDAO implements DAO {
 
     public static boolean insertRow(Seance seance) {
         String sql = "INSERT INTO Seance " +
-                "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?, status = ?, created_at = ? ) ";
+                "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?) ";
 
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -154,8 +154,6 @@ public class SeanceDAO implements DAO {
             stmt.setTimestamp(2, seance.getDate());
             stmt.setString(3, seance.getLocation());
             stmt.setInt(4, seance.getNb_places());
-            stmt.setString(5, seance.getStatus());
-            stmt.setTimestamp(6, seance.getCreated_at());
 
             var rs = stmt.executeUpdate();
             return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon

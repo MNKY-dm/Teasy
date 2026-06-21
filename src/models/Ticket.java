@@ -151,17 +151,7 @@ public class Ticket {
     }
 
     public void setStatus(String status) {
-        if (status == null) {
-            Seance seance = SeanceDAO.getRowById(this.getSeance_id());
-            if (Objects.equals(this.status, "used")) {
-                   this.status = "used";
-            } else if (seance.getDate().before(new java.util.Date()) || this.is_refunded) {
-                this.status = "expired";
-            }
-        } else {
-            this.status = status;
-        }
-        this.update();
+        this.status = status;
     }
 
     public void setUsed_at(Timestamp used_at) {

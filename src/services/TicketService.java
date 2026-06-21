@@ -1,6 +1,8 @@
 package services;
 
+import dao.SeanceDAO;
 import dao.TicketDAO;
+import models.Seance;
 import models.Ticket;
 
 import java.net.MalformedURLException;
@@ -10,6 +12,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TicketService {
@@ -31,6 +34,16 @@ public class TicketService {
     public static void refundTicket(Ticket ticket) {
         ticket.setStatus("expired");
         ticket.setIs_refunded(true);
+        ticket.update();
+    }
+
+    public static void setTicketStatus(Ticket ticket) {
+        Seance seance = SeanceDAO.getRowById(ticket.getSeance_id());
+        if (Objects.equals(ticket.getStatus(), "used")) {
+            ticket.setStatus("used");
+        } else if (seance.getDate().before(new java.util.Date()) || ticket.getIs_refunded()) {
+            ticket.setStatus("expired");
+        }
         ticket.update();
     }
 

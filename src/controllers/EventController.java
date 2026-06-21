@@ -2,22 +2,20 @@ package controllers;
 
 
 import dao.EventDAO;
-import dao.SeanceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Event;
-import models.Photo;
 import models.Seance;
 import models.User;
+import services.SeanceService;
+import services.SeanceStatusCache;
 import services.SessionManager;
 
 import java.io.IOException;
@@ -203,6 +201,10 @@ public class EventController implements Initializable {
     @FXML
     public void moveToBuyTicket(ActionEvent actionEvent) {
         System.out.println("EventController : moveToBuyTicket");
-        AppController.getInstance().loadSeance(currentSeance);
+        if (SeanceService.isAvailable(currentSeance)) {
+            AppController.getInstance().loadSeance(currentSeance);
+        } else {
+            System.out.println("Achat de tickets impossible : le status de la séance est " + SeanceStatusCache.getInstance().get(currentSeance.getId()));
+        }
     }
 }

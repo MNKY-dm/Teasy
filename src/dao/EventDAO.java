@@ -209,7 +209,7 @@ public class EventDAO implements DAO {
                         rs.getTimestamp("date"),
                         rs.getString("location"),
                         rs.getInt("nb_places"),
-                        rs.getString("status"));
+                        rs.getBoolean("is_cancelled"));
                 seance.setId(rs.getInt("id"));
                 seance.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(seance);

@@ -1,6 +1,8 @@
 package dao;
 
+import models.Seance;
 import models.Ticket;
+import services.TicketService;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,7 +33,7 @@ public class TicketDAO implements DAO {
                         rs.getBoolean("is_refunded"));
                 ticket.setId(rs.getInt("id"));
                 ticket.setCreated_at(rs.getTimestamp("created_at"));
-                ticket.setStatus(null);
+                TicketService.setTicketStatus(ticket);
                 all.add(ticket);
             }
 
@@ -41,6 +43,21 @@ public class TicketDAO implements DAO {
         }
 
         return all;
+    }
+
+    public static int countBySeance(Seance seance) {
+        String sql = "SELECT count(*) FROM ticket WHERE seance_id = ? AND status = 'available'";
+        int count = 0;
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, seance.getId()); // Remplace le '?' par l'id
+            var rs = stmt.executeQuery();
+            count = rs.next() ? rs.getInt("count(*)") : 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public static Ticket getRowById(Integer id) {
@@ -70,7 +87,7 @@ public class TicketDAO implements DAO {
             }
             ticket.setId(id);
             ticket.setCreated_at(rs.getTimestamp("created_at"));
-            ticket.setStatus(null);
+            TicketService.setTicketStatus(ticket);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

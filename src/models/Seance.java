@@ -1,13 +1,8 @@
 package models;
 
-import dao.TicketDAO;
+import dao.SeanceDAO;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 
 public class Seance {
 
@@ -16,15 +11,23 @@ public class Seance {
     private Timestamp date;
     private String location;
     private Integer nb_places;
-    private String status;
+    private boolean is_cancelled;
     private Timestamp created_at;
 
-    public Seance(Integer event_id, Timestamp date, String location, Integer nb_places, String status) {
+    public Seance(Integer event_id, Timestamp date, String location, Integer nb_places, boolean is_cancelled) {
         this.event_id = event_id;
         this.date = date;
         this.location = location;
         this.nb_places = nb_places;
-        this.status = status;
+        this.is_cancelled = is_cancelled;
+    }
+
+    public void update() {
+        SeanceDAO.updateRowById(this);
+    }
+
+    public void delete() {
+        SeanceDAO.deleteRowById(this.id);
     }
 
     public int getId() {
@@ -47,8 +50,8 @@ public class Seance {
         return this.nb_places;
     }
 
-    public String getStatus() {
-        return this.status;
+    public boolean getIs_cancelled() {
+        return this.is_cancelled;
     }
 
     public Timestamp getCreated_at() {
@@ -93,22 +96,10 @@ public class Seance {
         this.nb_places = nb_places; // Peut être null (voir BDD)
     }
 
-    public int getRemainingPlaces() {
-        int takenPlaces = 0;
-
-        List<Ticket> tickets = TicketDAO.getAll();
-        for (Ticket ticket : tickets) {
-            if (ticket.getSeance_id() == this.id) {
-                takenPlaces++;
-            }
-        }
-
-        return this.nb_places - takenPlaces;
+    public void setIs_cancelled(boolean is_cancelled) {
+        this.is_cancelled = is_cancelled;
     }
 
-    public void setStatut(String statut) {
-        this.status = statut;
-    }
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
