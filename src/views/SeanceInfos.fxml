@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<HBox fx:id="seanceInfosRoot" minHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" spacing="8.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeanceInfosController">
+<HBox fx:id="seanceInfosRoot" minHeight="-Infinity" onMouseClicked="#showSeance" prefHeight="20.0" prefWidth="200.0" spacing="8.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeanceInfosController">
    <children>
       <Label fx:id="seanceLocation" />
       <Label fx:id="seanceDate" />

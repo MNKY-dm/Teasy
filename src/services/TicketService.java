@@ -10,14 +10,13 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.UUID;
 
 public class TicketService {
 
-    public static boolean buyTicket(String code, String title, int userId, int seanceId, String type, float price, String status, Timestamp usedAt, boolean isRefunded) {
+    public static void buyTicket(String code, String title, int userId, int seanceId, String type, float price, String status, Timestamp usedAt, boolean isRefunded) {
         Ticket ticket = new Ticket(null, title, userId, seanceId, type, price, "available", null, false);
         int ticketId = TicketDAO.insertRow(ticket);
 
@@ -26,9 +25,8 @@ public class TicketService {
             ticket.setId(ticketId);
             String qrUrl = generateQRCode(ticketId, seanceId);
             ticket.setCode(qrUrl);
-            return ticket.update();
+            ticket.update();
         }
-        return false;
     }
 
     public static void refundTicket(Ticket ticket) {

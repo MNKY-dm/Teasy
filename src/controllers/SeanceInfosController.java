@@ -36,6 +36,8 @@ public class SeanceInfosController {
                     seance.getId(),
                     () -> SeanceService.getSeanceStatus(seance)
             );
+
+            System.out.println("[SEANCEINFOSCONTROLLER] : setSeanceInfos --> status de la seance chargée : " + status);
             this.disponible = status == SeanceStatus.DISPONIBLE;
             try {
                 System.out.println("lieu : " + location);
