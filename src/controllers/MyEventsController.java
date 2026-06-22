@@ -85,6 +85,12 @@ public class MyEventsController implements Initializable {
     }
 
     @FXML
+    public void addSeance(ActionEvent actionEvent) {
+        System.out.println("MyEventsController : addSeance");
+        AppController.getInstance().loadAddSeance(currentEvent);
+    }
+
+    @FXML
     private void showEvent() {
         System.out.println("showEvent pour le ticket : " + currentEvent.getId());
         AppController.getInstance().loadEvent(currentEvent);
@@ -101,4 +107,5 @@ public class MyEventsController implements Initializable {
         System.out.println("MyEventsController : moveToHome");
         AppController.getInstance().loadHome();
     }
+
 }

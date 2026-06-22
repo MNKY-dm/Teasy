@@ -3,11 +3,11 @@ package models;
 public class Pricing extends Model {
     private int id;
     private int seance_id;
-    private float price1;
-    private float price2;
-    private float price3;
+    private Float price1;
+    private Float price2;
+    private Float price3;
 
-    public Pricing(int seance_id, float price1, float price2, float price3) {
+    public Pricing(int seance_id, Float price1, Float price2, Float price3) {
         this.seance_id = seance_id;
         this.price1 = price1;
         this.price2 = price2;
@@ -24,15 +24,15 @@ public class Pricing extends Model {
         return seance_id;
     }
 
-    public float getPrice1() {
+    public Float getPrice1() {
         return price1;
     }
 
-    public float getPrice2() {
+    public Float getPrice2() {
         return price2;
     }
 
-    public float getPrice3() {
+    public Float getPrice3() {
         return price3;
     }
 
@@ -46,15 +46,15 @@ public class Pricing extends Model {
         this.seance_id = seance_id;
     }
 
-    public void setPrice1(float price1) {
+    public void setPrice1(Float price1) {
         this.price1 = price1;
     }
 
-    public void setPrice2(float price2) {
+    public void setPrice2(Float price2) {
         this.price2 = price2;
     }
 
-    public void setPrice3(float price3) {
+    public void setPrice3(Float price3) {
         this.price3 = price3;
     }
 }

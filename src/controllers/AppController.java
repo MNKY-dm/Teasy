@@ -1,7 +1,6 @@
 package controllers;
 
 import dao.EventDAO;
-import dao.SeanceDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -255,7 +254,31 @@ public class AppController {
             EditEventController editEventController = loader.getController();
             editEventController.setEvent(currentEvent);
 
-            primaryStage.setTitle("Teasy - Publier un nouvel événement");
+            primaryStage.setTitle("Teasy - Edition de l'événement " + currentEvent.getName());
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        }  catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger PublishEventScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    public void loadAddSeance(Event currentEvent) {
+        try {
+            System.out.println("[APPCONTROLLER] : loadAddSeance");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddSeanceScene.fxml"));
+            Parent root = loader.load();
+
+            AddSeanceController addSeanceController = loader.getController();
+            addSeanceController.setEvent(currentEvent);
+
+            primaryStage.setTitle("Teasy - Edition de l'événement " + currentEvent.getName());
             primaryStage.setMinWidth(600);
             primaryStage.setMinHeight(400);
 

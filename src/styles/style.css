@@ -142,8 +142,8 @@
     -fx-font-weight: bold;
 }
 .label-category {
-    -fx-text-fill: #1D1D1F;
-    -fx-font-size: 13px;
+    -fx-text-fill: #5B4FFF;
+    -fx-font-size: 15px;
 }
 .label-error   { -fx-text-fill: #FF3B30; -fx-font-size: 11px; }
 .label-success { -fx-text-fill: #34C759; -fx-font-size: 11px; }

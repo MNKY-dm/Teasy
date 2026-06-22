@@ -27,7 +27,7 @@ public class SeanceDAO implements DAO {
                         rs.getString("location"),
                         rs.getInt("nb_places"),
                         rs.getBoolean("is_cancelled")); // TODO : retirer status de la bdd t le rendre uniquement calculé dynamiquement par les contrôleurs, stocké dans les objets quand-même
-                seance.setId(rs.getInt("seance_id"));
+                seance.setId(rs.getInt("id"));
                 seance.setCreated_at(rs.getTimestamp("created_at"));
                 all.add(seance);
             }
@@ -185,25 +185,36 @@ public class SeanceDAO implements DAO {
         }
     }
 
-    public static boolean insertRow(Seance seance) {
-        String sql = "INSERT INTO Seance " +
-                "VALUES (event_id = ?, date = ?,  location = ?, nb_places = ?) ";
+    public static int insertNewRow(Seance seance) {
+        String sql = "INSERT INTO seance (event_id, date, location, nb_places) " +
+                "VALUES (?, ?, ?, ?) ";
 
         try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
+             var stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, seance.getEvent_id());
             stmt.setTimestamp(2, seance.getDate());
             stmt.setString(3, seance.getLocation());
             stmt.setInt(4, seance.getNb_places());
 
-            var rs = stmt.executeUpdate();
-            return rs == 1; // Indique que la fonction a fonctionné si le nombre de lignes insérée est 1, et false sinon
+            var rows = stmt.executeUpdate();
+
+            if (rows == 0) {
+                return -1;
+            }
+
+            try (var rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    seance.setId(id);
+                    return id;
+                }
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            return false;
         }
+        return -1;
     }
 
     public static void main (String[] args) {

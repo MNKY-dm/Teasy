@@ -92,6 +92,37 @@ public class PricingDAO implements DAO {
         return pricing;
     }
 
+    public static boolean insertPricing(Pricing pricing) {
+        String sql = "INSERT INTO pricing (seance_id, price_1, price_2, price_3) " +
+                "VALUES (?, ?, ?, ?)";
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, pricing.getSeance_id());
+            stmt.setFloat(2, pricing.getPrice1());
+
+            if (pricing.getPrice2() != null) {
+                stmt.setFloat(3, pricing.getPrice2());
+            } else {
+                stmt.setNull(3, java.sql.Types.DECIMAL);
+            }
+
+            if (pricing.getPrice3() != null) {
+                stmt.setFloat(4, pricing.getPrice3());
+            } else {
+                stmt.setNull(4, java.sql.Types.DECIMAL);
+            }
+
+            int rows = stmt.executeUpdate();
+            return rows == 1;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
     public static boolean updatePricing(Pricing pricing){
         // Update
         String sql = "UPDATE pricing " +

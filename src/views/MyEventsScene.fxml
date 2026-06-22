@@ -28,8 +28,9 @@
             <children>
                 <Button layoutX="382.0" layoutY="21.0" mnemonicParsing="false" onAction="#moveToHome" styleClass="btn-secondary" text="Retour à l'accueil" />
                 <Button mnemonicParsing="false" onAction="#deleteEvent" styleClass="btn-delete" text="Supprimer" />
+                <Button mnemonicParsing="false" onAction="#showEvent" styleClass="btn-secondary" text="Voir l'événement" HBox.hgrow="ALWAYS" />
+                <Button mnemonicParsing="false" onAction="#addSeance" styleClass="btn-primary" text="Ajouter une séance" HBox.hgrow="ALWAYS" />
                 <Button mnemonicParsing="false" onAction="#editEvent" styleClass="btn-primary" text="Éditer l'événement" HBox.hgrow="ALWAYS" />
-                <Button mnemonicParsing="false" onAction="#showEvent" styleClass="btn-primary" text="Voir l'événement" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
     </bottom>

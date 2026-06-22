@@ -170,11 +170,11 @@ public class EventController implements Initializable {
                 } catch (Exception ex) {
                     System.err.println("Erreur chargement description : " + ex.getMessage());
                     // Mettre un texte par défaut
-                    eventDescription.setText("Venez tous à cet événement génial ! (promis c'est pas de l'IA)");
+                    eventDescription.setText("Venez tous à cet événement génial !");
                 }
             } else {
                 // Mettre un texte par défaut
-                eventDescription.setText("Venez tous à cet événement génial ! (promis c'est pas de l'IA)");
+                eventDescription.setText("Venez tous à cet événement génial !");
             }
 
         } catch (Exception e) {
