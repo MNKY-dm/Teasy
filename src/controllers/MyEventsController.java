@@ -79,6 +79,12 @@ public class MyEventsController implements Initializable {
     }
 
     @FXML
+    public void editEvent(ActionEvent actionEvent) {
+        System.out.println("MyEventsController : editEvent");
+        AppController.getInstance().loadEditEvent(currentEvent);
+    }
+
+    @FXML
     private void showEvent() {
         System.out.println("showEvent pour le ticket : " + currentEvent.getId());
         AppController.getInstance().loadEvent(currentEvent);
@@ -88,10 +94,11 @@ public class MyEventsController implements Initializable {
     private void deleteEvent() {
         // TODO : ajouter une vérification et confirmation avant toute action sur les Event
         currentEvent.delete();
+        eventsRoot.getChildren().remove(currentEventPane);
     }
 
     public void moveToHome(ActionEvent actionEvent) {
-        System.out.println("MyTicketsController : moveToHome");
+        System.out.println("MyEventsController : moveToHome");
         AppController.getInstance().loadHome();
     }
 }

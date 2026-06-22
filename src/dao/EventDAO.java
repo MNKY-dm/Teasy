@@ -73,10 +73,39 @@ public class EventDAO implements DAO {
         return event;
     }
 
+    public static Event getRowByName(String name) {
+        String sql = "SELECT * " +
+                "FROM event " +
+                "WHERE name = ?";
+        Event event = null;
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, name); // Remplace le '?' par l'id
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                event = new Event(rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("affiche"),
+                        rs.getString("language"),
+                        rs.getInt("creator_id"));
+                event.setId(rs.getInt("id"));
+                event.setCreated_at(rs.getTimestamp("created_at"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return event;
+    }
+
     public static boolean updateRowById(Event event){
         // Update
         String sql = "UPDATE event " +
-                "SET name = ?, description = ?,  affiche = ?, language = ?, event.creator_id = ?" +
+                "SET name = ?, description = ?,  affiche = ?, language = ?, event.creator_id = ? " +
                 "WHERE id = ?";
 
         int eventId = event.getId();
@@ -86,11 +115,15 @@ public class EventDAO implements DAO {
             try (var conn = MySQLConnection.getConnection();
                  var stmt = conn.prepareStatement(sql)) {
 
+                System.out.println("UPDATE event en cours");
+
                 stmt.setString(1, event.getName());
                 stmt.setString(2, event.getDescription());
                 stmt.setString(3, event.getAffiche());
                 stmt.setString(4, event.getLanguage());
                 stmt.setInt(5, event.getCreator_id());
+
+                stmt.setInt(6, eventId);
 
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon

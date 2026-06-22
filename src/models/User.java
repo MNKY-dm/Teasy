@@ -62,6 +62,10 @@ public class User {
         return this.created_at;
     }
 
+    public boolean isAdmin() {
+        return this.role.equals("admin");
+    }
+
     public List<Ticket> getTickets() {
         List<Ticket> myTickets = new ArrayList<>();
 
