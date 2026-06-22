@@ -11,10 +11,50 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class TicketService {
+
+    public static List<Ticket> getTicketsWithSeanceInfos(boolean onlyAvailable, int userId) {
+        List<Ticket> tickets = TicketDAO.getAll();
+
+        if (userId != -1) {
+            tickets = tickets.stream()
+                    .filter(t -> t.getUser_id() == userId)
+                    .toList();
+        }
+
+        if (onlyAvailable) {
+            tickets = tickets.stream()
+                    .filter(t -> "available".equalsIgnoreCase(t.getStatus()))
+                    .toList();
+        }
+
+        if (tickets.isEmpty()) {
+            return tickets;
+        }
+
+        Set<Integer> seanceIds = new HashSet<>();
+        for (Ticket t : tickets) {
+            seanceIds.add(t.getSeance_id());
+        }
+
+        List<Seance> seances = SeanceDAO.getRowsByIds(new ArrayList<>(seanceIds));
+
+        Map<Integer, Seance> seanceById = new HashMap<>();
+        for (Seance s : seances) {
+            seanceById.put(s.getId(), s);
+        }
+
+        for (Ticket t : tickets) {
+            Seance s = seanceById.get(t.getSeance_id());
+            if (s != null) {
+                t.setSeance(s);
+            }
+        }
+
+        return tickets;
+    }
 
     public static void buyTicket(String code, String title, int userId, int seanceId, String type, float price, String status, Timestamp usedAt, boolean isRefunded) {
         Ticket ticket = new Ticket(null, title, userId, seanceId, type, price, "available", null, false);

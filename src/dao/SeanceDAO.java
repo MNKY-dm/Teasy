@@ -7,6 +7,7 @@ import utils.TypeConverter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SeanceDAO implements DAO {
 
@@ -66,6 +67,47 @@ public class SeanceDAO implements DAO {
         }
 
         return seance;
+    }
+
+    public static List<Seance> getRowsByIds(List<Integer> seanceIds) {
+        if (seanceIds == null || seanceIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        String placeholders = seanceIds.stream()
+                .map(id -> "?")
+                .collect(Collectors.joining(","));
+        String sql = "SELECT * FROM seance WHERE id IN (" + placeholders + ")";
+
+        List<Seance> result = new ArrayList<>();
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            int index = 1;
+            for (Integer id : seanceIds) {
+                stmt.setInt(index++, id);
+            }
+
+            var rs = stmt.executeQuery();
+            while (rs.next()) {
+                Seance seance = new Seance(
+                        rs.getInt("event_id"),
+                        rs.getTimestamp("date"),
+                        rs.getString("location"),
+                        rs.getInt("nb_places"),
+                        rs.getBoolean("is_cancelled")
+                );
+                seance.setId(rs.getInt("id"));
+                seance.setCreated_at(rs.getTimestamp("created_at"));
+                result.add(seance);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
     }
 
     public static Pricing getPricingById(int id) throws SQLException {

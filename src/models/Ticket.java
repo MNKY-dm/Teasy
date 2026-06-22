@@ -20,6 +20,7 @@ public class Ticket {
     private Timestamp used_at;
     private boolean is_refunded;
     private Timestamp created_at;
+    private Seance seance;
 
     public Ticket(String code,
                   String title,
@@ -109,6 +110,10 @@ public class Ticket {
         return this.created_at;
     }
 
+    public Seance getSeance() {
+        return this.seance;
+    }
+
     public void setId(int id) {
         if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
             this.id = id;
@@ -164,6 +169,10 @@ public class Ticket {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
+    }
+
+    public void setSeance(Seance seance) {
+        this.seance = seance;
     }
 
     // TODO : Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")

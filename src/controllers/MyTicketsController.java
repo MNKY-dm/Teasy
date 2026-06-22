@@ -31,13 +31,14 @@ public class MyTicketsController implements Initializable {
     }
 
     public void loadTicketsInfos() {
-
         System.out.println("loadTicketsInfos est bien lancée.");
-        // Récupérer les séances de l'événement courant
-        List<Ticket> tickets = SessionManager.getInstance().getCurrentUser().getAvailableTickets();
+
+        List<Ticket> tickets = TicketService.getTicketsWithSeanceInfos(true, SessionManager.getInstance().getCurrentUser().getId());
 
         System.out.println("Nombre de tickets trouvés : " + tickets.size());
-        // Afficher chaque événement dans une card
+
+        ticketsRoot.getChildren().clear(); // optionnel, pour éviter les doublons si tu recharges
+
         for (Ticket ticket : tickets) {
             addTicketInfos(ticket);
             System.out.println("Ticket affiché : " + ticket.getId());
@@ -46,21 +47,16 @@ public class MyTicketsController implements Initializable {
 
     @FXML
     public void addTicketInfos(Ticket ticket) {
-        System.out.println("addTicketsInfos pour l'event : " + ticket.getId());
+        System.out.println("addTicketsInfos pour le ticket : " + ticket.getId());
         try {
-            // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketInfos.fxml"));
             HBox cardRoot = loader.load();
 
-            // Charger le controller et set up les infos de la card selon l'event
             TicketInfosController ticketInfosController = loader.getController();
-            ticketInfosController.setTicketsInfos(ticket.getId());
+            ticketInfosController.setTicketsInfos(ticket); // ici il utilise ticket.getSeance()
 
-            cardRoot.setOnMouseClicked(event -> {
-                ticketClicked(cardRoot, ticket);
-            });
+            cardRoot.setOnMouseClicked(event -> ticketClicked(cardRoot, ticket));
 
-            // L'ajouter au HBOX
             ticketsRoot.getChildren().add(cardRoot);
 
         } catch (IOException e) {

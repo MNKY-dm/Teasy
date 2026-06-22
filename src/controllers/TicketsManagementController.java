@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Ticket;
+import services.TicketService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,11 +33,13 @@ public class TicketsManagementController implements Initializable {
     public void loadTicketsInfos() {
 
         System.out.println("loadTicketsInfos est bien lancée.");
-        // Récupérer les séances de l'événement courant
-        List<Ticket> tickets = TicketDAO.getAll();
+
+        List<Ticket> tickets = TicketService.getTicketsWithSeanceInfos(false, -1);
 
         System.out.println("Nombre de tickets trouvés : " + tickets.size());
-        // Afficher chaque événement dans une card
+
+        ticketsRoot.getChildren().clear();
+
         for (Ticket ticket : tickets) {
             addTicketInfos(ticket);
             System.out.println("Ticket affiché : " + ticket.getId());
@@ -45,21 +48,16 @@ public class TicketsManagementController implements Initializable {
 
     @FXML
     public void addTicketInfos(Ticket ticket) {
-        System.out.println("addTicketsInfos pour l'event : " + ticket.getId());
+        System.out.println("addTicketsInfos pour le ticket : " + ticket.getId());
         try {
-            // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketInfos.fxml"));
             HBox cardRoot = loader.load();
 
-            // Charger le controller et set up les infos de la card selon l'event
             TicketInfosController ticketInfosController = loader.getController();
-            ticketInfosController.setTicketsInfos(ticket.getId());
+            ticketInfosController.setTicketsInfos(ticket);
 
-            cardRoot.setOnMouseClicked(event -> {
-                ticketClicked(cardRoot, ticket);
-            });
+            cardRoot.setOnMouseClicked(event -> ticketClicked(cardRoot, ticket));
 
-            // L'ajouter au HBOX
             ticketsRoot.getChildren().add(cardRoot);
 
         } catch (IOException e) {
