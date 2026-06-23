@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddSeanceController">
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <fx:include source="MenuBar.fxml" />
+            <Label styleClass="section-label" text="Ajouter une séance" />
+            <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="TOP_CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="16.0" styleClass="home-content">
+                    <GridPane alignment="TOP_CENTER" hgap="12.0" vgap="12.0">
+                        <Label styleClass="stat-label" text="Événement :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="eventName" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label styleClass="stat-label" text="Date :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <DatePicker fx:id="seanceDate" styleClass="form-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="stat-label" text="Lieu de la séance :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="seanceLocation" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label styleClass="stat-label" text="Nombre de places :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="seanceNbPlaces" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label styleClass="label-category" text="Tarifs :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <Label styleClass="stat-label" text="Standard :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <TextField fx:id="price1Field" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label styleClass="stat-label" text="Nombre de places :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <TextField fx:id="price2Field" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label styleClass="stat-label" text="Nombre de places :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <TextField fx:id="price3Field" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+    <padding>
+        <Insets bottom="6.0" left="6.0" right="6.0" />
+    </padding>
+    <bottom>
+        <HBox alignment="TOP_CENTER" spacing="12.0">
+            <Button mnemonicParsing="false" onAction="#saveSeance" styleClass="btn-primary" text="Enregistrer" />
+            <Button mnemonicParsing="false" onAction="#backToEvent" styleClass="btn-secondary" text="Retour à l'événement" />
+        </HBox>
+    </bottom>
+</BorderPane>

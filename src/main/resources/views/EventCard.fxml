@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="cardRoot" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showEvent" prefHeight="300.0" prefWidth="300.0" spacing="6.0" styleClass="event-card" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventCardController">
+   <ImageView fx:id="eventPic" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" />
+   <Label fx:id="eventTitle" textAlignment="CENTER" />
+</VBox>

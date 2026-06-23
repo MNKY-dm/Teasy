@@ -1,0 +1,177 @@
+package models;
+
+import dao.TicketDAO;
+import dao.UserDAO;
+
+import java.sql.Timestamp;
+
+public class Ticket {
+
+    private Integer id;
+    private String code;
+    private String title;
+    private int user_id;
+    private int seance_id;
+    private String type;
+    private float price;
+    private String status;
+    private Timestamp used_at;
+    private boolean is_refunded;
+    private Timestamp created_at;
+    private Seance seance;
+
+    public Ticket(String code,
+                  String title,
+                  int user_id,
+                  int seance_id,
+                  String type,
+                  float price,
+                  String status,
+                  Timestamp used_at,
+                  Boolean is_refunded) {
+        this.code = code;
+        this.title = title;
+        this.user_id = user_id;
+        this.seance_id = seance_id;
+        this.type = type;
+        this.price = price;
+        this.status = status;
+        this.used_at = used_at;
+        this.is_refunded = is_refunded;
+    }
+
+    public void delete() {
+        try {
+            TicketDAO.deleteRowById(this.id);
+        } catch (Exception e) {
+            System.out.println("[TICKET] : Deletion failed");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean update() {
+        try {
+            TicketDAO.updateRowById(this);
+            return true;
+        } catch (Exception e) {
+            System.out.println("[TICKET] : Update failed");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public int getUser_id() {
+        return this.user_id;
+    }
+
+    public String getUser() {
+        return UserDAO.getRowById(this.getUser_id()).getNom();
+    }
+
+    public int getSeance_id() {
+        return this.seance_id;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public float getPrice() {
+        return this.price;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public Timestamp getUsed_at() {
+        return this.used_at;
+    }
+
+    public boolean getIs_refunded() {
+        return this.is_refunded;
+    }
+
+    public Timestamp getCreated_at() {
+        return this.created_at;
+    }
+
+    public Seance getSeance() {
+        return this.seance;
+    }
+
+    public void setId(int id) {
+        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+            this.id = id;
+        }
+        else {
+            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
+        }
+    }
+
+    public void setCode(String code) {
+        if (code != null) {
+            this.code = code;
+        } else {
+            throw new IllegalArgumentException("Le code ne peut pas être null.");
+        }
+    }
+
+    public void setTitle(String title) {
+        if (title != null) {
+            this.title = title;
+        } else {
+            throw new IllegalArgumentException("L'title ne peut pas être null.");
+        }
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id; // Peut être null (voir BDD)
+    }
+
+    public void setSeance_id(int seance_id) {
+        this.seance_id = seance_id;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setUsed_at(Timestamp used_at) {
+        this.used_at = used_at;
+    }
+
+    public void setIs_refunded(boolean is_refunded) {
+        this.is_refunded = is_refunded;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+
+    public void setSeance(Seance seance) {
+        this.seance = seance;
+    }
+
+    // TODO : Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")
+}

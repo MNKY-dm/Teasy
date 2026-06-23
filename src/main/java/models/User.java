@@ -1,0 +1,163 @@
+package models;
+
+import dao.EventDAO;
+import dao.TicketDAO;
+import dao.UserDAO;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+public class User {
+    private Integer id;
+    private String nom;
+    private String email;
+    private String password;
+    private String tel;
+    private String role;
+    private Timestamp created_at;
+
+    public User(String nom, String email, String password, String tel, String role) {
+        this.nom = nom;
+        this.email = email;
+        this.password = password;
+        this.tel = tel;
+        this.role = role;
+    }
+
+    public void delete() {
+        UserDAO.deleteRowById(this.id);
+    }
+
+    public void update() {
+        UserDAO.updateRowById(this);
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getTel() {
+        return this.tel;
+    }
+
+    public String getRole() {
+        return this.role;
+    }
+
+    public Timestamp getCreated_at() {
+        return this.created_at;
+    }
+
+    public boolean isAdmin() {
+        return this.role.equals("admin");
+    }
+
+    public List<Ticket> getTickets() {
+        List<Ticket> myTickets = new ArrayList<>();
+
+        List<Ticket> tickets = TicketDAO.getAll();
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getUser_id() == this.getId()) {
+                myTickets.add(ticket);
+            }
+        }
+
+        return myTickets;
+    }
+
+    public List<Event> getEvents() {
+        List<Event> myEvents = new ArrayList<>();
+
+        List<Event> events = EventDAO.getAll();
+
+        for (Event event : events) {
+            if (event.getCreator_id() == this.getId()) {
+                myEvents.add(event);
+            }
+        }
+
+        return myEvents;
+    }
+
+    public List<Ticket> getAvailableTickets() {
+        List<Ticket> myTickets = getTickets();
+
+        myTickets.removeIf(Ticket::getIs_refunded);
+
+        return myTickets;
+    }
+
+    public void setId(int id) {
+        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+            this.id = id;
+        }
+        else {
+            throw new IllegalArgumentException("L'id ne peut pas être négatif.");
+        }
+    }
+
+    public void setNom(String nom) {
+        if (nom != null) {
+            this.nom = nom;
+        } else {
+            throw new IllegalArgumentException("Le nom ne peut pas être null.");
+        }
+    }
+
+    public void setEmail(String email) {
+        if (email != null) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("L'email ne peut pas être null.");
+        }
+    }
+
+    public void setPassword(String password) {
+        if (password != null) {
+            this.password = password;
+        }
+        else {
+            throw new IllegalArgumentException("Le mot de passe ne peut pas être null.");
+        }
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel; // Peut être null (voir BDD)
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                ", mdp='" + password + '\'' +
+                ", tel='" + tel + '\'' +
+                ", role='" + role + '\'' +
+                ", créé le='" + created_at + '\'' +
+                '}';
+    }
+
+}

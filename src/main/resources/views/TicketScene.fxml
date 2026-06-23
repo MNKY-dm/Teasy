@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TicketController">
+
+    <!-- HAUT : MenuBar + titre -->
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <fx:include source="MenuBar.fxml" />
+            <Label styleClass="section-label" text="Mon ticket" />
+            <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="TOP_CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="16.0" styleClass="home-content">
+                    <Label fx:id="ticketTitle" alignment="CENTER" maxWidth="Infinity" styleClass="page-title" />
+                    <Label fx:id="userName" alignment="CENTER" maxWidth="Infinity" styleClass="page-title" />
+                    <ImageView fx:id="ticketCode" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+
+                    <GridPane alignment="TOP_CENTER" hgap="12.0" vgap="12.0">
+
+                        <Label styleClass="stat-label" text="ID :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="ticketId" editable="false" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label styleClass="stat-label" text="Code :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="ticketCodeField" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false" />
+
+                        <Label styleClass="stat-label" text="Evénement :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="ticketLabel" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false" />
+
+                        <Label styleClass="stat-label" text="User ID :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="ticketUserId" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false" />
+
+                        <Label styleClass="stat-label" text="Séance ID :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <TextField fx:id="ticketSeanceId" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="4" editable="false" />
+
+                        <Label styleClass="stat-label" text="Emplacement :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <TextField fx:id="ticketLocation" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="5" editable="false" />
+
+                        <Label styleClass="stat-label" text="Date et heure :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <TextField fx:id="ticketDate" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="6" editable="false" />
+
+                        <Label styleClass="stat-label" text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <TextField fx:id="ticketType" prefWidth="220.0" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="7" editable="false" />
+
+                        <Label styleClass="stat-label" text="Prix :" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                            <TextField fx:id="ticketPrice" styleClass="auth-field" editable="false" />
+                            <Label styleClass="stat-label" text="€" />
+                        </HBox>
+
+
+                        <Label styleClass="stat-label" text="Statut :" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                        <TextField fx:id="ticketStatus" prefWidth="220.0" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="9" editable="false" />
+
+                        <Label styleClass="stat-label" text="Remboursé :" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                        <CheckBox fx:id="ticketRefunded" styleClass="form-checkbox" GridPane.columnIndex="1" GridPane.rowIndex="10" disable="true" />
+
+                        <Label styleClass="stat-label" text="Utilisé le :" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                        <TextField fx:id="ticketUsedAt" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="11" editable="false" />
+
+                        <Label styleClass="stat-label" text="Créé le :" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                        <TextField fx:id="ticketCreatedAt" editable="false" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+
+                    </GridPane>
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+                    </padding>
+
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <padding>
+        <Insets bottom="6.0" left="6.0" right="6.0" />
+    </padding>
+    <bottom>
+        <HBox alignment="TOP_CENTER" spacing="12.0">
+            <Button layoutX="156.0" layoutY="10.0" mnemonicParsing="false" onAction="#refundTicket" styleClass="btn-delete" text="Se faire rembourser" />
+            <Button mnemonicParsing="false" onAction="#moveToHome" styleClass="btn-secondary" text="Retour à l'accueil" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
