@@ -36,4 +36,4 @@ bin/
 ### Maven ###
 target/
 *.jar
-*.iml/
+*.iml
