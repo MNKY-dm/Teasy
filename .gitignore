@@ -35,6 +35,7 @@ bin/
 docker-compose.yml
 
 ### Maven ###
+dependency-reduced-pom.xml
 target/
 *.jar
 *.iml
