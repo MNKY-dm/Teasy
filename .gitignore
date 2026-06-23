@@ -32,6 +32,7 @@ bin/
 
 ### Project ###
 /src/main/resources/config.properties
+docker-compose.yml
 
 ### Maven ###
 target/
