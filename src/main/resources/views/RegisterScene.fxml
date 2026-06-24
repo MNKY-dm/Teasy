@@ -21,7 +21,6 @@
       <TextField fx:id="tfnom" promptText="Nom" styleClass="auth-field" />
       <TextField fx:id="tfmail" promptText="Adresse mail" styleClass="auth-field" />
       <TextField fx:id="tftel" promptText="Numéro de téléphone" styleClass="auth-field" />
-      <TextField fx:id="tfrole" promptText="Rôle" styleClass="auth-field" />
       <PasswordField fx:id="tfpassword" promptText="Mot de passe" styleClass="auth-field" />
       <PasswordField fx:id="tfpasswordConfirm" promptText="Confirmez le mot de passe" styleClass="auth-field" />
       <Button mnemonicParsing="false" onAction="#btnRegister" styleClass="btn-primary" text="S'inscrire" />

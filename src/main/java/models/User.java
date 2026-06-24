@@ -153,7 +153,6 @@ public class User {
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", email='" + email + '\'' +
-                ", mdp='" + password + '\'' +
                 ", tel='" + tel + '\'' +
                 ", role='" + role + '\'' +
                 ", créé le='" + created_at + '\'' +

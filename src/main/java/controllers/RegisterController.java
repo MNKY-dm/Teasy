@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import models.User;
+import services.PwnedPasswordService;
 import utils.PasswordUtils;
+import utils.RegisterValidator;
 
 // Gérait initialement le changement de scene dans moveToConnect()
 
@@ -21,9 +23,6 @@ public class RegisterController {
 
     @FXML
     private TextField tftel;
-
-    @FXML
-    private TextField tfrole;
 
     @FXML
     private PasswordField tfpassword;
@@ -44,41 +43,33 @@ public class RegisterController {
     @FXML
     public void btnRegister() {
         // Récupérer les données du formulaire fxml
-        String nom = tfnom.getText();
-        String email = tfmail.getText();
+        String nom = tfnom.getText().trim();
+        String email = tfmail.getText().trim().toLowerCase();
+        String tel = tftel.getText().trim();
         String password = tfpassword.getText();
         String passwordConfirm = tfpasswordConfirm.getText();
-        String tel = tftel.getText();
-        String role = tfrole.getText();
-//        String ville = tffrom.getText();
 
-        // Vérifier si tous les champs sont remplis
-        if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
-                || role.isEmpty()) {
-            lbinfo.setText("Champs obligatoires manquants");
+        String error = RegisterValidator.validate(nom, email, tel, password, passwordConfirm);
+        if (error != null) {
+            lbinfo.setText(error);
             return;
         }
 
-        // Vérifier que les mots de passe correspondent
-        if (!password.equals(passwordConfirm)) {
-            lbinfo.setText("Les mots de passe ne correspondent pas");
-            return;
-        }
-
-        // Vérifier que l'email n'existe pas déjà en BDD
         if (UserDAO.getRowByEmail(email) != null) {
             lbinfo.setText("Email déjà utilisé");
-            return; // Interrompt la méthode si jamais le mail est déjà inscrit en BDD
+            return;
         }
 
-        // Hasher le mot de passe avant de l'enregistrer
+        boolean uncompromised = PwnedPasswordService.isSafe(password);
+        if (!uncompromised) {
+            lbinfo.setText("Mot de passe compromis, choisis-en un autre");
+            return;
+        }
+
         String hashedPassword = PasswordUtils.hashPassword(password);
-
-        // Créer nouvel utilisateur
-        User newUser = new User(nom, email, hashedPassword, tel, role);
-
-        // l'ajouter en base de données
+        User newUser = new User(nom, email, hashedPassword, tel.isBlank() ? null : tel, "client");
         UserDAO.insertNewRow(newUser);
+
 
         // INSCRIPTION RÉUSSIE
         lbinfo.setText("Compte créé avec succès ! Redirection...");
