@@ -1,6 +1,7 @@
 package models;
 
 import dao.SeanceDAO;
+import models.enums.SeanceStatus;
 
 import java.sql.Timestamp;
 
@@ -13,6 +14,10 @@ public class Seance {
     private Integer nb_places;
     private boolean is_cancelled;
     private Timestamp created_at;
+
+    private Integer remainingPlaces;
+    private SeanceStatus status;
+    private String formattedDate;
 
     public Seance(Integer event_id, Timestamp date, String location, Integer nb_places, boolean is_cancelled) {
         this.event_id = event_id;
@@ -58,11 +63,22 @@ public class Seance {
         return this.created_at;
     }
 
+    public Integer getRemainingPlaces() {
+        return remainingPlaces;
+    }
+
+    public SeanceStatus getStatus() {
+        return status;
+    }
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
     public void setId(int id) {
-        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+        if (id >= 0) {
             this.id = id;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("L'id ne peut pas être négatif.");
         }
     }
@@ -86,22 +102,32 @@ public class Seance {
     public void setLocation(String location) {
         if (location != null) {
             this.location = location;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("L'emplacement ne peut pas être null.");
         }
     }
 
     public void setNb_places(Integer nb_places) {
-        this.nb_places = nb_places; // Peut être null (voir BDD)
+        this.nb_places = nb_places;
     }
 
     public void setIs_cancelled(boolean is_cancelled) {
         this.is_cancelled = is_cancelled;
     }
 
-
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
+    }
+
+    public void setRemainingPlaces(Integer remainingPlaces) {
+        this.remainingPlaces = remainingPlaces;
+    }
+
+    public void setStatus(SeanceStatus status) {
+        this.status = status;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 }

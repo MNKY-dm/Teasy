@@ -8,21 +8,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketDAO implements DAO {
-    public static List<Ticket> getAll(){
+    public static List<Ticket> getAll() {
         String sql = "SELECT * " +
                 "FROM ticket";
 
         List<Ticket> all = new ArrayList<>();
 
         try (var conn = MySQLConnection.getConnection()) {
-            var stmt  = conn.createStatement();
-            var rs = stmt.executeQuery(sql) ;
+            var stmt = conn.createStatement();
+            var rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Ticket ticket = new Ticket(rs.getString("code"),
+                Ticket ticket = new Ticket(
+                        rs.getString("code"),
                         rs.getString("title"),
                         rs.getInt("user_id"),
                         rs.getInt("seance_id"),
@@ -30,13 +34,13 @@ public class TicketDAO implements DAO {
                         rs.getFloat("price"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
-                        rs.getBoolean("is_refunded"));
+                        rs.getBoolean("is_refunded")
+                );
                 ticket.setId(rs.getInt("id"));
                 ticket.setCreated_at(rs.getTimestamp("created_at"));
                 TicketService.setTicketStatus(ticket);
                 all.add(ticket);
             }
-
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -46,22 +50,60 @@ public class TicketDAO implements DAO {
     }
 
     public static int countBySeance(Seance seance) {
-        String sql = "SELECT count(*) FROM ticket WHERE seance_id = ? AND status = 'available'";
+        String sql = "SELECT COUNT(*) AS ticket_count FROM ticket WHERE seance_id = ? AND status = 'available'";
         int count = 0;
+
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, seance.getId()); // Remplace le '?' par l'id
+
+            stmt.setInt(1, seance.getId());
             var rs = stmt.executeQuery();
-            count = rs.next() ? rs.getInt("count(*)") : 0;
+            count = rs.next() ? rs.getInt("ticket_count") : 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return count;
     }
 
+    public static Map<Integer, Integer> countBySeanceIds(List<Integer> seanceIds) {
+        Map<Integer, Integer> counts = new HashMap<>();
+
+        if (seanceIds == null || seanceIds.isEmpty()) {
+            return counts;
+        }
+
+        String placeholders = seanceIds.stream()
+                .map(id -> "?")
+                .collect(Collectors.joining(","));
+
+        String sql = "SELECT seance_id, COUNT(*) AS ticket_count " +
+                "FROM ticket " +
+                "WHERE seance_id IN (" + placeholders + ") AND status = 'available' " +
+                "GROUP BY seance_id";
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            int index = 1;
+            for (Integer seanceId : seanceIds) {
+                stmt.setInt(index++, seanceId);
+            }
+
+            var rs = stmt.executeQuery();
+            while (rs.next()) {
+                counts.put(rs.getInt("seance_id"), rs.getInt("ticket_count"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return counts;
+    }
+
     public static Ticket getRowById(Integer id) {
-        // Select row by id
         String sql = "SELECT * " +
                 "FROM ticket " +
                 "WHERE id = ?";
@@ -71,11 +113,12 @@ public class TicketDAO implements DAO {
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id); // Remplace le '?' par l'id
+            stmt.setInt(1, id);
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                ticket = new Ticket(rs.getString("code"),
+                ticket = new Ticket(
+                        rs.getString("code"),
                         rs.getString("title"),
                         rs.getInt("user_id"),
                         rs.getInt("seance_id"),
@@ -83,11 +126,12 @@ public class TicketDAO implements DAO {
                         rs.getFloat("price"),
                         rs.getString("status"),
                         rs.getTimestamp("used_at"),
-                        rs.getBoolean("is_refunded"));
+                        rs.getBoolean("is_refunded")
+                );
+                ticket.setId(id);
+                ticket.setCreated_at(rs.getTimestamp("created_at"));
+                TicketService.setTicketStatus(ticket);
             }
-            ticket.setId(id);
-            ticket.setCreated_at(rs.getTimestamp("created_at"));
-            TicketService.setTicketStatus(ticket);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -115,6 +159,7 @@ public class TicketDAO implements DAO {
 
             int rs = stmt.executeUpdate();
             return rs == 1;
+
         } catch (SQLException ex) {
             System.out.println("Erreur UPDATE Ticket : " + ex.getMessage());
             return false;
@@ -122,8 +167,6 @@ public class TicketDAO implements DAO {
     }
 
     public static boolean deleteRowById(Integer id) {
-        // Delete
-
         String sql = "DELETE " +
                 "FROM ticket " +
                 "WHERE id = ?";
@@ -131,9 +174,9 @@ public class TicketDAO implements DAO {
         try (var conn = MySQLConnection.getConnection();
              var stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id); // Remplace le '?' par l'id
+            stmt.setInt(1, id);
             var rs = stmt.executeUpdate();
-            return rs == 1; // Renvoie true si une ligne a bien été supprimée, false sinon
+            return rs == 1;
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -146,7 +189,7 @@ public class TicketDAO implements DAO {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (var conn = MySQLConnection.getConnection();
-             var stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {  // ← clé
+             var stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, ticket.getCode());
             stmt.setString(2, ticket.getTitle());
@@ -161,13 +204,13 @@ public class TicketDAO implements DAO {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 1) {
-                // ← Récupérer l'ID généré
                 var rs = stmt.getGeneratedKeys();
                 if (rs.next()) {
-                    return rs.getInt(1); // retourne l'auto-increment ID
+                    return rs.getInt(1);
                 }
             }
-            return -1; // erreur
+            return -1;
+
         } catch (SQLException ex) {
             System.out.println("Erreur INSERT Ticket : " + ex.getMessage());
             return -1;

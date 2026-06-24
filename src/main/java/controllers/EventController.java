@@ -1,7 +1,7 @@
 package controllers;
 
-
 import dao.EventDAO;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +20,7 @@ import services.SessionManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +30,7 @@ public class EventController implements Initializable {
     private int eventId;
     private Seance currentSeance;
     private HBox currentSeancePane;
+    private long seancesLoadVersion;
 
     @FXML private Label eventTitle;
     @FXML private ImageView eventAffiche;
@@ -36,70 +38,96 @@ public class EventController implements Initializable {
     @FXML private VBox seancesInfos;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // paramètres non utilisés
-        // Récupérer l'utilisateur connecté de la session
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         this.currentUser = SessionManager.getInstance().getCurrentUser();
 
-        // Débugger
-        System.out.println("initialize() appelée");
-//        System.out.println("event : " + event.toString());
-        System.out.println("eventId = 0 ? " + (eventId == 0));
-        System.out.println("eventTitle null ? " + (eventTitle == null));
-        System.out.println("eventAffiche null ? " + (eventAffiche == null));
-        System.out.println("eventDescription null ? " + (eventDescription == null));
-
-        // Vérifier qu'on est bien connecté (par sécurité)
         if (currentUser == null) {
             System.out.println("Erreur dans EventController : Aucun utilisateur connecté.");
             AppController.getInstance().loadLogin();
-            return; // interrompt la fonction si pas d'utilisateur connecté
         }
-
-        System.out.println("EventController : Événement chargé pour : " + currentUser.getEmail());
     }
 
     public void loadSeanceInfos() {
+        final int requestedEventId = eventId;
+        final long loadVersion = ++seancesLoadVersion;
 
-        System.out.println("loadSeanceInfos est bien lancée. Event_id : " + eventId);
-        // Récupérer les séances de l'événement courant
-        List<Seance> seances = EventDAO.getSeances(eventId);
+        Task<List<Seance>> task = new Task<>() {
+            @Override
+            protected List<Seance> call() {
+                List<Seance> seances = EventDAO.getSeances(requestedEventId);
+                SeanceService.prepareSeancesForDisplay(seances);
+                return seances;
+            }
+        };
 
-        System.out.println("Nombre de seances trouvées : " + seances.size());
-        // Afficher chaque événement dans une card
-        for (Seance seance : seances) {
-            addSeanceInfos(seance);
-            System.out.println("Séance affichée : " + seance.getDate() + " ; pour l'événement : " + seance.getEvent_id());
-        }
+        task.setOnSucceeded(workerStateEvent -> {
+            if (loadVersion != seancesLoadVersion || requestedEventId != eventId) {
+                return;
+            }
+
+            List<Seance> seances = task.getValue();
+            List<HBox> cards = buildSeanceCards(seances);
+
+            currentSeance = null;
+            currentSeancePane = null;
+            seancesInfos.getChildren().setAll(cards);
+        });
+
+        task.setOnFailed(workerStateEvent -> {
+            if (loadVersion != seancesLoadVersion || requestedEventId != eventId) {
+                return;
+            }
+
+            currentSeance = null;
+            currentSeancePane = null;
+            seancesInfos.getChildren().setAll(new Label("Impossible de charger les séances."));
+
+            Throwable exception = task.getException();
+            if (exception != null) {
+                exception.printStackTrace();
+            }
+        });
+
+        Thread thread = new Thread(task, "event-seances-loader-" + requestedEventId);
+        thread.setDaemon(true);
+        thread.start();
     }
 
-    // Méthode qui permet d'afficher les différents éléments dans la partie "Événements à venir"
-    @FXML
-    private void addSeanceInfos(Seance seance) {
-        System.out.println("addSeanceInfos pour l'event : " + seance.getEvent_id());
+    private List<HBox> buildSeanceCards(List<Seance> seances) {
+        List<HBox> cards = new ArrayList<>(seances.size());
+
+        for (Seance seance : seances) {
+            HBox cardRoot = createSeanceCard(seance);
+            if (cardRoot != null) {
+                cards.add(cardRoot);
+            }
+        }
+
+        return cards;
+    }
+
+    private HBox createSeanceCard(Seance seance) {
         try {
-            // Charger le FXML de la card
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/SeanceInfos.fxml"));
             HBox cardRoot = loader.load();
 
-            // Charger le controller et set up les infos de la card selon l'event
             SeanceInfosController seanceInfosController = loader.getController();
             seanceInfosController.setSeanceInfos(seance);
 
-            cardRoot.setOnMouseClicked(event -> {
-                seanceClicked(cardRoot, seance);
-            });
-
-            // L'ajouter au HBOX
-            seancesInfos.getChildren().add(cardRoot);
+            cardRoot.setOnMouseClicked(event -> seanceClicked(cardRoot, seance));
+            return cardRoot;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
     public void setEvent(Event event) {
         this.eventId = event.getId();
-        System.out.println("setEvent affiche l'event courant : " + event);
+        this.currentSeance = null;
+        this.currentSeancePane = null;
+
         setEventTitle(event);
         setEventDescription(event);
         setEventAffiche(event);
@@ -112,73 +140,64 @@ public class EventController implements Initializable {
 
     @FXML
     private void setEventTitle(Event event) {
-//        System.out.println("SetEventTitle pour l'event suivant : " + event.toString());
         try {
-            // Tenter de récupérer le titre de l'événement voulu
             String title = event.getName();
             eventTitle.setText(title);
 
         } catch (Exception e) {
-            System.err.println("EventController : erreur dans setEventTitle ; Impossible de récupérer le titre de l'événement " + e.getMessage());
+            System.err.println("EventController : erreur dans setEventTitle ; Impossible de récupérer le titre de l'événement " + e.getMessage());
         }
     }
 
     @FXML
     private void setEventAffiche(Event event) {
-
         try {
-            // Tenter de récupérer les infos de l'événement voulu
             this.eventId = event.getId();
             String affiche = event.getAffiche();
 
-            // Tenter de récupérer l'affiche liée à l'événement pour l'afficher
-
-            if (affiche != null && event.isAfficheUrlValid()) { // Si l'URL n'est pas NULL et n'est pas vide (""), et qu'elle ne renvoie pas de code erreur HTTP
-                try {
-                    Image image = new Image(affiche); // On modélise l'affiche à partir de son URL
-                    System.out.println("Url valide : " + affiche);
-                    eventAffiche.setImage(image); // On l'affiche dans le conteneur FXML eventAffiche
-                } catch (Exception ex) {
-                    System.err.println("Erreur chargement image : " + affiche);
-                    // Mettre une image par défaut
-                    eventAffiche.setImage(new Image("/pics/default_event_pic.png"));
-                }
-            } else {
-                // Mettre une image par défaut
-                eventAffiche.setImage(new Image("/pics/default_event_pic.png"));
+            if (affiche == null || affiche.isBlank()) {
+                eventAffiche.setImage(getDefaultEventImage());
+                return;
             }
 
+            Image image = new Image(affiche, true);
+            image.errorProperty().addListener((observable, oldValue, isError) -> {
+                if (Boolean.TRUE.equals(isError)) {
+                    eventAffiche.setImage(getDefaultEventImage());
+                }
+            });
+
+            if (image.isError()) {
+                eventAffiche.setImage(getDefaultEventImage());
+                return;
+            }
+
+            eventAffiche.setImage(image);
+
         } catch (Exception e) {
-            System.err.println("EventController : erreur dans setEventData ; Impossible de récupérer l'affiche l'événement. " + e.getMessage());
+            System.err.println("EventController : erreur dans setEventAffiche ; Impossible de récupérer l'affiche de l'événement. " + e.getMessage());
+            eventAffiche.setImage(getDefaultEventImage());
         }
+    }
+
+    private Image getDefaultEventImage() {
+        return new Image(getClass().getResourceAsStream("/pics/default_event_pic.png"));
     }
 
     @FXML
     private void setEventDescription(Event event) {
-
         try {
-            // Tenter de récupérer les infos de l'événement voulu
             this.eventId = event.getId();
             String description = event.getDescription();
 
-            // Tenter de récupérer la description liée à l'événement pour l'afficher
-
-            if (description != null) {
-                try {
-                    System.out.println("Description à afficher : " + description);
-                    eventDescription.setText(description); // On l'affiche dans le conteneur FXML eventDescription
-                } catch (Exception ex) {
-                    System.err.println("Erreur chargement description : " + ex.getMessage());
-                    // Mettre un texte par défaut
-                    eventDescription.setText("Venez tous à cet événement génial !");
-                }
+            if (description != null && !description.isBlank()) {
+                eventDescription.setText(description);
             } else {
-                // Mettre un texte par défaut
                 eventDescription.setText("Venez tous à cet événement génial !");
             }
 
         } catch (Exception e) {
-            System.err.println("EventController : erreur dans setEventDescription ; Impossible de récupérer les infos de l'événement." + e.getMessage());
+            System.err.println("EventController : erreur dans setEventDescription ; Impossible de récupérer les infos de l'événement. " + e.getMessage());
         }
     }
 
@@ -194,13 +213,16 @@ public class EventController implements Initializable {
 
     @FXML
     public void moveToHome(ActionEvent actionEvent) {
-        System.out.println("EventController : moveToHome");
         AppController.getInstance().loadHome();
     }
 
     @FXML
     public void moveToBuyTicket(ActionEvent actionEvent) {
-        System.out.println("EventController : moveToBuyTicket");
+        if (currentSeance == null) {
+            System.out.println("Achat de tickets impossible : aucune séance sélectionnée.");
+            return;
+        }
+
         if (SeanceService.isAvailable(currentSeance)) {
             AppController.getInstance().loadSeance(currentSeance);
         } else {

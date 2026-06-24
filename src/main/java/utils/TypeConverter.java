@@ -1,22 +1,20 @@
 package utils;
+
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 public class TypeConverter {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public static float StringToFloat(String s) {
         return Float.parseFloat(s);
     }
 
     public static String dateFormat(Timestamp date) {
-        System.out.println("MyProfileController : dateFormat --> " + date);
-
         if (date == null) {
             return "Date inconnue";
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return date.toLocalDateTime().format(formatter);
+        return date.toLocalDateTime().format(DATE_TIME_FORMATTER);
     }
 }
