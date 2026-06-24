@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="home-pane" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserController">
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <fx:include source="MenuBar.fxml" />
+            <Label styleClass="section-label" text="Modification de l'utilisateur" />
+            <VBox.margin><Insets bottom="8.0" top="12.0" /></VBox.margin>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="TOP_CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="16.0" styleClass="home-content">
+                    <Label fx:id="userTitle" alignment="CENTER" maxWidth="Infinity" styleClass="page-title" />
+
+                    <GridPane alignment="TOP_CENTER" hgap="12.0" vgap="12.0">
+                        <Label styleClass="stat-label" text="ID :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="userId" editable="false" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label styleClass="stat-label" text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="userNom" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label styleClass="stat-label" text="Email :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="userEmail" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label styleClass="stat-label" text="Téléphone :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="userTel" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label styleClass="stat-label" text="Rôle :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <ChoiceBox fx:id="userRole" prefWidth="220.0" styleClass="form-choicebox" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="client" />
+                                    <String fx:value="artist" />
+                                    <String fx:value="admin" />
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+
+                        <Label styleClass="stat-label" text="Créé le :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <TextField fx:id="userCreatedAt" editable="false" styleClass="auth-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                    <Label fx:id="infoLabel" styleClass="stat-label" />
+
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <padding>
+        <Insets bottom="6.0" left="6.0" right="6.0" />
+    </padding>
+    <bottom>
+        <HBox alignment="TOP_CENTER" spacing="12.0">
+            <Button mnemonicParsing="false" onAction="#saveUser" styleClass="btn-primary" text="Enregistrer" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteUser" styleClass="btn-delete" text="Supprimer" />
+            <Button mnemonicParsing="false" onAction="#toUsersManagement" styleClass="btn-secondary" text="Retour aux utilisateurs" />
+        </HBox>
+    </bottom>
+</BorderPane>

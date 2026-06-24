@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.Event;
 import models.Seance;
+import models.User;
 import models.Ticket;
 import services.SessionManager;
 
@@ -244,6 +245,55 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+    public void loadUsersManagement() {
+        try {
+            System.out.println("[APPCONTROLLER] : loadUsersManagement");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserManagementScene.fxml"));
+            Parent root = loader.load();
+
+            UserManagementController userManagementController = loader.getController();
+            userManagementController.setUsers();
+
+            primaryStage.setTitle("Teasy - Gestion des utilisateurs");
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger UserManagementScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    public void loadEditUser(User user) {
+        try {
+            System.out.println("[APPCONTROLLER] : loadEditUser --> Chargement de : " + user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditUserScene.fxml"));
+            Parent root = loader.load();
+
+            EditUserController editUserController = loader.getController();
+            editUserController.setUser(user);
+
+            primaryStage.setTitle("Teasy - Édition de l'utilisateur " + user.getNom());
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/styles/style.css").toExternalForm()
+            );
+            primaryStage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("[ERREUR] Impossible de charger EditUserScene.fxml");
+            e.printStackTrace();
+        }
+    }
+
 
     public void loadEditEvent(Event currentEvent) {
         try {

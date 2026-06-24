@@ -34,7 +34,7 @@ public class User {
         UserDAO.updateRowById(this);
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -102,7 +102,7 @@ public class User {
         return myTickets;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
             this.id = id;
         }

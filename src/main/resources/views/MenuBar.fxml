@@ -31,7 +31,9 @@
             <!--      TODO : Changer les options en mettant "Gérer les tickets" ; "Gérer les événements" ...      -->
             <items>
                 <MenuItem text="Panel Admin" onAction="#adminPanel"/>
+                <MenuItem text="Gérer les utilisateurs" onAction="#usersManagement"/>
             </items>
         </Menu>
+
     </menus>
 </MenuBar>

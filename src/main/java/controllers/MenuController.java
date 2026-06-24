@@ -67,4 +67,8 @@ public class MenuController implements Initializable {
     private void adminPanel() {
         AppController.getInstance().loadAdminPanel();
     }
+    @FXML
+    private void usersManagement() {
+        AppController.getInstance().loadUsersManagement();
+    }
 }
