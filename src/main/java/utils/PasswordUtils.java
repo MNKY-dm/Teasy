@@ -13,14 +13,4 @@ public class PasswordUtils {
         //String actualPassword = hashPassword(password);
         return encoder.matches(password, hashPassword);
     }
-
-// Tests de la fonction
-    public static void main(String[] args) {
-//        Tests des fonctions
-//        String password = "123456";
-//        String hashPassword = hashPassword(password);
-//        System.out.println(hashPassword);
-//
-//        System.out.println(checkPassword("123456", "$2a$10$zusUW6nI7yBwxUKxkTYc/OTOzLuc2oLcgkVCJyG9Wicb5BNwvFXDm"));
-    }
 }
