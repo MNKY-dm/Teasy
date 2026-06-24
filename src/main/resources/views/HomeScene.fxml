@@ -15,7 +15,7 @@
                 <AnchorPane fx:id="mainContent" minHeight="0.0" minWidth="0.0" prefHeight="523.0" prefWidth="582.0">
                     <children>
                   <Label alignment="CENTER" layoutX="233.0" layoutY="8.0" prefHeight="23.0" prefWidth="95.0" styleClass="page-title" text="Accueil" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <Label fx:id="eventsToComeTitle" styleClass="section-title" text="Événements à venir :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0">
+                        <Label fx:id="eventsToComeTitle" styleClass="section-title" text="Événements :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0">
                             <font><Font size="15.0" /></font>
                         </Label>
                         <ScrollPane fx:id="eventsToComePane" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="2.0" layoutY="62.0" prefWidth="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
