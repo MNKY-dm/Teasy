@@ -120,11 +120,15 @@ public class UserDAO implements DAO {
                 stmt.setString(4, user.getRole());
                 stmt.setString(5, user.getTel());
 
+                stmt.setInt(6, userId);
+
+                System.out.println("Updating User");
+
                 var rs = stmt.executeUpdate();
                 return rs == 1 ; // Indique que la fonction a fonctionné si le nombre de lignes mises à jour est 1, et false sinon
 
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                ex.printStackTrace();
                 return false ;
             }
         }

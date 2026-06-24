@@ -39,6 +39,10 @@ public class SessionManager {
         return currentUser;
     }
 
+    public void update(User user) {
+        currentUser = user;
+    }
+
     public boolean isAuthenticated() {
         return isAuthenticated;
     }

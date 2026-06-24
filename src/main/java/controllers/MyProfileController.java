@@ -65,6 +65,7 @@ public class MyProfileController {
         newProfile.setCreated_at(user.getCreated_at());
 
         newProfile.update();
+        SessionManager.getInstance().update(newProfile);
         setProfile();
 
     }

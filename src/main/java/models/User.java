@@ -3,6 +3,7 @@ package models;
 import dao.EventDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
+import services.SessionManager;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
