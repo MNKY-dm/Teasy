@@ -1,9 +1,11 @@
 package controllers;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Ticket;
@@ -17,36 +19,70 @@ import java.util.ResourceBundle;
 public class TicketsManagementController implements Initializable {
     private Ticket currentTicket;
     private HBox currentTicketPane;
+    private long ticketsLoadVersion;
 
     @FXML
     private VBox ticketsRoot;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("TicketsManagementController.initialize()");
+    }
 
-        // Débugger
-        System.out.println("initialize() appelée");
+    public void setTickets() {
+        loadTicketsInfos();
     }
 
     public void loadTicketsInfos() {
+        final long loadVersion = ++ticketsLoadVersion;
 
-        System.out.println("loadTicketsInfos est bien lancée.");
+        currentTicket = null;
+        currentTicketPane = null;
+        ticketsRoot.getChildren().setAll(new Label("Chargement des tickets..."));
 
-        List<Ticket> tickets = TicketService.getTicketsWithSeanceInfos(false, -1);
+        Task<List<Ticket>> task = new Task<>() {
+            @Override
+            protected List<Ticket> call() {
+                return TicketService.getTicketsWithSeanceInfos(false, -1);
+            }
+        };
 
-        System.out.println("Nombre de tickets trouvés : " + tickets.size());
+        task.setOnSucceeded(workerStateEvent -> {
+            if (loadVersion != ticketsLoadVersion) {
+                return;
+            }
 
-        ticketsRoot.getChildren().clear();
+            List<Ticket> tickets = task.getValue();
+            ticketsRoot.getChildren().clear();
 
-        for (Ticket ticket : tickets) {
-            addTicketInfos(ticket);
-            System.out.println("Ticket affiché : " + ticket.getId());
-        }
+            if (tickets == null || tickets.isEmpty()) {
+                ticketsRoot.getChildren().setAll(new Label("Aucun ticket à afficher."));
+                return;
+            }
+
+            for (Ticket ticket : tickets) {
+                addTicketInfos(ticket);
+            }
+        });
+
+        task.setOnFailed(workerStateEvent -> {
+            if (loadVersion != ticketsLoadVersion) {
+                return;
+            }
+
+            ticketsRoot.getChildren().setAll(new Label("Impossible de charger les tickets."));
+            Throwable exception = task.getException();
+            if (exception != null) {
+                exception.printStackTrace();
+            }
+        });
+
+        Thread thread = new Thread(task, "tickets-management-loader");
+        thread.setDaemon(true);
+        thread.start();
     }
 
-    @FXML
     public void addTicketInfos(Ticket ticket) {
-        System.out.println("addTicketsInfos pour le ticket : " + ticket.getId());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TicketInfos.fxml"));
             HBox cardRoot = loader.load();
@@ -55,7 +91,6 @@ public class TicketsManagementController implements Initializable {
             ticketInfosController.setTicketsInfos(ticket);
 
             cardRoot.setOnMouseClicked(event -> ticketClicked(cardRoot, ticket));
-
             ticketsRoot.getChildren().add(cardRoot);
 
         } catch (IOException e) {
@@ -63,15 +98,12 @@ public class TicketsManagementController implements Initializable {
         }
     }
 
-    public void setTickets() {
-        loadTicketsInfos();
-    }
-
     @FXML
     private void ticketClicked(HBox cardRoot, Ticket ticket) {
         if (currentTicketPane != null) {
             currentTicketPane.setStyle("-fx-background-color: #111113; -fx-text-fill: #FFFFFF;");
         }
+
         currentTicketPane = cardRoot;
         currentTicketPane.setStyle("-fx-background-color: #5B4FFF; -fx-text-fill: #111113;");
         currentTicket = ticket;
@@ -79,18 +111,32 @@ public class TicketsManagementController implements Initializable {
 
     @FXML
     private void updateTicketInfos() {
-        System.out.println("updateTicketsInfos pour l'event : " + currentTicket.getId());
+        if (currentTicket == null) {
+            System.out.println("Aucun ticket sélectionné.");
+            return;
+        }
+
         AppController.getInstance().loadTicketModifier(currentTicket);
     }
 
     @FXML
     private void deleteTicket() {
+        if (currentTicket == null) {
+            System.out.println("Aucun ticket sélectionné.");
+            return;
+        }
+
         currentTicket.delete();
-        ticketsRoot.getChildren().remove(currentTicketPane);
+
+        if (currentTicketPane != null) {
+            ticketsRoot.getChildren().remove(currentTicketPane);
+        }
+
+        currentTicket = null;
+        currentTicketPane = null;
     }
 
     public void moveToAdminPanel(ActionEvent actionEvent) {
-        System.out.println("TicketManagementController : moveToAdminPanel");
         AppController.getInstance().loadAdminPanel();
     }
 }

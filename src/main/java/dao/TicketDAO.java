@@ -38,7 +38,6 @@ public class TicketDAO implements DAO {
                 );
                 ticket.setId(rs.getInt("id"));
                 ticket.setCreated_at(rs.getTimestamp("created_at"));
-                TicketService.setTicketStatus(ticket);
                 all.add(ticket);
             }
 

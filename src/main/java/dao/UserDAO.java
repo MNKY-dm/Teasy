@@ -4,7 +4,10 @@ import models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UserDAO implements DAO {
 
@@ -100,6 +103,41 @@ public class UserDAO implements DAO {
 
         return user;
     }
+
+    public static Map<Integer, String> getNamesByIds(List<Integer> userIds) {
+        Map<Integer, String> result = new HashMap<>();
+
+        if (userIds == null || userIds.isEmpty()) {
+            return result;
+        }
+
+        String placeholders = userIds.stream()
+                .map(id -> "?")
+                .collect(Collectors.joining(","));
+
+        // Remplace "user" par "users" si ton vrai nom de table est "users"
+        String sql = "SELECT id, nom FROM user WHERE id IN (" + placeholders + ")";
+
+        try (var conn = MySQLConnection.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+
+            int index = 1;
+            for (Integer id : userIds) {
+                stmt.setInt(index++, id);
+            }
+
+            var rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.put(rs.getInt("id"), rs.getString("nom"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
     public static boolean updateRowById(User user){
         // Update

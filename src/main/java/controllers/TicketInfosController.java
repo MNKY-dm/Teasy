@@ -18,25 +18,28 @@ public class TicketInfosController {
     @FXML private Label ticketStatus;
 
     public void setTicketsInfos(Ticket ticket) {
-        System.out.println("setTicketsInfos pour le ticket " + ticketID);
-
         try {
-
-            ticketID.setText(ticket.getId() + "");
+            ticketID.setText(String.valueOf(ticket.getId()));
             eventName.setText(ticket.getTitle());
             userName.setText(ticket.getUser());
             ticketType.setText(ticket.getType());
 
             Seance seance = ticket.getSeance();
-            seanceID.setText(ticket.getSeance_id() + "");
-            seanceLocation.setText(seance.getLocation());
-            seanceDate.setText(TypeConverter.dateFormat(seance.getDate()));
 
-            price.setText(ticket.getPrice() + "");
+            if (seance != null) {
+                seanceID.setText(String.valueOf(ticket.getSeance_id()));
+                seanceLocation.setText(seance.getLocation());
+                seanceDate.setText(TypeConverter.dateFormat(seance.getDate()));
+            } else {
+                seanceID.setText(String.valueOf(ticket.getSeance_id()));
+                seanceLocation.setText("-");
+                seanceDate.setText("-");
+            }
+
+            price.setText(String.valueOf(ticket.getPrice()));
             ticketStatus.setText(ticket.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

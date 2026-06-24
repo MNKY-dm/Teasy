@@ -2,6 +2,7 @@ package services;
 
 import dao.SeanceDAO;
 import dao.TicketDAO;
+import dao.UserDAO;
 import models.Seance;
 import models.Ticket;
 
@@ -35,11 +36,15 @@ public class TicketService {
         }
 
         Set<Integer> seanceIds = new HashSet<>();
+        Set<Integer> userIds = new HashSet<>();
+
         for (Ticket t : tickets) {
             seanceIds.add(t.getSeance_id());
+            userIds.add(t.getUser_id());
         }
 
         List<Seance> seances = SeanceDAO.getRowsByIds(new ArrayList<>(seanceIds));
+        Map<Integer, String> userNamesById = UserDAO.getNamesByIds(new ArrayList<>(userIds));
 
         Map<Integer, Seance> seanceById = new HashMap<>();
         for (Seance s : seances) {
@@ -50,6 +55,13 @@ public class TicketService {
             Seance s = seanceById.get(t.getSeance_id());
             if (s != null) {
                 t.setSeance(s);
+            }
+
+            String userName = userNamesById.get(t.getUser_id());
+            if (userName != null && !userName.isBlank()) {
+                t.setUserName(userName);
+            } else {
+                t.setUserName("Utilisateur #" + t.getUser_id());
             }
         }
 
@@ -86,7 +98,6 @@ public class TicketService {
     }
 
     public static String generateQRCode(int ticketId, int seanceId) {
-        // UUID unique + infos ticket encodées
         String data = "TEASY-TICKET-" + ticketId + "-" + seanceId + "-" + UUID.randomUUID().toString().substring(0, 8);
         return "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
                 URLEncoder.encode(data, StandardCharsets.UTF_8);
@@ -97,7 +108,6 @@ public class TicketService {
             String[] parts = scannedData.split("-");
             int ticketId = Integer.parseInt(parts[2]);
             int seanceId = Integer.parseInt(parts[3]);
-            // valider ticket avec TicketDAO.getRowById(ticketId)
         }
     }
 

@@ -1,7 +1,6 @@
 package models;
 
 import dao.TicketDAO;
-import dao.UserDAO;
 
 import java.sql.Timestamp;
 
@@ -19,6 +18,7 @@ public class Ticket {
     private boolean is_refunded;
     private Timestamp created_at;
     private Seance seance;
+    private String userName;
 
     public Ticket(String code,
                   String title,
@@ -77,7 +77,11 @@ public class Ticket {
     }
 
     public String getUser() {
-        return UserDAO.getRowById(this.getUser_id()).getNom();
+        return this.userName != null ? this.userName : "Utilisateur #" + this.user_id;
+    }
+
+    public String getUserName() {
+        return this.userName;
     }
 
     public int getSeance_id() {
@@ -113,10 +117,9 @@ public class Ticket {
     }
 
     public void setId(int id) {
-        if (id >= 0) { // Affecter un id seulement s'il n'est pas négatif
+        if (id >= 0) {
             this.id = id;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("L'id ne peut pas être négatif.");
         }
     }
@@ -133,12 +136,16 @@ public class Ticket {
         if (title != null) {
             this.title = title;
         } else {
-            throw new IllegalArgumentException("L'title ne peut pas être null.");
+            throw new IllegalArgumentException("Le title ne peut pas être null.");
         }
     }
 
     public void setUser_id(int user_id) {
-        this.user_id = user_id; // Peut être null (voir BDD)
+        this.user_id = user_id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setSeance_id(int seance_id) {
@@ -172,6 +179,4 @@ public class Ticket {
     public void setSeance(Seance seance) {
         this.seance = seance;
     }
-
-    // TODO : Penser à ajouter fonctionnalité de simuler une utilisation de ticket (bouton "participer à un event")
 }
