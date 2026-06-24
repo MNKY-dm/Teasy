@@ -104,3 +104,21 @@ Si `target/teasy-1.0.0.jar` est introuvable :
 
 - vérifier que la commande `./mvnw clean package` a bien été exécutée ;
 - vérifier qu'aucune erreur de compilation n'a interrompu la génération.
+
+
+## Comptes de démonstration
+
+Compte administrateur :
+
+- Email : `admin@teasy.bts`
+- Mot de passe : `H3l1c0pt3re.`
+
+Compte client :
+
+- Email : `client@teasy.bts`
+- Mot de passe : `H3l1c0pt3re.`
+
+Compte artiste :
+
+- Email : `artiste@teasy.bts`
+- Mot de passe : `H3l1c0pt3re.`
